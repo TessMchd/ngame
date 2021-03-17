@@ -20,13 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Security/LoginAuthenticator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/security/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ngame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ngame.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Game.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/game/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/game/show_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/show_game.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +124,11 @@
       <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
       <path value="$PROJECT_DIR$/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/intl" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/symfony/validator" />
       <path value="$PROJECT_DIR$/vendor/symfony/asset" />
     </include_path>
   </component>
@@ -140,6 +152,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\ngame\templates\security" />
       <recent name="C:\wamp64\www\ngame\src\Security" />
       <recent name="C:\wamp64\www\ngame\templates" />
       <recent name="C:\wamp64\www\ngame\templates\game" />
@@ -156,6 +169,12 @@
       <updated>1614939139428</updated>
       <workItem from="1614939141503" duration="5575000" />
       <workItem from="1615214007095" duration="5554000" />
+      <workItem from="1615296066811" duration="1465000" />
+      <workItem from="1615299396981" duration="923000" />
+      <workItem from="1615366715219" duration="83000" />
+      <workItem from="1615799619143" duration="789000" />
+      <workItem from="1615800675446" duration="242000" />
+      <workItem from="1615901128469" duration="11884000" />
     </task>
     <servers />
   </component>
@@ -175,14 +194,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1170" y="286" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1614943381879">
+    <state x="1170" y="286" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615910135235">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1170" y="286" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1614943381879" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1615217177154">
+    <state x="1170" y="286" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615910135235" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1615901616281">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615217177154" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1615901616281" />
+    <state x="769" y="243" key="NewPhpClassDialog" timestamp="1615904487916">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="243" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615904487916" />
     <state x="794" y="443" key="NewPhpFileDialog" timestamp="1614941643509">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

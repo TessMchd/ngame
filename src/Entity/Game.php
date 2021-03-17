@@ -20,19 +20,19 @@ class Game
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="games1")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="games1")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user1;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="games2")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="games2")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user2;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $winner;
 

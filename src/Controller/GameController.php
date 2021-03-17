@@ -36,7 +36,7 @@ class GameController extends AbstractController
         UserRepository $userRepository,
         CardRepository $cardRepository
     ): Response {
-        $user1 = $userRepository->find($request->request->get('user1'));
+        $user1 = $this->getUser();
         $user2 = $userRepository->find($request->request->get('user2'));
 
         if ($user1 !== $user2) {
@@ -54,8 +54,9 @@ class GameController extends AbstractController
 
             $cards = $cardRepository->findAll();
             $tCards = [];
-            foreach ($cards as $card) {
-                $tCards[$card->getId()] = $card;
+            foreach ($cards as $card ) {
+                    $tCards[$card->getId()] = $card;
+
             }
             shuffle($tCards);
             $carte = array_pop($tCards);
@@ -63,7 +64,7 @@ class GameController extends AbstractController
 
             $tMainJ1 = [];
             $tMainJ2 = [];
-            for ($i = 0; $i < 3; $i++) {
+            for ($i = 0; $i < 6; $i++) {
                 //on distribue 6 cartes aux deux joueurs
                 $carte = array_pop($tCards);
                 $tMainJ1[] = $carte->getId();
