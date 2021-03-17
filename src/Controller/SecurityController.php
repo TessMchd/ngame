@@ -49,11 +49,12 @@ class SecurityController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){ // test si le formulaire a été soumis et s'il est valide
             $data=$form->getData();
             $encoded = $passwordEncoder->encodePassword($user,$user->getPassword());
+            $user->setAvatar("image_avatar.jpg");
             $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager(); // on récupère la gestion des entités
             $em->persist($user); // on effectue les mise à jours internes
             $em->flush(); // on effectue la mise à jour vers la base de données
-            return $this->redirectToRoute('user_profil', ['id' => $user->getId()]); // on redirige vers la route show_task avec l'id du post créé ou modifié
+            return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
             }
             return $this->render('security/register.html.twig', ['form' => $form->createView()]);
 
