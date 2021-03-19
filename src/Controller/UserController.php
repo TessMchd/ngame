@@ -21,12 +21,6 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        if(isset($_POST['avatar'])){
-            $user->setAvatar($_POST['avatar']);
-            $em = $this->getDoctrine()->getManager(); // on récupère la gestion des entités
-            $em->persist($user); // on effectue les mise à jours internes
-            $em->flush(); // on effectue la mise à jour vers la base de données
-        }
         return $this->render('user/index.html.twig', [
             'user' => $user,
         ]);

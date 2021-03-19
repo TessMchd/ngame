@@ -6,54 +6,9 @@
     <div id="profil_content">
         <h1>Bonjour {{ user.firstName }}</h1>
         <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
-    </div>
-    <div id="popup">
-
-        <form id="avatar_form" method="POST" action="">
-            <div id="close">
-                <img id="close_img" src="{{ asset('img/avatar/times-solid.svg' )}}">
-            </div>
-
-            <ul>
-                <li><input type="radio" id="cb1" name="avatar" value="image_avatar.jpg"/>
-                    <label for="cb1"  ><img src="{{ asset('img/avatar/image_avatar.jpg' )}}" /></label>
-                </li>
-                <li><input type="radio" id="cb2"  name="avatar" value="image_avatar2.jpg"/>
-                    <label for="cb2"  ><img src="{{ asset('img/avatar/image_avatar2.jpg' )}}" /></label>
-                </li>
-                <li><input type="radio" id="cb3" name="avatar"  value="image_avatar3.jpg"/>
-                    <label for="cb3" ><img src="{{ asset('img/avatar/image_avatar3.jpg' )}}" /></label>
-                </li>
-                <li><input type="radio" id="cb4" name="avatar"  value="image_avatar4.jpg"/>
-                    <label for="cb4" ><img src="{{ asset('img/avatar/image_avatar4.jpg' )}}" /></label>
-                </li>
-            </ul>
-
-            <button type="submit">Changer l'avatar</button>
-        </form>
+        <a href="{{ path('app_modify') }}"/>Modifier le profil</div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-
-            $('#popup').toggle();
-
-            $('#avatar').click(function(){
-                $	('html,body').animate({scrollTop: $("#popup").offset().top}, 'slow'      );
-                $("#popup").fadeIn('500');
-
-                if(document.body.clientWidth>600){
-                    $('body').css('overflow', 'hidden');
-                }
-            });
-
-            $('#close_img').click(function(){
-                $("#popup").fadeOut('500');
-                $('body').css('overflow', 'auto');
-            });
-
-        });
-    </script>
 {% endblock %}
 
 
