@@ -23,7 +23,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Stats.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Stats.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +135,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/intranetV3-master" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -177,7 +179,8 @@
       <workItem from="1616403501138" duration="2236000" />
       <workItem from="1616430291409" duration="54000" />
       <workItem from="1616488402741" duration="6310000" />
-      <workItem from="1616503995950" duration="7367000" />
+      <workItem from="1616503995950" duration="14492000" />
+      <workItem from="1616524705468" duration="230000" />
     </task>
     <servers />
   </component>
@@ -201,10 +204,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="586" y="198" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1615987994353" />
-    <state x="753" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1615984540614">
+    <state x="753" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1616522848136">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="753" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1615984540614" />
+    <state x="753" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1616522848136" />
     <state x="597" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1615983587910">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -217,10 +220,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="707" y="364" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1615983837845" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1616430334424">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1616522369861">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1616430334424" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1616522369861" />
     <state x="769" y="243" key="NewPhpClassDialog" timestamp="1615904487916">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

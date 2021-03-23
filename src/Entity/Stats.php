@@ -17,11 +17,6 @@ class Stats
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=user::class, inversedBy="stats", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="integer")
@@ -53,17 +48,7 @@ class Stats
         return $this->id;
     }
 
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
 
-    public function setUser(user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getVictoires(): ?int
     {

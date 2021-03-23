@@ -49,20 +49,20 @@ class SecurityController extends AbstractController
         $form=$this->createForm(UserRegistrationFormType::class,$user);
         $form->handleRequest($request); // hydratation du form
         if($form->isSubmitted() && $form->isValid()){ // test si le formulaire a été soumis et s'il est valide
-            $encoded = $passwordEncoder->encodePassword($user,$user->getPassword());
-            $user->setAvatar("image_avatar.jpg");
-            $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager(); // on récupère la gestion des entités
-            $em->persist($user); // on effectue les mise à jours internes
-            $em->flush(); // on effectue la mise à jour vers la base de données
             $stats= new Stats();
-            $stats->setUser($user);
             $stats->setDefaites(0);
             $stats->setVictoires(0);
             $stats->setPieces(0);
             $stats->setRang(1);
             $em->persist($stats);
             $em->flush();
+            $encoded = $passwordEncoder->encodePassword($user,$user->getPassword());
+            $user->setAvatar("image_avatar.jpg");
+            $user->setPassword($encoded);
+            $user->setStats($stats);
+            $em->persist($user); // on effectue les mise à jours internes
+            $em->flush(); // on effectue la mise à jour vers la base de données
             return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
             }
             return $this->render('security/register.html.twig', ['form' => $form->createView()]);

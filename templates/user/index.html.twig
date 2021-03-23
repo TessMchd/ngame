@@ -6,7 +6,8 @@
     <div id="profil_content">
         <h1>Bonjour {{ user.firstName }}</h1>
         <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
-        <a href="{{ path('app_modify') }}"/>Modifier le profil</div>
+        <a href="{{ path('app_modify') }}"/>Modifier le profil</a>
+        <p>{{ stats.defaites }}</p>
     </div>
 
 {% endblock %}

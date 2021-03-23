@@ -88,9 +88,18 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * @ORM\OneToOne(targetEntity=Stats::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Stats::class,  cascade={"persist", "remove"})
+     * * @ORM\JoinColumn(nullable=true)
      */
     private $stats;
+
+    /**
+     * @param mixed $stats
+     */
+    public function setStats($stats): void
+    {
+        $this->stats = $stats;
+    }
 
     public function __construct()
     {
@@ -305,15 +314,5 @@ class User implements UserInterface
         return $this->stats;
     }
 
-    public function setStats(Stats $stats): self
-    {
-        // set the owning side of the relation if necessary
-        if ($stats->getUser() !== $this) {
-            $stats->setUser($this);
-        }
 
-        $this->stats = $stats;
-
-        return $this;
-    }
 }
