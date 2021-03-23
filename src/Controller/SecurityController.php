@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stats;
 use App\Entity\User;
 use App\Form\ModifyPasswordType;
 use App\Form\UserRegistrationFormType;
@@ -54,6 +55,14 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager(); // on récupère la gestion des entités
             $em->persist($user); // on effectue les mise à jours internes
             $em->flush(); // on effectue la mise à jour vers la base de données
+            $stats= new Stats();
+            $stats->setUser($user);
+            $stats->setDefaites(0);
+            $stats->setVictoires(0);
+            $stats->setPieces(0);
+            $stats->setRang(1);
+            $em->persist($stats);
+            $em->flush();
             return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
             }
             return $this->render('security/register.html.twig', ['form' => $form->createView()]);

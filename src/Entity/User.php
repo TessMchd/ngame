@@ -87,6 +87,11 @@ class User implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Stats::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $stats;
+
     public function __construct()
     {
         $this->games1 = new ArrayCollection();
@@ -291,6 +296,23 @@ class User implements UserInterface
     public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getStats(): ?Stats
+    {
+        return $this->stats;
+    }
+
+    public function setStats(Stats $stats): self
+    {
+        // set the owning side of the relation if necessary
+        if ($stats->getUser() !== $this) {
+            $stats->setUser($this);
+        }
+
+        $this->stats = $stats;
 
         return $this;
     }
