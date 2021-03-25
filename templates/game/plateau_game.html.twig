@@ -2,7 +2,7 @@
     <div class="col-8">
         Cartes de l'adversaire
         {% for card in set.user2HandCards %}
-            <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">{{ cards[card].id }}
+            <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
         {% endfor %}
     </div>
     <div class="col-4">
@@ -29,7 +29,7 @@
     <div class="col-8">
         {% for card in set.user1HandCards %}
             <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
-            {{ cards[card].id }}
+      
             <input type="radio" name="carte_secret" value="{{ card }}"
                    style="display: none"
                    class="choixSecret">
