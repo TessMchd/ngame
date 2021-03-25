@@ -150,4 +150,12 @@ class Game
 
         return $this;
     }
+
+    public function getUser1Id(){
+        return $this->getUser1()->getId();
+    }
+
+    public function getUser2Id(){
+        return $this->getUser2()->getId();
+    }
 }

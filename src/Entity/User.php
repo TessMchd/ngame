@@ -314,5 +314,7 @@ class User implements UserInterface
         return $this->stats;
     }
 
-
+    public function getStatsId(){
+        return $this->getStats()->getId();
+    }
 }
