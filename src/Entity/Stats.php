@@ -43,6 +43,21 @@ class Stats
      */
     private $rang;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $parties_terminees;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $parties_jouees;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $parties_en_cours;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +121,42 @@ class Stats
     public function setRang(int $rang): self
     {
         $this->rang = $rang;
+
+        return $this;
+    }
+
+    public function getPartiesTerminees(): ?int
+    {
+        return $this->parties_terminees;
+    }
+
+    public function setPartiesTerminees(int $parties_terminees): self
+    {
+        $this->parties_terminees = $parties_terminees;
+
+        return $this;
+    }
+
+    public function getPartiesJouees(): ?int
+    {
+        return $this->parties_jouees;
+    }
+
+    public function setPartiesJouees(int $parties_jouees): self
+    {
+        $this->parties_jouees = $parties_jouees;
+
+        return $this;
+    }
+
+    public function getPartiesEnCours(): ?int
+    {
+        return $this->parties_en_cours;
+    }
+
+    public function setPartiesEnCours(int $parties_en_cours): self
+    {
+        $this->parties_en_cours = $parties_en_cours;
 
         return $this;
     }

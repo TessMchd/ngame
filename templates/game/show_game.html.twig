@@ -2,42 +2,59 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-8">
-            Cartes de l'adversaire
-            {% for card in set.user2HandCards %}
-                <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">{{ cards[card].number }}
-            {% endfor %}
-        </div>
-        <div class="col-4">
-            Actions
-        </div>
+    <div id="plateau">
+        {{ include('game/plateau_game.html.twig') }}
     </div>
-    <div class="row">
-        Plateau adversaire
-    </div>
-    <div class="row">
-        Plateau
-    </div>
-    <div class="row">
-        Mon Plateau
-    </div>
-    <div class="row">
-        <div class="col-8">
-            {% for card in set.user1HandCards %}
-                <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">{{ cards[card].number }}
-            {% endfor %}
-        </div>
-        <div class="col-4">
-            Mes Actions
-        </div>
-    </div>
-
-
 
 {% endblock %}
 
 {% block title %}
 
 {% endblock %}
+{% block javascripts %}
+    <script>
+        let action
+        $(document).on('click', '#secret', function(){
+            console.log('secret')
+            action = 'secret' //mémorise l'action en cours
+            $('.choixSecret').show()
+            $('#valider').show()
+        })
+
+        $(document).on('click', '#valider', function(){
+            switch (action) {
+                case 'secret':
+                    donneesAction = {
+                        action: 'secret',
+                        carte: $('input[name="carte_secret"]:checked').val()
+                    }
+                    break;
+                case 'depot':
+
+                    break;
+                case 'offre':
+
+                    break;
+                case 'echange':
+
+                    break;
+            }
+
+            $.ajax({
+                url: "{{ path('action_game', {game: game.id}) }}",
+                data: donneesAction,
+                method: 'POST',
+                success: function(data) {
+                    if (data == true) {
+                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                    }
+                },
+                error: function(){
+
+                }
+            })
+        })
+    </script>
+{% endblock %}
+
 

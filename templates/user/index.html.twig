@@ -4,10 +4,20 @@
 
 {% block body %}
     <div id="profil_content">
-        <h1>Bonjour {{ user.firstName }}</h1>
-        <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
+        <h1>Bonjour {{ user.pseudo }}</h1>
+        <div>
+             <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
+            <div> Nom : {{ user.lastname }}</div>
+            <div> Prénom : {{ user.firstname }}</div>
+            <div> Pseudo : {{ user.pseudo }}</div>
+            <div> Anniversaire : {{ user.birthday|date("m/d/Y") }}</div>
+        </div>
+        <div>
+            <h2>Statistiques</h2>
+            <div> Parties gagnées : {{ stats.victoires }}</div>
+            <div> Parties perdues : {{ stats.defaites }} </div>
+        </div>
         <a href="{{ path('app_modify') }}"/>Modifier le profil</a>
-        <p>{{ stats.defaites }}</p>
     </div>
 
 {% endblock %}

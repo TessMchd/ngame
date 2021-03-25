@@ -55,6 +55,9 @@ class SecurityController extends AbstractController
             $stats->setVictoires(0);
             $stats->setPieces(0);
             $stats->setRang(1);
+            $stats->setPartiesEnCours(0);
+            $stats->setPartiesJouees(0);
+            $stats->setPartiesTerminees(0);
             $em->persist($stats);
             $em->flush();
             $encoded = $passwordEncoder->encodePassword($user,$user->getPassword());
