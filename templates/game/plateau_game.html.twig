@@ -29,7 +29,7 @@
     <div class="col-8">
         {% for card in set.user1HandCards %}
             <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
-      
+
             <input type="radio" name="carte_secret" value="{{ card }}"
                    style="display: none"
                    class="choixSecret">
