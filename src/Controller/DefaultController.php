@@ -17,17 +17,6 @@ class DefaultController extends AbstractController
     public function index(MailerInterface $mailer): Response
 
     {
-        $email = (new TemplatedEmail())
-            ->to('tessmchd@hotmail.fr')
-            ->from('no_reply@ngame.com')
-            ->subject('Test d un mail')
-            ->text('Coucou')
-            ->context([
-            'prenom' => 'Tess',
-            'nom' => 'Machado',
-        ]);
-
-        $mailer->send($email);
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
         ]);
