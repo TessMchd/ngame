@@ -38,7 +38,8 @@ class UserRegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'Confirmer le mot de passe'),
 
             ));
-            $builder->add('captcha', CaptchaType::class);//
+            $builder->add('captcha', CaptchaType::class,
+            );//
 
 
         }

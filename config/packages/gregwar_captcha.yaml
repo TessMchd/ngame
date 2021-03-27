@@ -1,5 +1,15 @@
 gregwar_captcha:
-  width: 160
-  height: 50
+  width: 180
+  height: 60
   background-color: [255, 255, 255]
+  length: 6
+  invalid_message: 'Code invalide'
+  distortion: disable
+  max_front_lines: 0
+  max_behind_lines: 0
+  text_color: [1,1,1]
+  interpolation: disable
+  quality: 100
+  ignore_all_effects: enable
+
 

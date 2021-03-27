@@ -6,9 +6,12 @@ use App\Entity\Stats;
 use App\Entity\User;
 use App\Form\ModifyPasswordType;
 use App\Form\UserRegistrationFormType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -44,7 +47,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response{
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer): Response{
         $user = new User();
         $form=$this->createForm(UserRegistrationFormType::class,$user);
         $form->handleRequest($request); // hydratation du form
@@ -66,6 +69,18 @@ class SecurityController extends AbstractController
             $user->setStats($stats);
             $em->persist($user); // on effectue les mise à jours internes
             $em->flush(); // on effectue la mise à jour vers la base de données
+            $email = (new TemplatedEmail())
+                ->to($user->getEmail())
+                ->from('no_reply@ngame.com')
+                ->subject("Tu as rejoins l'équipage pirate !")
+                ->htmlTemplate('mail/mail.html.twig')
+                ->context([
+                    'prenom' => $user->getFirstname(),
+                    'nom' => $user->getLastname(),
+                    'pseudo'=>$user->getPseudo(),
+                ]);
+
+            $mailer->send($email);
             return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
             }
             return $this->render('security/register.html.twig', ['form' => $form->createView()]);

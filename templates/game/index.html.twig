@@ -11,7 +11,7 @@
     <div>
         <label for="user2">Contre :</label>
         <select name="user2" id="user2">
-            <option value="">Choisir le joueur 2</option>
+            <option value="" disabled selected>Choisir le joueur 2</option>
             {% for user in users|filter(user => user.id != app.user.id) %}
                 <option value="{{ user.id }}">{{ user.display }}</option>
             {% endfor %}
@@ -22,3 +22,5 @@
 
 </form>
 {% endblock %}
+
+
