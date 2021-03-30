@@ -71,11 +71,24 @@
                         $('#message').html('A votre adversaire de jouer')
                     } else {
                         clearInterval(boucle)
+                        pioche()
                         $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
                         $('#message').html('A vous de jouer')
                         document.getElementById("overlay").style.display = "none";
 
                     }
+                },
+                error: function(){
+
+                }
+            })
+
+        }
+        function pioche(){
+            $.ajax({
+                url: "{{ path('pioche', {game: game.id}) }}",
+                success: function(carte) {
+                    console.log('pioche :' ,carte);
                 },
                 error: function(){
 

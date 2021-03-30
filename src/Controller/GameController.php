@@ -153,7 +153,7 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/get-tout-game/{game}", name="get_tour")
+     * @Route("/get-tour-game/{game}", name="get_tour")
      */
     public function getTour(
         Game $game
@@ -186,6 +186,47 @@ class GameController extends AbstractController
         $entityManager->flush();
 
         return $this->json(true);
+    }
+
+    /**
+     * @Route("/pioche/{game}", name="pioche")
+     */
+    public function Pioche(
+        Game $game,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+            if($game->getSets()[0]->getUser1Pioche()== 0){
+                $game->getSets()[0]->setUser1Pioche(1);
+                $hands=$game->getSets()[0]->getUser1HandCards();
+                $carte=$game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] ;
+                array_push($hands, $carte);
+                $game->getSets()[0]->setUser1HandCards($hands);
+                $pioche=$game->getSets()[0]->getPioche();
+                unset($pioche[(sizeof($game->getSets()[0]->getPioche()))-1]);
+                $game->getSets()[0]->setPioche($pioche);
+                $entityManager->persist($game->getSets()[0]);
+                $entityManager->flush();
+                return $this->json($carte);
+            }
+
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+            if ($game->getSets()[0]->getUser2Pioche() == 0) {
+                $game->getSets()[0]->setUser2Pioche(1);
+                $hands = $game->getSets()[0]->getUser2HandCards();
+                array_push($hands, $game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] );
+                $game->getSets()[0]->setUser2HandCards($hands);
+                $pioche=$game->getSets()[0]->getPioche();
+                unset($pioche[(sizeof($game->getSets()[0]->getPioche()))-1]);
+                $game->getSets()[0]->setPioche($pioche);
+                $entityManager->persist($game->getSets()[0]);
+                $entityManager->flush();
+                return $this->json(sizeof($game->getSets()[0]->getPioche()));
+            }
+        }
+
+        return $this->json(true);
+
     }
 
     /**
@@ -259,7 +300,7 @@ class GameController extends AbstractController
                     unset($main[$indexCarte]); //je supprime la carte de ma main
                     $round->setUser1HandCards($main);
                 }
-                if ($joueur === 2) {
+                else if ($joueur === 2) {
                     $actions = $round->getUser2Action(); //un tableau...
                     $actions['SECRET'] = [$carte]; //je sauvegarde la carte cachée dans mes actions
                     $round->setUser2Action($actions); //je mets à jour le tableau

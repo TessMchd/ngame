@@ -24,11 +24,11 @@
         <table>
         {% for game in en_cours %}
             <tr>
-                <th>Id</th>
+                <th>Crée le</th>
                 <th>Adversaires</th>
             </tr>
             <tr>
-                <td>{{ game.id }}</td>
+                <td>{{ game.created | date("m/d/Y") }}</td>
                 {% if game.user1.id == app.user.id %}
                     <td>{{ game.user2.pseudo }}</td>
                 {% else %}
