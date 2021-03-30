@@ -5,7 +5,7 @@
 {% block body %}
 <form action="{{ path('create_game') }}" method="post">
     <div>
-        Moi
+        {{ app.user.pseudo }}
     </div>
 
     <div>
@@ -17,8 +17,31 @@
             {% endfor %}
         </select>
     </div>
-
     <button type="submit">Commencer la partie</button>
+
+    <div>
+        <p>Gérer mes parties</p>
+        <table>
+        {% for game in en_cours %}
+            <tr>
+                <th>Id</th>
+                <th>Adversaires</th>
+            </tr>
+            <tr>
+                <td>{{ game.id }}</td>
+                {% if game.user1.id == app.user.id %}
+                    <td>{{ game.user2.pseudo }}</td>
+                {% else %}
+                    <td>{{ game.user1.pseudo }}</td>
+                {% endif %}
+                <td><a href="{{ path('show_game',{game: game.id}) }}">Reprendre</a></td>
+                <td><a href="#">Mail</a></td>
+                <td><a href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a></td>
+
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 
 </form>
 {% endblock %}

@@ -14,7 +14,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/default", name="default")
      */
-    public function index(MailerInterface $mailer): Response
+    public function index(): Response
 
     {
         return $this->render('default/index.html.twig', [

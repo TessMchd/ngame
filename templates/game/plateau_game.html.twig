@@ -1,12 +1,16 @@
 <div class="row">
     <div class="col-8">
         Cartes de l'adversaire
-        {% for card in set.user2HandCards %}
+        {% for card in adversaire.handCards %}
             <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
         {% endfor %}
     </div>
     <div class="col-4">
-        Actions
+        Actions de l'adversaire
+        <button id="">Secret</button>
+        <button  id="">Depot</button>
+        <button  id="">Offre</button>
+        <button  id="">Echange</button><br>
     </div>
 </div>
 <div class="row">
@@ -27,7 +31,7 @@
 </div>
 <div class="row">
     <div class="col-8">
-        {% for card in set.user1HandCards %}
+        {% for card in moi.handCards %}
             <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
 
             <input type="radio" name="carte_secret" value="{{ card }}"
@@ -42,5 +46,7 @@
         <button  id="offre">Offre</button>
         <button  id="echange">Echange</button><br>
         <button id="valider" style="display: none">Valider action</button>
+        <button id="finDeTour" disabled>Fin de tour</button>
     </div>
 </div>
+

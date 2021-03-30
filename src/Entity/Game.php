@@ -51,6 +51,28 @@ class Game
      */
     private $sets;
 
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quiJoue = 1;
+
+    /**
+     * @return int
+     */
+    public function getQuiJoue(): ?int
+    {
+        return $this->quiJoue;
+    }
+
+    /**
+     * @param int $quiJoue
+     */
+    public function setQuiJoue(int $quiJoue): void
+    {
+        $this->quiJoue = $quiJoue;
+    }
+
     public function __construct()
     {
         $this->sets = new ArrayCollection();

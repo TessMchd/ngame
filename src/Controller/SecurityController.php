@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,MailerInterface $mailer): Response{
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response{
         $user = new User();
         $form=$this->createForm(UserRegistrationFormType::class,$user);
         $form->handleRequest($request); // hydratation du form
@@ -69,6 +69,7 @@ class SecurityController extends AbstractController
             $user->setStats($stats);
             $em->persist($user); // on effectue les mise à jours internes
             $em->flush(); // on effectue la mise à jour vers la base de données
+            /*
             $email = (new TemplatedEmail())
                 ->to($user->getEmail())
                 ->from('no_reply@ngame.com')
@@ -81,6 +82,7 @@ class SecurityController extends AbstractController
                 ]);
 
             $mailer->send($email);
+            */
             return $this->redirectToRoute('user_profil', ['id' => $user->getId()]);
             }
             return $this->render('security/register.html.twig', ['form' => $form->createView()]);

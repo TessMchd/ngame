@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Entity\Round;
 use App\Repository\CardRepository;
+use App\Repository\GameRepository;
+use App\Repository\RoundRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +20,27 @@ class GameController extends AbstractController
      * @Route("/new-game", name="new_game")
      */
     public function newGame(
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        GameRepository $gameRepostory
     ): Response {
         $users = $userRepository->findAll();
+        $user = $this->getUser();
+        $games=[];
+        $adversaires=[];
+        $en_cours = $gameRepostory->findby(array('user1'=>$user->getId(),'ended'=>null));
+        foreach ($en_cours as $game){
+            array_push($games,$game);
+        }
+        $en_cours = $gameRepostory->findby(array('user2'=>$user->getId(),'ended'=>null));
+        foreach ($en_cours as $game){
+            array_push($games,$game);
+        }
 
         return $this->render('game/index.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'en_cours'=> $games,
+            'adversaires' => $adversaires
+
         ]);
     }
 
@@ -136,6 +153,42 @@ class GameController extends AbstractController
     }
 
     /**
+     * @Route("/get-tout-game/{game}", name="get_tour")
+     */
+    public function getTour(
+        Game $game
+    ): Response {
+        if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
+            return $this->json(true);
+        }
+
+        if ($this->getUser()->getId() === $game->getUser2()->getId() && $game->getQuiJoue() === 2) {
+            return $this->json(true);
+        }
+
+        return $this->json( false);
+    }
+
+    /**
+     * @Route("/change-player/{game}", name="change_player")
+     */
+    public function ChangePlayer(
+        Game $game,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($game->getQuiJoue()==1){
+            $game->setQuiJoue(2);
+        }else{
+            $game->setQuiJoue(1);
+        }
+
+        $entityManager->persist($game);
+        $entityManager->flush();
+
+        return $this->json(true);
+    }
+
+    /**
      * @param Game $game
      * @route("/refresh/{game}", name="refresh_plateau_game")
      */
@@ -146,10 +199,30 @@ class GameController extends AbstractController
         foreach ($cards as $card) {
             $tCards[$card->getId()] = $card;
         }
+        if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+            $moi['handCards'] = $game->getSets()[0]->getUser1HandCards();
+            $moi['actions'] = $game->getSets()[0]->getUser1Action();
+            $moi['board'] = $game->getSets()[0]->getUser1BoardCards();
+            $adversaire['handCards'] = $game->getSets()[0]->getUser2HandCards();
+            $adversaire['actions'] = $game->getSets()[0]->getUser2Action();
+            $adversaire['board'] = $game->getSets()[0]->getUser2BoardCards();
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+            $moi['handCards'] = $game->getSets()[0]->getUser2HandCards();
+            $moi['actions'] = $game->getSets()[0]->getUser2Action();
+            $moi['board'] = $game->getSets()[0]->getUser2BoardCards();
+            $adversaire['handCards'] = $game->getSets()[0]->getUser1HandCards();
+            $adversaire['actions'] = $game->getSets()[0]->getUser1Action();
+            $adversaire['board'] = $game->getSets()[0]->getUser1BoardCards();
+        } else {
+            return $this->redirectToRoute('user_profil');
+        }
+
         return $this->render('game/plateau_game.html.twig', [
             'game' => $game,
             'set' => $game->getSets()[0],
-            'cards' => $tCards
+            'cards' => $tCards,
+            'moi' => $moi,
+            'adversaire' => $adversaire
         ]);
     }
 
@@ -186,12 +259,34 @@ class GameController extends AbstractController
                     unset($main[$indexCarte]); //je supprime la carte de ma main
                     $round->setUser1HandCards($main);
                 }
+                if ($joueur === 2) {
+                    $actions = $round->getUser2Action(); //un tableau...
+                    $actions['SECRET'] = [$carte]; //je sauvegarde la carte cachée dans mes actions
+                    $round->setUser2Action($actions); //je mets à jour le tableau
+                    $main = $round->getUser2HandCards();
+                    $indexCarte = array_search($carte, $main); //je récupère l'index de la carte a supprimer dans ma main
+                    unset($main[$indexCarte]); //je supprime la carte de ma main
+                    $round->setUser2HandCards($main);
+                }
                 break;
         }
 
         $entityManager->flush();
 
         return $this->json(true);
+    }
+
+    /**
+     * @Route("/delete-game/{game}", name="delete_game")
+     */
+    public function deleteGame(
+        EntityManagerInterface $entityManager,
+        Game $game
+        ): Response {
+        $entityManager->remove($game);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('new_game');
     }
 }
 
