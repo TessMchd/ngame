@@ -178,8 +178,10 @@ class GameController extends AbstractController
     ): Response {
         if ($game->getQuiJoue()==1){
             $game->setQuiJoue(2);
+            $game->getSets()[0]->setUser2Pioche(0);
         }else{
             $game->setQuiJoue(1);
+            $game->getSets()[0]->setUser1Pioche(0);
         }
 
         $entityManager->persist($game);
@@ -193,10 +195,11 @@ class GameController extends AbstractController
      */
     public function Pioche(
         Game $game,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        CardRepository $cardRepository
     ): Response {
         if ($this->getUser()->getId() === $game->getUser1()->getId()) {
-            if($game->getSets()[0]->getUser1Pioche()== 0){
+            if($game->getSets()[0]->getUser1Pioche()== 0 and (sizeof($game->getSets()[0]->getPioche()))>0 ){
                 $game->getSets()[0]->setUser1Pioche(1);
                 $hands=$game->getSets()[0]->getUser1HandCards();
                 $carte=$game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] ;
@@ -207,21 +210,24 @@ class GameController extends AbstractController
                 $game->getSets()[0]->setPioche($pioche);
                 $entityManager->persist($game->getSets()[0]);
                 $entityManager->flush();
-                return $this->json($carte);
+                $response=$cardRepository->findBy(array('id'=>$carte));
+                return $this->json([$response[0]->getId(),$response[0]->getPicture()]);
             }
 
-        } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId() and (sizeof($game->getSets()[0]->getPioche()))>0 ) {
             if ($game->getSets()[0]->getUser2Pioche() == 0) {
                 $game->getSets()[0]->setUser2Pioche(1);
-                $hands = $game->getSets()[0]->getUser2HandCards();
-                array_push($hands, $game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] );
+                $hands=$game->getSets()[0]->getUser2HandCards();
+                $carte=$game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] ;
+                array_push($hands, $carte);
                 $game->getSets()[0]->setUser2HandCards($hands);
                 $pioche=$game->getSets()[0]->getPioche();
                 unset($pioche[(sizeof($game->getSets()[0]->getPioche()))-1]);
                 $game->getSets()[0]->setPioche($pioche);
                 $entityManager->persist($game->getSets()[0]);
                 $entityManager->flush();
-                return $this->json(sizeof($game->getSets()[0]->getPioche()));
+                $response=$cardRepository->findBy(array('id'=>$carte));
+                return $this->json([$response[0]->getId(),$response[0]->getPicture()]);
             }
         }
 

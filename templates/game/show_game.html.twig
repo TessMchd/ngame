@@ -4,14 +4,11 @@
     <style>
 
         #overlay {
-            position: fixed; /* Sit on top of the page content */
+            position:absolute;
+            bottom:0;
             display: block; /* Hidden by default */
             width: 100%; /* Full width (cover the whole page) */
-            height: 100%; /* Full height (cover the whole page) */
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            height: 80%; /* Full height (cover the whole page) */
             background-color: rgba(0,0,0,0); /* Black background with opacity */
             z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
             cursor: pointer; /* Add a pointer on hover */
@@ -26,6 +23,8 @@
 
     <div id="overlay"></div>
 
+
+
 {% endblock %}
 
 {% block title %}
@@ -38,12 +37,13 @@
         $(document).ready(function(){
             boucle = setInterval(refreshGame, 3000);
 
-            fin=setInterval(function (){
-                if(fintour==1) {
-                    document.getElementById("finDeTour").disabled = false;
-                }
-            })
         })
+
+        fin=setInterval(function (){
+            if(fintour==1) {
+                document.getElementById("finDeTour").disabled = false;
+            }
+        },3000)
 
         $(document).on('click', '#finDeTour', function() {
             $.ajax({
@@ -54,12 +54,17 @@
                         document.getElementById("finDeTour").disabled = true;
                         boucle = setInterval(refreshGame, 3000);
                         document.getElementById("overlay").style.display = "block";
+
                     }
                 },
                 error: function(){
 
                 }
             })
+        })
+
+        $(document).on('click', '#depot', function() {
+            pioche()
         })
 
         function refreshGame() {
@@ -71,10 +76,19 @@
                         $('#message').html('A votre adversaire de jouer')
                     } else {
                         clearInterval(boucle)
-                        pioche()
-                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                         $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
                         $('#message').html('A vous de jouer')
                         document.getElementById("overlay").style.display = "none";
+                        checkLoading = setInterval(function (){
+                            if ( $('#plateau').html().length == 0 ) {
+                                console.log('0');
+                            }else{
+                                clearInterval(checkLoading)
+                                pioche()
+
+                            }
+                        },1000)
+
 
                     }
                 },
@@ -84,16 +98,28 @@
             })
 
         }
-        function pioche(){
+         function pioche(){
             $.ajax({
                 url: "{{ path('pioche', {game: game.id}) }}",
-                success: function(carte) {
-                    console.log('pioche :' ,carte);
+                success: function (carte) {
+                    console.log('pioche :', carte);
+                    if (carte != true){
+                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:50px\"/><input type='radio' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
+                    $('#new_card').hide()
+                    $('#new_card').fadeIn(1000)
+                }
                 },
                 error: function(){
 
                 }
             })
+        }
+
+        async function asyncCall() {
+            console.log('calling');
+            const result = await pioche();
+            console.log(result);
+            // expected output: "resolved"
         }
 
         let action
