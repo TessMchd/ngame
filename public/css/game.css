@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    background-color: #CECECE;
+}
+#div1{
+    background-color: white;
+    width: 45%;
+    height: 100vh;
+    top:0 !important;
+    position: absolute;left: 0; top: 50px;
+    transition: all 0.5s ease;
+}
+.bounce_div{
+    background-color: white;
+    width: 45%;
+    height: 100vh;
+    top:0 !important;
+    position: absolute;left: -50%; top: 50px;
+    transition: all 0.5s ease;
+}
+
+#parties{
+    height: 70%;
+    width: 80%;
+    overflow-y: auto;
+}

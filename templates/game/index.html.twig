@@ -1,49 +1,187 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Hello GameController!{% endblock %}
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/game.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+
+{% endblock %}
 
 {% block body %}
-<form action="{{ path('create_game') }}" method="post">
-    <div>
-        {{ app.user.pseudo }}
+
+    <div id="div1" >
+        <a  v-on:click = "suite">Nouvelle partie</a>
+        <br>
+        <a v-on:click = "">Reprendre une partie</a>
+        <br>
+        <a v-on:click = "">Demande de revanche</a>
+        <br>
+        <a  v-on:click = "">Supprimer une partie en cours</a>
+        <br>
+        <a href="{{ path("user_profil") }}" >Retour</a>
+
     </div>
 
-    <div>
-        <label for="user2">Contre :</label>
-        <select name="user2" id="user2">
-            <option value="" disabled selected>Choisir le joueur 2</option>
-            {% for user in users|filter(user => user.id != app.user.id) %}
-                <option value="{{ user.id }}">{{ user.display }}</option>
+    <div id="div2" class="animate__animated animate__bounceInLeft bounce_div">
+
+        <h1>Choix du joueur</h1>
+
+        <div id="choix_joueur">
+        <form action="{{ path('create_game') }}" method="post">
+                    {% for user in users|filter(user => user.id != app.user.id) %}
+                        <div>
+                        <label for="{{ user.id }}">
+                            <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                            <div>
+                                {{ user.pseudo}}
+                                <p>Rang {{  user.stats.rang}}</p>
+                            </div>
+                        </label>
+                        <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                        </div>
+                    {% endfor %}
+            <button type="submit">Commencer la partie</button>
+        </form>
+        </div>
+        <button v-on:click = "retour">Retour</button>
+    </div>
+
+    <div id="div3" class="animate__animated animate__bounceInLeft bounce_div">
+        <h1>Reprendre une partie</h1>
+        <div id="parties">
+            {% for game in en_cours %}
+                <div>
+                    <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                    {% if game.user1.id == app.user.id %}
+                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                        <p>{{ game.user2.pseudo }}</p>
+                        <p>Rang {{ game.user2.stats.rang }}</p>
+                    {% else %}
+                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                        <p>{{ game.user1.pseudo }}</p>
+                        <p>Rang {{ game.user1.stats.rang }}</p>
+                    {% endif %}
+                    <a href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
+                </div>
             {% endfor %}
-        </select>
-    </div>
-    <button type="submit">Commencer la partie</button>
+        </div>
 
-    <div>
-        <p>Gérer mes parties</p>
-        <table>
-        {% for game in en_cours %}
-            <tr>
-                <th>Crée le</th>
-                <th>Adversaires</th>
-            </tr>
-            <tr>
-                <td>{{ game.created | date("m/d/Y") }}</td>
-                {% if game.user1.id == app.user.id %}
-                    <td>{{ game.user2.pseudo }}</td>
+    </div>
+
+    <div id="div4" class="animate__animated animate__bounceInLeft bounce_div">
+        <h1>Demander une revanche</h1>
+        <div id="revanches">
+            <form action="{{ path('create_game') }}" method="post">
+                {% for game in revanches %}
+
+                <p>Finie le {{ game.ended| date("m/d/Y") }} </p>
+                {% if game.user2.id == app.user.id %}
+                <div>
+                    <label for="{{ game.user1.id }}">
+                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                        <div>
+                            {{ game.user1.pseudo}}
+                            <p>Rang {{  game.user1.stats.rang}}</p>
+                            {% if game.winner.id == app.user.id %}
+                                <p>Gagné</p>
+                            {% else %}
+                                <p>Perdu</p>
+                            {% endif %}
+                        </div>
+                    </label>
+                    <input type="radio" id="{{ game.user1.id }}" name="user2" value="{{ game.user1.id }}">
+                </div>
                 {% else %}
-                    <td>{{ game.user1.pseudo }}</td>
+                <div>
+                    <label for="{{ game.user2.id }}">
+                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                        <div>
+                            {{ game.user2.pseudo}}
+                            <p>Rang {{ game.user2.stats.rang }}</p>
+                            {% if game.winner.id == app.user.id %}
+                                <p>Gagné</p>
+                            {% else %}
+                                <p>Perdu</p>
+                            {% endif %}
+                        </div>
+                    </label>
+                    <input type="radio" id="{{ game.user2.id }}" name="user2" value="{{ game.user2.id }}">
+                </div>
                 {% endif %}
-                <td><a href="{{ path('show_game',{game: game.id}) }}">Reprendre</a></td>
-                <td><a href="#">Mail</a></td>
-                <td><a href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a></td>
+                {% endfor %}
+                <button type="submit">Commencer la partie</button>
+            </form>
+        <button v-on:click = "retour">Retour</button>
 
-            </tr>
-        {% endfor %}
-        </table>
+            <button v-on:click = "retour">Retour</button>
     </div>
 
-</form>
+
+    </div>
+
+    <div id="div5" class="animate__animated animate__bounceInLeft bounce_div">
+        <h1>Supprimer une partie</h1>
+        <div id="parties">
+            {% for game in en_cours %}
+                <div>
+                    <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                    {% if game.user1.id == app.user.id %}
+                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                        <p>{{ game.user2.pseudo }}</p>
+                        <p>Rang {{ game.user2.stats.rang }}</p>
+                    {% else %}
+                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                        <p>{{ game.user1.pseudo }}</p>
+                        <p>Rang {{ game.user1.stats.rang }}</p>
+                    {% endif %}
+                    <a href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
+                </div>
+            {% endfor %}
+        </div>
+        <button v-on:click = "retour">Retour</button>
+    </div>
+
+
+
+    <script>
+        var example2 = new Vue({
+            el: '#div1',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                suite: function () {
+                    document.getElementById("div2").style.left = "0";
+                    document.getElementById("div1").style.left = "-50%";
+                }
+            }
+        })
+        var example2 = new Vue({
+            el: '#div2',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                retour: function () {
+                    document.getElementById("div2").style.left = "-50%";
+                    document.getElementById("div1").style.left = "0";
+                }
+            }
+        })
+    </script>
 {% endblock %}
 
 

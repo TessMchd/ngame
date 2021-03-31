@@ -26,20 +26,29 @@ class GameController extends AbstractController
         $users = $userRepository->findAll();
         $user = $this->getUser();
         $games=[];
-        $adversaires=[];
-        $en_cours = $gameRepostory->findby(array('user1'=>$user->getId(),'ended'=>null));
+        $revanches=[];
+        $en_cours = $gameRepostory->findby(array('user1'=>$user->getId()));
         foreach ($en_cours as $game){
-            array_push($games,$game);
+            if($game->getEnded()=="") {
+                array_push($games, $game);
+            }else{
+                array_push($revanches,$game);
+            }
         }
-        $en_cours = $gameRepostory->findby(array('user2'=>$user->getId(),'ended'=>null));
+        $en_cours = $gameRepostory->findby(array('user2'=>$user->getId()));
         foreach ($en_cours as $game){
-            array_push($games,$game);
+            if($game->getEnded()) {
+                array_push($games, $game);
+            }else{
+
+                array_push($revanches,$game);
+            }
         }
 
         return $this->render('game/index.html.twig', [
             'users' => $users,
             'en_cours'=> $games,
-            'adversaires' => $adversaires
+            'revanches'=> $revanches
 
         ]);
     }
