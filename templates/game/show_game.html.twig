@@ -6,6 +6,7 @@
         #overlay {
             position:absolute;
             bottom:0;
+            right:0;
             display: block; /* Hidden by default */
             width: 100%; /* Full width (cover the whole page) */
             height: 80%; /* Full height (cover the whole page) */
@@ -36,21 +37,18 @@
         let boucle
         $(document).ready(function(){
             boucle = setInterval(refreshGame, 3000);
-
+            console.log(localStorage.getItem('tour'))
         })
 
-        fin=setInterval(function (){
-            if(fintour==1) {
-                document.getElementById("finDeTour").disabled = false;
-            }
-        },3000)
+
+
 
         $(document).on('click', '#finDeTour', function() {
             $.ajax({
                 url: "{{ path('change_player', {game: game.id}) }}",
                 success: function(data) {
                     if (data == true) {
-                        fintour=0
+                        localStorage.setItem('tour', 0);
                         document.getElementById("finDeTour").disabled = true;
                         boucle = setInterval(refreshGame, 3000);
                         document.getElementById("overlay").style.display = "block";
@@ -85,6 +83,9 @@
                             }else{
                                 clearInterval(checkLoading)
                                 pioche()
+                                if(localStorage.getItem('tour')==1){
+                                    document.getElementById("finDeTour").disabled = false;
+                                }
 
                             }
                         },1000)
@@ -104,7 +105,7 @@
                 success: function (carte) {
                     console.log('pioche :', carte);
                     if (carte != true){
-                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:50px\"/><input type='radio' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
+                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:80px\"/><input type='radio' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
                     $('#new_card').hide()
                     $('#new_card').fadeIn(1000)
                 }
@@ -157,7 +158,11 @@
                 success: function(data) {
                     if (data == true) {
                         $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
-                        fintour=1;
+
+                        localStorage.setItem('tour', 1);
+                        if ( $('#plateau').html().length != 0 ) {
+                            document.getElementById("finDeTour").disabled = false;
+                        }
 
                     }
                 },

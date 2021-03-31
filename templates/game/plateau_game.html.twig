@@ -1,16 +1,43 @@
 <div class="row">
     <div class="col-8">
         Cartes de l'adversaire
+
         {% for card in adversaire.handCards %}
-            <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
+            <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
         {% endfor %}
     </div>
-    <div class="col-4">
-        Actions de l'adversaire
-        <button id="">Secret</button>
-        <button  id="">Depot</button>
-        <button  id="">Offre</button>
-        <button  id="">Echange</button><br>
+    <div class="col-2">
+        {% if adversaire.actions['SECRET']==true %}
+            <img style="width:100px" src="{{ asset('img/plateau/secret.png')}}">
+        {% endif %}
+        {% if adversaire.actions['DEPOT']==true %}
+            <img style="width:100px" src="{{ asset('img/plateau/depot.png')}}">
+        {% endif %}
+    </div>
+    <div class="col-2">
+        <div class="actions" style="display: flex;flex-wrap: wrap">
+            Actions de l'adversaire
+            {% if adversaire.actions['SECRET']==false %}
+                <img id=""  width="90px"  src="{{ asset('img/plateau/action2_1.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if adversaire.actions['DEPOT']==false %}
+                <img id=""  width="90px" src="{{ asset('img/plateau/action2_2.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if adversaire.actions['OFFRE']==false %}
+                <img id="" width=90px" src="{{ asset('img/plateau/action2_3.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if adversaire.actions['ECHANGE']==false %}
+                <img id=""   width="90px" src="{{ asset('img/plateau/action2_4.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+        </div>
     </div>
 </div>
 <div class="row">
@@ -32,21 +59,49 @@
 <div class="row">
     <div class="col-8" id="mes_cartes">
         {% for card in moi.handCards %}
-            <img style="width:50px" src="{{ asset('img/card/'~cards[card].picture) }}">
+            <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
 
             <input type="radio" name="carte_secret" value="{{ card }}"
                    style="display: none"
                    class="choixSecret">
         {% endfor %}
     </div>
-    <div class="col-4">
+    <div class="col-2">
+        {% if moi.actions['SECRET']==true %}
+            <img style="width:100px" src="{{ asset('img/plateau/secret.png')}}">
+        {% endif %}
+        {% if moi.actions['DEPOT']==true %}
+            <img style="width:100px" src="{{ asset('img/plateau/depot.png')}}">
+        {% endif %}
+    </div>
+    <div class="col-2" >
         Mes Actions
-        <button id="secret">Secret</button>
-        <button  id="depot">Depot</button>
-        <button  id="offre">Offre</button>
-        <button  id="echange">Echange</button><br>
+        <div class="actions" style="display: flex;flex-wrap: wrap">
+            {% if moi.actions['SECRET']==false %}
+                <img id="secret"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_1.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if moi.actions['DEPOT']==false %}
+                <img id="depot"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_2.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if moi.actions['OFFRE']==false %}
+                <img id="depot"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
+            {% else %}
+                <div style="width: 90px; height: 55px"></div>
+            {% endif %}
+            {% if moi.actions['ECHANGE']==false %}
+                <img id="echange"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_4.png') }}">
+            {% endif %}
+        </div>
+
+        <br>
         <button id="valider" style="display: none">Valider action</button>
         <button id="finDeTour" disabled>Fin de tour</button>
     </div>
+
+
 </div>
 

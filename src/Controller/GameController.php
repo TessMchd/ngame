@@ -37,7 +37,7 @@ class GameController extends AbstractController
         }
         $en_cours = $gameRepostory->findby(array('user2'=>$user->getId()));
         foreach ($en_cours as $game){
-            if($game->getEnded()) {
+            if($game->getEnded()=="") {
                 array_push($games, $game);
             }else{
 

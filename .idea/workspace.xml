@@ -20,10 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/game.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/game/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/game/show_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/show_game.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +201,8 @@
       <workItem from="1617093283519" duration="1093000" />
       <workItem from="1617102217821" duration="29007000" />
       <workItem from="1617176556801" duration="683000" />
-      <workItem from="1617182674668" duration="7294000" />
+      <workItem from="1617182674668" duration="9219000" />
+      <workItem from="1617198486705" duration="5465000" />
     </task>
     <servers />
   </component>
