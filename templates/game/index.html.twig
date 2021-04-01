@@ -61,7 +61,10 @@
                 <button type="submit">Commencer la partie</button>
             </form>
         </div>
-        <button v-on:click = "nouvelleRetour">Retour</button>
+        <a class="return_link" v-on:click = "nouvelleRetour">
+            <p>Retour</p>
+            <img src="{{ asset('img/ban_gauche.png')}}" alt="">
+        </a>
     </div>
 
     <div class="left-content" id="div3">
