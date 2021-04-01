@@ -128,4 +128,15 @@ body{
     left: -50px;
     top: 71px;
   }
+
+  &:nth-child(3){
+    p{
+      top: 11px;
+      left: 23px;
+    }
+    img{
+      top: 5px;
+      left: -128px;
+    }
+  }
 }
