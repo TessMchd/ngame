@@ -38,6 +38,7 @@
         $(document).ready(function(){
             boucle = setInterval(refreshGame, 3000);
             console.log(localStorage.getItem('tour'))
+
         })
 
 
@@ -61,9 +62,6 @@
             })
         })
 
-        $(document).on('click', '#depot', function() {
-            pioche()
-        })
 
         function refreshGame() {
             $.ajax({
@@ -74,23 +72,18 @@
                         $('#message').html('A votre adversaire de jouer')
                     } else {
                         clearInterval(boucle)
-                         $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
                         $('#message').html('A vous de jouer')
                         document.getElementById("overlay").style.display = "none";
-                        checkLoading = setInterval(function (){
-                            if ( $('#plateau').html().length == 0 ) {
-                                console.log('0');
-                            }else{
-                                clearInterval(checkLoading)
-                                pioche()
+                         $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}",function(responseTxt, statusTxt, xhr){
+                             if(statusTxt == "success")
+                                    console.log("External content loaded successfully!")
+                                    setTimeout(pioche(),9000)
                                 if(localStorage.getItem('tour')==1){
-                                    document.getElementById("finDeTour").disabled = false;
-                                }
-
-                            }
-                        },1000)
-
-
+                                 document.getElementById("finDeTour").disabled = false;
+                                 }
+                             if(statusTxt == "error")
+                                console.log("Error: " + xhr.status + ": " + xhr.statusText);
+                         });
                     }
                 },
                 error: function(){
@@ -102,10 +95,11 @@
          function pioche(){
             $.ajax({
                 url: "{{ path('pioche', {game: game.id}) }}",
+                method: 'POST',
                 success: function (carte) {
                     console.log('pioche :', carte);
                     if (carte != true){
-                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:80px\"/><input type='radio' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
+                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:80px\"/><input type='checkbox' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
                     $('#new_card').hide()
                     $('#new_card').fadeIn(1000)
                 }
@@ -116,12 +110,6 @@
             })
         }
 
-        async function asyncCall() {
-            console.log('calling');
-            const result = await pioche();
-            console.log(result);
-            // expected output: "resolved"
-        }
 
         let action
         $(document).on('click', '#secret', function(){
@@ -129,11 +117,29 @@
             action = 'secret' //mémorise l'action en cours
             $('.choixSecret').show()
             $('#valider').show()
+            $("input:checkbox").click(function() {
+                var bol = $("input:checkbox:checked").length >= 1;
+                $("input:checkbox").not(":checked").attr("disabled",bol);
+            });
         })
 
-        $(document).on('click', '#valider', function(){
+        $(document).on('click', '#depot', function(){
+            console.log('depot')
+            $("#depot_carte").addClass("fadeInDown")
+            action = 'depot' //mémorise l'action en cours
+            $('.choixSecret').show()
+            $('#valider').show()
+            $("input:checkbox").click(function() {
+                var bol = $("input:checkbox:checked").length >= 2;
+                $("input:checkbox").not(":checked").attr("disabled",bol);
+            });
+        })
+
+        $(document).on('click', '#valider', function() {
+            var carte_number
             switch (action) {
                 case 'secret':
+                    carte_number = 1
                     donneesAction = {
                         action: 'secret',
                         carte: $('input[name="carte_secret"]:checked').val()
@@ -141,6 +147,17 @@
 
                     break;
                 case 'depot':
+                    carte_number=2
+                    var array = [];
+                    $.each($("input[name='carte_secret']:checked"), function () {
+                        array.push($(this).val());
+                    });
+                    console.log(array[0])
+                    donneesAction = {
+                        action: 'depot',
+                        carte1: array[0],
+                        carte2: array[1]
+                    }
 
                     break;
                 case 'offre':
@@ -151,26 +168,35 @@
                     break;
             }
 
-            $.ajax({
-                url: "{{ path('action_game', {game: game.id}) }}",
-                data: donneesAction,
-                method: 'POST',
-                success: function(data) {
-                    if (data == true) {
-                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+            if ($("input:checkbox:checked").length == carte_number){
 
-                        localStorage.setItem('tour', 1);
-                        if ( $('#plateau').html().length != 0 ) {
-                            document.getElementById("finDeTour").disabled = false;
+                $.ajax({
+                    url: "{{ path('action_game', {game: game.id}) }}",
+                    data: donneesAction,
+                    method: 'POST',
+                    success: function (data) {
+                        if (data[0] == true) {
+                            console.log(data[1])
+                            $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}", function (responseTxt, statusTxt, xhr) {
+                                if (statusTxt == "success")
+                                    document.getElementById("finDeTour").disabled = false;
+                                if(data[1]=='depot'){
+                                    $("#depot_carte").addClass("fadeInDown")
+                                    $("#depot_action").addClass("fadeInDown")
+                                }
+                                if (statusTxt == "error")
+                                    console.log("Error: " + xhr.status + ": " + xhr.statusText);
+                            });
+                            localStorage.setItem('tour', 1);
                         }
+                    },
+                    error: function () {
 
                     }
-                },
-                error: function(){
-
-                }
-            })
-
+                })
+        }else{
+                console.log('Selectionner plus de carte')
+            }
         })
 
     </script>

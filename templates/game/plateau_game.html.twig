@@ -1,18 +1,24 @@
 <div class="row">
-    <div class="col-8">
-        Cartes de l'adversaire
-
+    <div class="col-6">
         {% for card in adversaire.handCards %}
-            <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
+            <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
         {% endfor %}
     </div>
-    <div class="col-2">
+    <div class="col-4">
+        <div class="col-4" style="display:flex;justify-content: center;align-items: center">
         {% if adversaire.actions['SECRET']==true %}
-            <img style="width:100px" src="{{ asset('img/plateau/secret.png')}}">
+            <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+                <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
+                <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
+            </div>
         {% endif %}
         {% if adversaire.actions['DEPOT']==true %}
-            <img style="width:100px" src="{{ asset('img/plateau/depot.png')}}">
+            <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
+                <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
+                <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
+            </div>
         {% endif %}
+        </div>
     </div>
     <div class="col-2">
         <div class="actions" style="display: flex;flex-wrap: wrap">
@@ -57,21 +63,26 @@
     Mon plateau
 </div>
 <div class="row">
-    <div class="col-8" id="mes_cartes">
+    <div class="col-6" id="mes_cartes">
         {% for card in moi.handCards %}
             <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
-
-            <input type="radio" name="carte_secret" value="{{ card }}"
+            <input type="checkbox"  name="carte_secret"  value="{{ card }}"
                    style="display: none"
                    class="choixSecret">
         {% endfor %}
     </div>
-    <div class="col-2">
+    <div class="col-4" style="display:flex;justify-content: center;align-items: center">
         {% if moi.actions['SECRET']==true %}
-            <img style="width:100px" src="{{ asset('img/plateau/secret.png')}}">
+            <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+                <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
+                <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
+            </div>
         {% endif %}
         {% if moi.actions['DEPOT']==true %}
-            <img style="width:100px" src="{{ asset('img/plateau/depot.png')}}">
+            <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
+                <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
+                <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
+            </div>
         {% endif %}
     </div>
     <div class="col-2" >
@@ -88,7 +99,7 @@
                 <div style="width: 90px; height: 55px"></div>
             {% endif %}
             {% if moi.actions['OFFRE']==false %}
-                <img id="depot"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
+                <img id="offre"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
             {% else %}
                 <div style="width: 90px; height: 55px"></div>
             {% endif %}

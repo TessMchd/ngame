@@ -325,11 +325,39 @@ class GameController extends AbstractController
                     $round->setUser2HandCards($main);
                 }
                 break;
+
+            case 'depot':
+                $carte1 = $request->request->get('carte1');
+                $carte2=$request->request->get('carte2');
+                if ($joueur === 1) {
+
+                    $actions = $round->getUser1Action(); //un tableau...
+                    $actions['DEPOT'] = [[$carte1,$carte2]]; //je sauvegarde la carte cachée dans mes actions
+                    $round->setUser1Action($actions); //je mets à jour le tableau
+                    $main = $round->getUser1HandCards();
+                    $indexCarte = array_search($carte1, $main); //je récupère l'index de la carte a supprimer dans ma main
+                    unset($main[$indexCarte]); //je supprime la carte de ma main
+                    $indexCarte = array_search($carte2, $main); //je récupère l'index de la carte a supprimer dans ma main
+                    unset($main[$indexCarte]); //je supprime la carte de ma main
+                    $round->setUser1HandCards($main);
+                }
+                if ($joueur === 2) {
+                    $actions = $round->getUser2Action(); //un tableau...
+                    $actions['DEPOT'] = [[$carte1,$carte2]]; //je sauvegarde la carte cachée dans mes actions
+                    $round->setUser2Action($actions); //je mets à jour le tableau
+                    $main = $round->getUser2HandCards();
+                    $indexCarte = array_search($carte1, $main); //je récupère l'index de la carte a supprimer dans ma main
+                    unset($main[$indexCarte]); //je supprime la carte de ma main
+                    $indexCarte = array_search($carte2, $main); //je récupère l'index de la carte a supprimer dans ma main
+                    unset($main[$indexCarte]); //je supprime la carte de ma main
+                    $round->setUser2HandCards($main);
+                }
+                break;
         }
 
         $entityManager->flush();
+        return $this->json([true,$action]);
 
-        return $this->json(true);
     }
 
     /**
