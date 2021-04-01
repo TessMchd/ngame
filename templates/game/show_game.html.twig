@@ -99,7 +99,7 @@
                 success: function (carte) {
                     console.log('pioche :', carte);
                     if (carte != true){
-                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../img/card/" + carte[1] + "\" style=\"width:80px\"/><input type='checkbox' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
+                    document.getElementById("mes_cartes").innerHTML += "<img id='new_card' src=\"../../GoldenRumMutinerie/img/card/" + carte[1] + "\" style=\"width:80px\"/><input type='checkbox' value=" + carte[0] + " style='display: none' class='choixSecret' name='carte_secret' >";
                     $('#new_card').hide()
                     $('#new_card').fadeIn(1000)
                 }
