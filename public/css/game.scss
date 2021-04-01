@@ -1,0 +1,63 @@
+@import "_general.scss";
+$gris : #cfcfcf;
+
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#content-game{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("../img/fond/hublot1.jpg");
+  background-size: cover;
+  background-position: center;
+  .left-content{
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: rgba(34, 56, 68, 0.78);
+    width: 40%;
+    height: 100%;
+    transition: all 0.5s ease;
+    position: absolute;
+    left: -50%;
+    top: 0;
+    &:nth-child(1){
+      left: 0;
+      top: 0;
+    }
+  }
+  #div1{
+    #div1-liens{
+      display: flex;
+      flex-direction: column;
+      a{
+        background-color: $gris;
+      }
+    }
+  }
+}
+.titre-left{
+  position: relative;
+  height: 100px;
+  margin-top: 5%;
+  h2{
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    z-index: 1;
+    color: black;
+    font-family: $holidays;
+    font-size: 2.3em;
+    transform: rotate(2deg);
+  }
+  img{
+    position: absolute;
+    width: 80%;
+  }
+}
