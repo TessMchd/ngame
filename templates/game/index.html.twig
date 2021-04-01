@@ -20,7 +20,7 @@
 <div id="content-game">
     <div class="left-content" id="div1">
         <div class="titre-left">
-            <h2>Nouvelle Partie</h2>
+            <h2>Plateau de départ</h2>
             <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
         </div>
         <div id="div1-liens">
@@ -37,22 +37,27 @@
 
     <div class="left-content" id="div2">
 
-        <h1>Choix du joueur</h1>
+        <div class="titre-left">
+            <h2>Nouvelle Partie</h2>
+            <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
+        </div>
 
         <div id="choix_joueur">
             <form action="{{ path('create_game') }}" method="post">
+                <div id="joueurs-scroll">
                         {% for user in users|filter(user => user.id != app.user.id) %}
-                            <div>
-                            <label for="{{ user.id }}">
-                                <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
-                                <div>
-                                    {{ user.pseudo}}
-                                    <p>Rang {{  user.stats.rang}}</p>
-                                </div>
-                            </label>
-                            <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                            <div class="choix-joueur">
+                                <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                                <label for="{{ user.id }}">
+                                    <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                                    <div>
+                                        <p>{{ user.pseudo}}</p>
+                                        <p>Rang {{  user.stats.rang}}</p>
+                                    </div>
+                                </label>
                             </div>
                         {% endfor %}
+                </div>
                 <button type="submit">Commencer la partie</button>
             </form>
         </div>
