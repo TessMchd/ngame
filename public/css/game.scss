@@ -1,11 +1,12 @@
 @import "_general.scss";
-$gris : #cfcfcf;
+$gris : #f6f6f6;
 
 body{
   margin: 0;
   padding: 0;
   height: 100%;
   box-sizing: border-box;
+  font-family: $century;
 }
 
 #content-game{
@@ -20,24 +21,68 @@ body{
   .left-content{
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-    background-color: rgba(34, 56, 68, 0.78);
-    width: 40%;
+    background-color: rgba(57, 84, 98, 0.77);
+    width: 35%;
     height: 100%;
     transition: all 0.5s ease;
     position: absolute;
     left: -50%;
     top: 0;
-    &:nth-child(1){
-      left: 0;
-      top: 0;
-    }
   }
   #div1{
+    left: -50%;
+    top: 0;
     #div1-liens{
       display: flex;
       flex-direction: column;
+      margin-top: 10%;
       a{
         background-color: $gris;
+        margin: 3% 0;
+        padding: 2% 0 2% 6%;
+        width: 70%;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        transition: all 0.3s ease;
+        &:hover{
+          cursor: pointer;
+          background-color: $bleu-tres-fonce;
+          color: $gris;
+        }
+      }
+    }
+  }
+
+  #div2{
+    left: 0; // à retirer
+    z-index: 1; // à retirer
+
+    #choix_joueur {
+      margin-top: 10%;
+      #joueurs-scroll {
+        height: 50%;
+        overflow-y: scroll;
+
+        .choix-joueur{
+          color: white;
+          display: flex;
+          align-items: center;
+          margin: 4%;
+          label{
+            display: flex;
+            align-items: flex-end;
+            margin-left: 3%;
+            width: 100%;
+            img{
+              width: 50px;
+              border-radius: 10px;
+              margin-right: 2%;
+            }
+            p{
+              margin: 0;
+            }
+          }
+        }
       }
     }
   }
@@ -45,19 +90,42 @@ body{
 .titre-left{
   position: relative;
   height: 100px;
-  margin-top: 5%;
+  margin: 5% 0;
   h2{
     position: absolute;
-    top: 10px;
-    left: 40px;
+    top: 23px;
+    left: 20%;
     z-index: 1;
     color: black;
     font-family: $holidays;
-    font-size: 2.3em;
-    transform: rotate(2deg);
+    font-size: 2.9em;
+    transform: rotate(-1deg);
   }
   img{
     position: absolute;
-    width: 80%;
+    width: 142%;
+  }
+}
+
+.return_link{
+  position: relative;
+  p{
+    position: absolute;
+    top: 78px;
+    left: 95px;
+    font-size: 1.7em;
+    z-index: 1;
+    font-family: $holidays;
+    transform: rotate(4deg);
+    transition: all 0.3s ease;
+    &:hover{
+      transform: rotate(354deg);
+      color: $bleu-tres-fonce;
+    }
+  }
+  img{
+    position: absolute;
+    left: -50px;
+    top: 71px;
   }
 }
