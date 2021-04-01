@@ -1,29 +1,131 @@
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-    background-color: #CECECE;
+/*----------------------------- Colors ----------------------------*/
+/*----------------------------Fonts----------------------------*/
+@font-face {
+  font-family: "Century Gothic";
+  src: local("GOTHIC"), local("GOTHIC"), url(../fonts/GOTHIC.TTF);
 }
-#div1{
-    background-color: white;
-    width: 45%;
-    height: 100vh;
-    top:0 !important;
-    position: absolute;left: 0; top: 50px;
-    transition: all 0.5s ease;
+@font-face {
+  font-family: "Big Holidays";
+  src: local("Big_Holidays"), local("Big_Holidays"), url(../fonts/Big_Holidays.otf);
 }
-.bounce_div{
-    background-color: white;
-    width: 45%;
-    height: 100vh;
-    top:0 !important;
-    position: absolute;left: -50%; top: 50px;
-    transition: all 0.5s ease;
+@font-face {
+  font-family: "Josefin Sans";
+  src: local("JosefinSans"), local("JosefinSans"), url(../fonts/JosefinSans-Regular.ttf);
+}
+/*--------------------- General ---------------*/
+ul {
+  margin: 0;
+  padding: 0;
 }
 
-#parties{
-    height: 70%;
-    width: 80%;
-    overflow-y: auto;
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
+h2 {
+  color: #C24C4C;
+  font-family: "Josefin Sans";
+}
+
+h3 {
+  font-family: "Josefin Sans";
+}
+
+p {
+  font-family: "Century Gothic";
+}
+
+.justify {
+  text-align: justify;
+}
+
+.btn-primary {
+  background-color: #395462;
+  font-family: "Big Holidays";
+  text-decoration: none;
+  padding: 1% 3% 1% 3%;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-size: 1.5em;
+}
+.btn-primary:hover {
+  background-color: #223844;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.jaune {
+  color: #F9B000;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#content-game {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("../img/fond/hublot1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+#content-game .left-content {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  background-color: rgba(34, 56, 68, 0.78);
+  width: 40%;
+  height: 100%;
+  transition: all 0.5s ease;
+  position: absolute;
+  left: -50%;
+  top: 0;
+}
+#content-game .left-content:nth-child(1) {
+  left: 0;
+  top: 0;
+}
+#content-game #div1 #div1-liens {
+  display: flex;
+  flex-direction: column;
+}
+#content-game #div1 #div1-liens a {
+  background-color: #cfcfcf;
+}
+
+.titre-left {
+  position: relative;
+  height: 100px;
+  margin-top: 5%;
+}
+.titre-left h2 {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  z-index: 1;
+  color: black;
+  font-family: "Big Holidays";
+  font-size: 2.3em;
+  transform: rotate(2deg);
+}
+.titre-left img {
+  position: absolute;
+  width: 80%;
+}
+
+/*# sourceMappingURL=game.css.map */
