@@ -37,7 +37,11 @@
         let boucle
         $(document).ready(function(){
             boucle = setInterval(refreshGame, 3000);
-            console.log(localStorage.getItem('tour'))
+            if(localStorage.getItem('{{game.id}}')==null){
+
+                localStorage.setItem('{{game.id}}', 0);
+            }
+            console.log(localStorage.getItem('{{game.id}}'))
 
         })
 
@@ -49,7 +53,7 @@
                 url: "{{ path('change_player', {game: game.id}) }}",
                 success: function(data) {
                     if (data == true) {
-                        localStorage.setItem('tour', 0);
+                        localStorage.setItem('{{game.id}}', 0);
                         document.getElementById("finDeTour").disabled = true;
                         boucle = setInterval(refreshGame, 3000);
                         document.getElementById("overlay").style.display = "block";
@@ -78,7 +82,7 @@
                              if(statusTxt == "success")
                                     console.log("External content loaded successfully!")
                                     setTimeout(pioche(),9000)
-                                if(localStorage.getItem('tour')==1){
+                                if(localStorage.getItem('{{game.id}}')==1){
                                  document.getElementById("finDeTour").disabled = false;
                                  }
                              if(statusTxt == "error")
@@ -113,26 +117,30 @@
 
         let action
         $(document).on('click', '#secret', function(){
-            console.log('secret')
-            action = 'secret' //mémorise l'action en cours
-            $('.choixSecret').show()
-            $('#valider').show()
-            $("input:checkbox").click(function() {
-                var bol = $("input:checkbox:checked").length >= 1;
-                $("input:checkbox").not(":checked").attr("disabled",bol);
-            });
+            if(localStorage.getItem('{{game.id}}')==0) {
+                console.log('secret')
+                action = 'secret' //mémorise l'action en cours
+                $('.choixSecret').show()
+                $('#valider').show()
+                $("input:checkbox").click(function () {
+                    var bol = $("input:checkbox:checked").length >= 1;
+                    $("input:checkbox").not(":checked").attr("disabled", bol);
+                });
+            }
         })
 
         $(document).on('click', '#depot', function(){
-            console.log('depot')
-            $("#depot_carte").addClass("fadeInDown")
-            action = 'depot' //mémorise l'action en cours
-            $('.choixSecret').show()
-            $('#valider').show()
-            $("input:checkbox").click(function() {
-                var bol = $("input:checkbox:checked").length >= 2;
-                $("input:checkbox").not(":checked").attr("disabled",bol);
-            });
+            if(localStorage.getItem('{{game.id}}')==0) {
+                console.log('depot')
+                $("#depot_carte").addClass("fadeInDown")
+                action = 'depot' //mémorise l'action en cours
+                $('.choixSecret').show()
+                $('#valider').show()
+                $("input:checkbox").click(function () {
+                    var bol = $("input:checkbox:checked").length >= 2;
+                    $("input:checkbox").not(":checked").attr("disabled", bol);
+                });
+            }
         })
 
         $(document).on('click', '#valider', function() {
@@ -168,7 +176,7 @@
                     break;
             }
 
-            if ($("input:checkbox:checked").length == carte_number){
+            if ($("input:checkbox:checked").length == carte_number ){
 
                 $.ajax({
                     url: "{{ path('action_game', {game: game.id}) }}",
@@ -187,7 +195,7 @@
                                 if (statusTxt == "error")
                                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
                             });
-                            localStorage.setItem('tour', 1);
+                            localStorage.setItem('{{game.id}}', 1);
                         }
                     },
                     error: function () {

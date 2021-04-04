@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div id="friends_content">
+
+    <div id="friends">
+        <h1>Mes amis </h1>
+        {% if user.amis!="" %}
+            {% for user in user.amis%}
+                <div class="user_info">
+                    <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
+                    <div>
+                        <p>{{ invit_users[user].pseudo}}</p>
+                        <p>Rang {{  invit_users[user].stats.rang}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            Vous n'avez pas d'amis
+        {% endif %}
+    </div>
+
+    <div id="inviter">
+        <h1>Envoyer une invitation</h1>
+        <input type="text" id="search_friend" placeholder="Chercher un joueur">
+        <button id="search_button">Trouver</button>
+        <button id="retour_liste" style="display:none"> Retour</button>
+        <div id="search">
+        </div>
+        <div id="joueurs">
+        {% for user in users|filter(user => user.id != app.user.id) %}
+            <div class="user_info">
+                <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                <div>
+                    <p>{{ user.pseudo}}</p>
+                    <p>Rang {{  user.stats.rang}}</p>
+                </div>
+                <button class="send"  value="{{ user.id }}">Ajouter</button>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div id="Invitations">
+        <h1>Invitations</h1>
+            {% if user.invitations!="" %}
+                {% for user in invitations %}
+                    <div class="user_info">
+                        <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
+                        <div>
+                            <p>{{ invit_users[user].pseudo}}</p>
+                            <p>Rang {{  invit_users[user].stats.rang}}</p>
+                        </div>
+                        <button class="accept"  value="{{ user }}">Accepter</button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Vous n'avez pas d'invitations
+            {% endif %}
+
+
+        </div>
+    </div>
+
+    <script>
+
+        $('.send').click(function(){
+            var friend = $(this).val();
+            $.ajax({
+                url: "{{ path('friend_request') }}",
+                data: {friend: friend},
+                method: 'POST',
+                success: function (data) {
+                    console.log(friend)
+                },
+                error: function () {
+
+                }
+            })
+        });
+        $('.accept').click(function(){
+            var friend = $(this).val();
+            $.ajax({
+                url: "{{ path('friend_accept') }}",
+                data: {friend: friend},
+                method: 'POST',
+                success: function (data) {
+                    document.location.reload();
+                },
+                error: function () {
+
+                }
+            })
+        });
+        $( "#search_friend" ).keydown(function( event ) {
+            if (event.which == 13 && $('#search_friend').val()!=0) {
+                console.log('chercher')
+                searchFriend($('#search_friend').val())
+            }
+        })
+
+        $('#search_button').click(function () {
+            if($('search_friend').val()!=0){
+                searchFriend($('#search_friend').val())
+            }
+        })
+
+        $('#retour_liste').click(function () {
+            document.getElementById('search').innerHTML=""
+            $('#joueurs').show();
+        })
+
+        function searchFriend(pseudo){
+            $.ajax({
+                url: "{{ path('search_friend') }}",
+                data: {pseudo: pseudo},
+                method: 'POST',
+                success: function (data) {
+                    $('#joueurs').hide()
+                    $('#retour_liste').show()
+                    document.getElementById('search').innerHTML=""
+                    for(var i= 0; i < data.length; i++) {
+                        document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
+                            "                <img src=\"../../img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
+                            "                <div>\n" +
+                            "                    <p>" + data[i].pseudo + "</p>\n" +
+                            "                    <p>Rang " + data[i].rang + "</p>\n" +
+                            "                </div>\n" +
+                            "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
+                            "            </div>"
+                    }
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+    </script>
+{% endblock %}
+
+

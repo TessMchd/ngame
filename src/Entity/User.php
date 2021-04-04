@@ -94,6 +94,16 @@ class User implements UserInterface
     private $stats;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $amis = [];
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $invitations = [];
+
+    /**
      * @param mixed $stats
      */
     public function setStats($stats): void
@@ -316,5 +326,29 @@ class User implements UserInterface
 
     public function getStatsId(){
         return $this->getStats()->getId();
+    }
+
+    public function getAmis(): ?array
+    {
+        return $this->amis;
+    }
+
+    public function setAmis(?array $amis): self
+    {
+        $this->amis = $amis;
+
+        return $this;
+    }
+
+    public function getInvitations(): ?array
+    {
+        return $this->invitations;
+    }
+
+    public function setInvitations(?array $invitations): self
+    {
+        $this->invitations = $invitations;
+
+        return $this;
     }
 }
