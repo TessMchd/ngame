@@ -61,9 +61,13 @@ class UserController extends AbstractController
         if ($invitations==""){
             $invitations=array();
         }
-        array_push($invitations,$user->getId());
-        $friend->setInvitations($invitations);
-        $entityManager->flush();
+        if (in_array($user->getId(),$invitations)){
+            return $this->json(false);
+        }else{
+            array_push($invitations,$user->getId());
+            $friend->setInvitations($invitations);
+            $entityManager->flush();
+        }
         return $this->json(true);
     }
 
@@ -81,7 +85,11 @@ class UserController extends AbstractController
         foreach ($friends as $friend){
             array_push($array,['id'=>$friend->getId(),'pseudo'=>$friend->getPseudo(),'avatar'=>$friend->getAvatar(),'rang'=>$friend->getStats()->getRang()]);
         }
-        return $this->json($array);
+        if($array!=[]) {
+            return $this->json($array);
+        }else{
+            return $this->json(false);
+        }
 
     }
 
