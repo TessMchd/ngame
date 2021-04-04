@@ -37,7 +37,15 @@
                     <p>{{ user.pseudo}}</p>
                     <p>Rang {{  user.stats.rang}}</p>
                 </div>
-                <button class="send"  value="{{ user.id }}">Ajouter</button>
+                {% if app.user.id in user.amis %}
+                    <p>Amis</p>
+                {% elseif app.user.id in user.invitations%}
+                    <p>Invitation envoyée</p>
+                {% elseif user.id in app.user.invitations %}
+                    <p>Vous a ajouté</p>
+                {% else %}
+                    <button class="send"  value="{{ user.id }}">Ajouter</button>
+                {% endif %}
             </div>
         {% endfor %}
         </div>
@@ -74,6 +82,7 @@
                 method: 'POST',
                 success: function (data) {
                     console.log(friend)
+                    document.location.reload();
                 },
                 error: function () {
 
@@ -118,18 +127,20 @@
                 data: {pseudo: pseudo},
                 method: 'POST',
                 success: function (data) {
-                    $('#joueurs').hide()
-                    $('#retour_liste').show()
-                    document.getElementById('search').innerHTML=""
-                    for(var i= 0; i < data.length; i++) {
-                        document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
-                            "                <img src=\"../../img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
-                            "                <div>\n" +
-                            "                    <p>" + data[i].pseudo + "</p>\n" +
-                            "                    <p>Rang " + data[i].rang + "</p>\n" +
-                            "                </div>\n" +
-                            "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
-                            "            </div>"
+                    if (data!=false) {
+                        $('#joueurs').hide()
+                        $('#retour_liste').show()
+                        document.getElementById('search').innerHTML = ""
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
+                                "                <img src=\"../../img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
+                                "                <div>\n" +
+                                "                    <p>" + data[i].pseudo + "</p>\n" +
+                                "                    <p>Rang " + data[i].rang + "</p>\n" +
+                                "                </div>\n" +
+                                "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
+                                "            </div>"
+                        }
                     }
                 },
                 error: function () {
