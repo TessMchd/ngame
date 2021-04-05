@@ -1,5 +1,11 @@
 <div class="row">
     <div class="col-6">
+        {% if player == null  %}
+            <p>En attente d'un adversaire</p>
+        {% else %}
+            <img width="100px" src="{{ asset('img/avatar/'~player.avatar) }}">
+            <p>{{ player.pseudo }}</p>
+        {% endif %}
         {% for card in adversaire.handCards %}
             <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
         {% endfor %}
@@ -64,6 +70,8 @@
 </div>
 <div class="row">
     <div class="col-6" id="mes_cartes">
+        <img width="100px" src="{{ asset('img/avatar/'~app.user.avatar) }}">
+        <p>{{ app.user.pseudo }}</p>
         {% for card in moi.handCards %}
             <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
             <input type="checkbox"  name="carte_secret"  value="{{ card }}"
@@ -111,6 +119,7 @@
         <br>
         <button id="valider" style="display: none">Valider action</button>
         <button id="finDeTour" disabled>Fin de tour</button>
+
     </div>
 
 

@@ -14,6 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
     <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+
 {% endblock %}
 
 {% block body %}
@@ -41,30 +44,82 @@
             <h2>Nouvelle Partie</h2>
             <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
         </div>
-
+        <br>
         <div id="choix_joueur">
-            <form action="{{ path('create_game') }}" method="post">
-                <div id="joueurs-scroll">
-                        {% for user in users|filter(user => user.id != app.user.id) %}
-                            <div class="choix-joueur">
-                                <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
-                                <label for="{{ user.id }}">
-                                    <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
-                                    <div>
-                                        <p>{{ user.pseudo}}</p>
-                                        <p>Rang {{  user.stats.rang}}</p>
+            <div class="container">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="joueurs-tab" data-bs-toggle="tab" data-bs-target="#joueurs" type="button" role="tab" aria-controls="joueurs" aria-selected="true">Joueurs</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="amis-tab" data-bs-toggle="tab" data-bs-target="#amis" type="button" role="tab" aria-controls="amis" aria-selected="false">Amis</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ouvertes-tab" data-bs-toggle="tab" data-bs-target="#ouvertes" type="button" role="tab" aria-controls="ouvertes" aria-selected="false">En attente</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="joueurs" role="tabpanel" aria-labelledby="home-tab">
+                        <form action="{{ path('create_game') }}" method="post">
+                            <div id="joueurs-scroll">
+                                {% for user in users|filter(user => user.id != app.user.id) %}
+                                    <div class="choix-joueur">
+                                        <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                                        <label for="{{ user.id }}">
+                                            <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                                            <div>
+                                                <p>{{ user.pseudo}}</p>
+                                                <p>Rang {{  user.stats.rang}}</p>
+                                            </div>
+                                        </label>
                                     </div>
-                                </label>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                            <button type="submit">Commencer la partie</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="amis" role="tabpanel" aria-labelledby="profile-tab">
+                        <form action="{{ path('create_game') }}" method="post">
+                            <div id="joueurs-scroll">
+                                {% for user in app.user.amis %}
+                                    <div class="choix-joueur">
+                                        <input type="radio" id="{{ tusers[user].id }}" name="user2" value="{{ tusers[user].id }}">
+                                        <label for="{{ tusers[user].id }}">
+                                            <img src="{{ asset('img/avatar/'~tusers[user].avatar)}}" width="80px">
+                                            <div>
+                                                <p>{{ tusers[user].pseudo}}</p>
+                                                <p>Rang {{  tusers[user].stats.rang}}</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <button type="submit">Commencer la partie</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="ouvertes" role="tabpanel" aria-labelledby="contact-tab">
+                        <div id="joueurs-scroll">
+                            {% for game in ouvertes %}
+                                <div class="partie-ouverte">
+
+                                    <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                                    <div>
+                                        <p>{{ game.user1.pseudo}}</p>
+                                        <p>Rang {{  game.user1.stats.rang}}</p>
+                                    </div>
+                                    <a href="{{ path('join_game',{game: game.id}) }}">Rejoindre</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <button type="submit">Commencer la partie</button>
-            </form>
         </div>
         <a class="return_link" v-on:click = "nouvelleRetour">
             <p>Retour</p>
             <img src="{{ asset('img/ban_gauche.png')}}" alt="">
         </a>
+    </div>
     </div>
 
     <div class="left-content" id="div3">
@@ -161,6 +216,7 @@
 
 
     <script>
+
         var div1 = new Vue({
             el: '#div1',
             data: {

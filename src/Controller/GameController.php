@@ -27,14 +27,22 @@ class GameController extends AbstractController
         $user = $this->getUser();
         $games=[];
         $revanches=[];
+        $ouvertes=[];
+        $tUsers = [];
+        foreach ($users as $u) {
+            $tUsers[$u->getId()] = $u;
+        }
         $en_cours = $gameRepostory->findby(array('user1'=>$user->getId()));
         foreach ($en_cours as $game){
-            if($game->getEnded()=="") {
-                array_push($games, $game);
-            }else{
-                array_push($revanches,$game);
+            if ($game->getUser2() != null) {
+                if ($game->getEnded() == "") {
+                    array_push($games, $game);
+                } else {
+                    array_push($revanches, $game);
+                }
             }
         }
+
         $en_cours = $gameRepostory->findby(array('user2'=>$user->getId()));
         foreach ($en_cours as $game){
             if($game->getEnded()=="") {
@@ -45,10 +53,18 @@ class GameController extends AbstractController
             }
         }
 
+        $ouv = $gameRepostory->findOuvertes($user->getId());
+        foreach ($ouv as $ov){
+            array_push($ouvertes, $ov);
+        }
+
+
         return $this->render('game/index.html.twig', [
             'users' => $users,
             'en_cours'=> $games,
-            'revanches'=> $revanches
+            'revanches'=> $revanches,
+            'ouvertes'=> $ouvertes,
+            'tusers'=> $tUsers
 
         ]);
     }
@@ -63,9 +79,13 @@ class GameController extends AbstractController
         CardRepository $cardRepository
     ): Response
     {
-        if ($request->request->get('user2') != "") {
+
             $user1 = $this->getUser();
+        if ($request->request->get('user2') != "") {
             $user2 = $userRepository->find($request->request->get('user2'));
+        }else{
+            $user2=null;
+        }
 
             if ($user1 !== $user2) {
                 $game = new Game();
@@ -141,9 +161,6 @@ class GameController extends AbstractController
             } else {
                 return $this->redirectToRoute('new_game');
             }
-        }else{
-            return $this->redirectToRoute('new_game');
-        }
     }
 
     /**
@@ -267,6 +284,7 @@ class GameController extends AbstractController
             $adversaire['handCards'] = $game->getSets()[0]->getUser2HandCards();
             $adversaire['actions'] = $game->getSets()[0]->getUser2Action();
             $adversaire['board'] = $game->getSets()[0]->getUser2BoardCards();
+            $player=$game->getUser2();
         } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
             $moi['handCards'] = $game->getSets()[0]->getUser2HandCards();
             $moi['actions'] = $game->getSets()[0]->getUser2Action();
@@ -274,6 +292,7 @@ class GameController extends AbstractController
             $adversaire['handCards'] = $game->getSets()[0]->getUser1HandCards();
             $adversaire['actions'] = $game->getSets()[0]->getUser1Action();
             $adversaire['board'] = $game->getSets()[0]->getUser1BoardCards();
+            $player=$game->getUser1();
         } else {
             return $this->redirectToRoute('user_profil');
         }
@@ -283,7 +302,8 @@ class GameController extends AbstractController
             'set' => $game->getSets()[0],
             'cards' => $tCards,
             'moi' => $moi,
-            'adversaire' => $adversaire
+            'adversaire' => $adversaire,
+            'player' => $player
         ]);
     }
 
@@ -376,6 +396,25 @@ class GameController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('new_game');
+    }
+
+    /**
+     * @Route("/join-game/{game}", name="join_game")
+     */
+    public function joinGame(
+        EntityManagerInterface $entityManager,
+        Game $game
+    ): Response{
+        if($game->getUser2()== null ){
+            $user = $this->getUser();
+            $game->setUser2($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('show_game', [
+                'game' => $game->getId()
+            ]);
+        }else{
+            return $this->redirectToRoute('new_game');
+        }
     }
 }
 
