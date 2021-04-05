@@ -43,6 +43,8 @@
             }
             console.log(localStorage.getItem('{{game.id}}'))
 
+
+
         })
 
 
@@ -77,7 +79,9 @@
                     } else {
                         clearInterval(boucle)
                         $('#message').html('A vous de jouer')
-                        document.getElementById("overlay").style.display = "none";
+                        {% if game.user2 != null %}
+                            document.getElementById("overlay").style.display = "none";
+                        {% endif %}
                          $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}",function(responseTxt, statusTxt, xhr){
                              if(statusTxt == "success")
                                     console.log("External content loaded successfully!")
