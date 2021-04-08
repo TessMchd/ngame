@@ -20,7 +20,7 @@
 <div id="content-game">
     <div class="left-content" id="div1">
         <div class="titre-left">
-            <h2>Nouvelle Partie</h2>
+            <h2>Plateau de départ</h2>
             <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
         </div>
         <div id="div1-liens">
@@ -37,117 +37,168 @@
 
     <div class="left-content" id="div2">
 
-        <h1>Choix du joueur</h1>
+        <div class="titre-left">
+            <h2>Nouvelle Partie</h2>
+            <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
+        </div>
 
-        <div id="choix_joueur">
-            <form action="{{ path('create_game') }}" method="post">
+        <div class="choix_joueur">
+            <form class="form_choix_joueur" action="{{ path('create_game') }}" method="post">
+                <div class="joueurs-scroll">
                         {% for user in users|filter(user => user.id != app.user.id) %}
-                            <div>
-                            <label for="{{ user.id }}">
-                                <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
-                                <div>
-                                    {{ user.pseudo}}
-                                    <p>Rang {{  user.stats.rang}}</p>
-                                </div>
-                            </label>
-                            <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                            <div class="choix-joueur">
+                                <input type="radio" id="{{ user.id }}" name="user2" value="{{ user.id }}">
+                                <label for="{{ user.id }}">
+                                    <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                                    <div>
+                                        <p>{{ user.pseudo}}</p>
+                                        <p>Rang {{  user.stats.rang}}</p>
+                                    </div>
+                                </label>
                             </div>
                         {% endfor %}
-                <button type="submit">Commencer la partie</button>
+                </div>
+                <button class="next_link" type="submit">
+                    <p>Commencer la partie</p>
+                    <img src="{{ asset('img/ban_droite.png')}}" alt="">
+                </button>
             </form>
         </div>
-        <button v-on:click = "nouvelleRetour">Retour</button>
+        <a class="return_link" v-on:click = "nouvelleRetour">
+            <p>Retour</p>
+            <img src="{{ asset('img/ban_gauche.png')}}" alt="">
+        </a>
     </div>
 
     <div class="left-content" id="div3">
-        <h1>Reprendre une partie</h1>
-        <div id="parties">
-            {% for game in en_cours %}
-                <div>
-                    <p>Crée le {{ game.created | date("m/d/Y") }} </p>
-                    {% if game.user1.id == app.user.id %}
-                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
-                        <p>{{ game.user2.pseudo }}</p>
-                        <p>Rang {{ game.user2.stats.rang }}</p>
-                    {% else %}
-                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
-                        <p>{{ game.user1.pseudo }}</p>
-                        <p>Rang {{ game.user1.stats.rang }}</p>
-                    {% endif %}
-                    <a href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
-                </div>
-            {% endfor %}
+        <div class="titre-left">
+            <h2 class="titre-left-9">Reprendre une partie</h2>
+            <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
         </div>
-        <button v-on:click = "reprendreRetour">Retour</button>
+        <div class="choix_joueur" >
+            <div class="joueurs-scroll">
+                {% for game in en_cours %}
+                    <div class="choix-joueur-reprendre">
+                        {% if game.user1.id == app.user.id %}
+                            <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                            <div class="reprendre-content">
+                                <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                                <p>{{ game.user2.pseudo }}</p>
+                                <p>Rang {{ game.user2.stats.rang }}</p>
+                                <a class="btn-secondary" href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
+                            </div>
+                        {% else %}
+                            <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                            <div class="reprendre-content">
+                                <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                                <p>{{ game.user1.pseudo }}</p>
+                                <p>Rang {{ game.user1.stats.rang }}</p>
+                                <a class="btn-secondary" href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="return_link" v-on:click = "reprendreRetour">
+            <p>Retour</p>
+            <img src="{{ asset('img/ban_gauche.png')}}" alt="">
+        </a>
     </div>
 
     <div class="left-content" id="div4">
-        <h1>Demander une revanche</h1>
-        <div id="revanches">
-            <form action="{{ path('create_game') }}" method="post">
+        <div class="titre-left">
+            <h2 class="titre-left-9">Demander une revanche</h2>
+            <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
+        </div>
+        <div id="revanches" class="choix_joueur">
+            <form class="form_choix_joueur" action="{{ path('create_game') }}" method="post">
+                <div class="joueurs-scroll">
                 {% for game in revanches %}
 
-                <p>Finie le {{ game.ended| date("m/d/Y") }} </p>
-                {% if game.user2.id == app.user.id %}
-                <div>
-                    <label for="{{ game.user1.id }}">
-                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
-                        <div>
-                            {{ game.user1.pseudo}}
-                            <p>Rang {{  game.user1.stats.rang}}</p>
-                            {% if game.winner.id == app.user.id %}
-                                <p>Gagné</p>
-                            {% else %}
-                                <p>Perdu</p>
-                            {% endif %}
-                        </div>
-                    </label>
-                    <input type="radio" id="{{ game.user1.id }}" name="user2" value="{{ game.user1.id }}">
+                    {% if game.user2.id == app.user.id %}
+                    <div class="choix-joueur">
+                        <input type="radio" id="{{ game.user1.id }}" name="user2" value="{{ game.user1.id }}">
+                        <label for="{{ game.user1.id }}">
+                            <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                            <div>
+                                <p class="fin">Finie le {{ game.ended| date("m/d/Y") }}</p>
+                                <p class="pseudo">{{ game.user1.pseudo}}</p>
+                                <p class="rang">Rang {{  game.user1.stats.rang}}</p>
+                                {% if game.winner.id == app.user.id %}
+                                    <p class="resultat">Gagné</p>
+                                {% else %}
+                                    <p class="resultat">Perdu</p>
+                                {% endif %}
+                            </div>
+                        </label>
+                    </div>
+                    {% else %}
+                    <div class="choix-joueur">
+                        <input type="radio" id="{{ game.user2.id }}" name="user2" value="{{ game.user2.id }}">
+                        <label for="{{ game.user2.id }}">
+                            <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                            <div>
+                                <p class="fin">Finie le {{ game.ended| date("m/d/Y") }}</p>
+                                <p class="pseudo">{{ game.user2.pseudo}}</p>
+                                <p class="rang">Rang {{ game.user2.stats.rang }}</p>
+                                {% if game.winner.id == app.user.id %}
+                                    <p class="resultat">Gagné</p>
+                                {% else %}
+                                    <p class="resultat">Perdu</p>
+                                {% endif %}
+                            </div>
+                        </label>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% else %}
-                <div>
-                    <label for="{{ game.user2.id }}">
-                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
-                        <div>
-                            {{ game.user2.pseudo}}
-                            <p>Rang {{ game.user2.stats.rang }}</p>
-                            {% if game.winner.id == app.user.id %}
-                                <p>Gagné</p>
-                            {% else %}
-                                <p>Perdu</p>
-                            {% endif %}
-                        </div>
-                    </label>
-                    <input type="radio" id="{{ game.user2.id }}" name="user2" value="{{ game.user2.id }}">
-                </div>
-                {% endif %}
-                {% endfor %}
-                <button type="submit">Commencer la partie</button>
+                <button class="next_link" type="submit">
+                    <p>Commencer la partie</p>
+                    <img src="{{ asset('img/ban_droite.png')}}" alt="">
+                </button>
             </form>
         </div>
-        <button v-on:click = "revancheRetour">Retour</button>
+        <a class="return_link" v-on:click = "revancheRetour">
+            <p>Retour</p>
+            <img src="{{ asset('img/ban_gauche.png')}}" alt="">
+        </a>
     </div>
 
     <div class="left-content" id="div5">
-        <h1>Supprimer une partie</h1>
-        <div id="parties">
-            {% for game in en_cours %}
-                <div>
-                    <p>Crée le {{ game.created | date("m/d/Y") }} </p>
-                    {% if game.user1.id == app.user.id %}
-                        <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
-                        <p>{{ game.user2.pseudo }}</p>
-                        <p>Rang {{ game.user2.stats.rang }}</p>
-                    {% else %}
-                        <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
-                        <p>{{ game.user1.pseudo }}</p>
-                        <p>Rang {{ game.user1.stats.rang }}</p>
-                    {% endif %}
-                    <a href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
-                </div>
-            {% endfor %}
+        <div class="titre-left">
+            <h2 class="titre-left-9">Supprimer une partie</h2>
+            <img src="{{ asset('img/banniere_gauche.png')}}" alt="">
         </div>
-        <button v-on:click = "suprRetour">Retour</button>
+        <div id="parties" class="choix_joueur">
+            <div class="joueurs-scroll">
+                {% for game in en_cours %}
+                    <div class="choix-joueur-reprendre">
+                        {% if game.user1.id == app.user.id %}
+                            <img src="{{ asset('img/avatar/'~game.user2.avatar)}}" width="80px">
+                            <div class="reprendre-content">
+                                <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                                <p>{{ game.user2.pseudo }}</p>
+                                <p>Rang {{ game.user2.stats.rang }}</p>
+                                <a class="btn-secondary" href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
+                            </div>
+                        {% else %}
+                            <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
+                            <div class="reprendre-content">
+                                <p>Crée le {{ game.created | date("m/d/Y") }} </p>
+                                <p>{{ game.user1.pseudo }}</p>
+                                <p>Rang {{ game.user1.stats.rang }}</p>
+                                <a class="btn-secondary" href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a class="return_link" v-on:click = "suprRetour">
+            <p>Retour</p>
+            <img src="{{ asset('img/ban_gauche.png')}}" alt="">
+        </a>
     </div>
 
 
