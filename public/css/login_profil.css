@@ -173,14 +173,18 @@ a {
   margin-left: 15%;
 }
 #form_connexion #button_connexion {
-  background-color: #FCE798;
+  background-color: #BF4B4B;
   width: 347px;
   height: 65px;
   margin: 60px 385px;
   border:none;
   font-family: "Big Holidays";
-  color: black;
+  color: white;
 }
+#form_connexion #button_connexion:hover{
+  background-color: #9b3a3a;
+}
+
 #form_connexion .lien_inscription {
   color: white;
   font-family: "Josefin Sans", sans-serif;
