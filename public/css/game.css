@@ -130,7 +130,7 @@ body {
 #content-game .mt-0 {
   margin-top: 0;
 }
-@media (min-width: 1200px) {
+@media (min-width: 1450px) {
   #content-game .mt-0 {
     margin-top: 10% !important;
   }
@@ -141,13 +141,6 @@ body {
 #content-game .choix_joueur .joueurs-scroll {
   height: 50%;
   overflow-y: scroll;
-}
-#content-game .choix_joueur .joueurs-scroll::-webkit-scrollbar {
-  display: none;
-}
-#content-game .choix_joueur .joueurs-scroll {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
 #content-game .choix_joueur .joueurs-scroll .choix-joueur {
   color: white;
@@ -161,6 +154,15 @@ body {
   margin-left: 4%;
   width: 100%;
 }
+
+#content-game .choix_joueur .joueurs-scroll::-webkit-scrollbar {
+  display: none;
+}
+#content-game .choix_joueur .joueurs-scroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 #content-game .choix_joueur .joueurs-scroll .choix-joueur label img {
   width: 60px;
   border-radius: 10px;
