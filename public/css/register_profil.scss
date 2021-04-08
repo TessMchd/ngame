@@ -1,0 +1,103 @@
+@import "general"; //importation des variables dans le general
+
+.form_inscription{
+  margin: 40px 5%;
+  padding-top: 40px;
+  background-color: $bleu-moyen;
+  width: 1127px;
+  height: 850px;
+  border-radius: 37px;
+  background-image: url("../img/security_icon/boussole.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+
+  .img_logo_inscription{
+    margin-left: 440px;
+  }
+
+  .inscription_champ {
+    display: grid;
+    grid-template-columns: 500px 500px;
+    grid-template-rows: 50px 50px;
+    gap: 10px;
+    margin-left: 5%;
+    margin-top: 20px;
+
+    .prenom_inscription {
+      border-radius: 10px;
+      border: none;
+    }
+    .nom_inscription{
+      @extend .prenom_inscription
+    }
+    .email_inscription{
+      @extend .prenom_inscription
+    }
+    .pseudo_inscription{
+      @extend .prenom_inscription
+    }
+
+  }
+
+  .anniversaire_inscription{
+    padding: 5px 5px 5px 5px;
+    border-radius: 10px;
+    font-family: Roboto,sans-serif;
+    background-color: white;
+    width: auto;
+    height: 30px;
+    margin-left: 5%;
+    margin-top: 10px;
+  }
+
+  .captcha{
+
+  }
+
+  .captcha_image{
+
+    margin-left: 5%;
+  }
+
+  #user_registration_form_captcha{
+    height: 60px;
+    margin-top: 15px;
+    margin-left: 5%;
+  }
+
+  .mot_de_passe{
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 1000px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+
+  }
+
+  .checkbox_condition{
+    color: white;
+    margin-left: 5%;
+    a{
+      text-decoration: underline;
+      &:hover{
+        color: black;
+      }
+    }
+  }
+
+  #button_inscription{
+    background-color: $jaune-connexion;
+    border-radius: 25px;
+    width: 347px;
+    height: 65px;
+    margin:60px 0px 20px 385px;
+    font-family: "Josefin Sans",sans-serif;
+    color: black;
+  }
+}
+.lien_login{
+  color: white;
+  text-decoration: underline;
+  margin-left: 44%;
+}
