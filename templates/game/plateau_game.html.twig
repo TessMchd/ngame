@@ -109,9 +109,9 @@
         </div>
 
         <div class="col-2">
-            <div class="actions" style="display: flex;">
+            <div class="actions" >
                 Actions de l'adversaire
-                <div style="height:55px">
+                <div class="d-inline-flex">
                     {% if adversaire.actions['SECRET']==false %}
                         <img id=""  width="90px"  src="{{ asset('img/plateau/action2_1.png') }}">
                     {% else %}
@@ -123,7 +123,7 @@
                         <div style="width: 90px; height: 55px"></div>
                     {% endif %}
                 </div>
-                <div>
+                <div class="d-inline-flex ">
                     {% if adversaire.actions['OFFRE']==false %}
                         <img id="" width=90px" src="{{ asset('img/plateau/action2_3.png') }}">
                     {% else %}
@@ -254,8 +254,8 @@
         </div>
         <div class="col-2" >
             Mes Actions
-            <div class="actions" style="">
-                <div class="flex-md-row">
+            <div class="actions" >
+                <div class="d-inline-flex ">
                 {% if moi.actions['SECRET']==false %}
                     <img id="secret"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_1.png') }}">
                 {% else %}
@@ -267,15 +267,15 @@
                     <div style="width: 90px; height: 55px"></div>
                 {% endif %}
                 </div>
-                <div class="flex-md-row flex-wrap">
-                {% if moi.actions['OFFRE']==false %}
-                    <img  id="offre"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
-                {% else %}
-                    <div style="width: 90px; height: 55px"></div>
-                {% endif %}
-                {% if moi.actions['ECHANGE']==false %}
-                    <img id="echange"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_4.png') }}">
-                {% endif %}
+                <div class="d-inline-flex " >
+                    {% if moi.actions['OFFRE']==false %}
+                        <img  id="offre"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
+                    {% else %}
+                        <div style="width: 90px; height: 55px;margin:0 !important; "></div>
+                    {% endif %}
+                    {% if moi.actions['ECHANGE']==false %}
+                        <img id="echange"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_4.png') }}">
+                    {% endif %}
                 </div>
             </div>
 
