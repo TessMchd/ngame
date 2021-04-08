@@ -1,0 +1,279 @@
+/*----------------------------- Colors ----------------------------*/
+/*----------------------------Fonts----------------------------*/
+@font-face {
+  font-family: "Century Gothic";
+  src: local("GOTHIC"), local("GOTHIC"), url(../fonts/GOTHIC.TTF);
+}
+@font-face {
+  font-family: "Big Holidays";
+  src: local("Big_Holidays"), local("Big_Holidays"), url(../fonts/Big_Holidays.otf);
+}
+@font-face {
+  font-family: "Josefin Sans";
+  src: local("JosefinSans"), local("JosefinSans"), url(../fonts/JosefinSans-Regular.ttf);
+}
+/*--------------------- General ---------------*/
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color: #C24C4C;
+  font-family: "Josefin Sans";
+}
+
+h3 {
+  font-family: "Josefin Sans";
+}
+
+p {
+  font-family: "Century Gothic";
+}
+
+.justify {
+  text-align: justify;
+}
+
+.btn-primary, .btn-secondary {
+  background-color: #395462;
+  font-family: "Big Holidays";
+  text-decoration: none;
+  padding: 1% 3% 1% 3%;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-size: 1.5em;
+}
+.btn-primary:hover, .btn-secondary:hover {
+  background-color: #223844;
+}
+
+.btn-secondary {
+  background-color: #C24C4C;
+}
+.btn-secondary:hover {
+  background-color: #7d2b2b;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.jaune {
+  color: #F9B000;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Century Gothic";
+}
+
+#content-game {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("../img/fond/hublot1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+#content-game .left-content {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  background-color: rgba(57, 84, 98, 0.77);
+  width: 35%;
+  height: 100%;
+  transition: all 0.5s ease;
+  position: absolute;
+  left: -50%;
+  top: 0;
+}
+#content-game #div1 {
+  left: 0;
+  top: 0;
+}
+#content-game #div1 #div1-liens {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+#content-game #div1 #div1-liens a {
+  background-color: #f6f6f6;
+  margin: 3% 0;
+  padding: 2% 0 2% 6%;
+  width: 70%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: all 0.3s ease;
+}
+#content-game #div1 #div1-liens a:hover {
+  cursor: pointer;
+  background-color: #223844;
+  color: #f6f6f6;
+}
+#content-game .choix_joueur {
+  margin-top: 10%;
+}
+#content-game .choix_joueur .joueurs-scroll {
+  height: 50%;
+  overflow-y: scroll;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur {
+  color: white;
+  display: flex;
+  align-items: flex-end;
+  margin: 4%;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur label {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 4%;
+  width: 100%;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur label img {
+  width: 60px;
+  border-radius: 10px;
+  margin-right: 2%;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur label p {
+  margin: 0;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur label .fin, #content-game .choix_joueur .joueurs-scroll .choix-joueur label .rang, #content-game .choix_joueur .joueurs-scroll .choix-joueur label .resultat {
+  font-size: 0.9em;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre {
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  width: 100%;
+  padding: 3% 4%;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre img {
+  height: 50%;
+  border-radius: 10px;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre .reprendre-content {
+  width: 50%;
+  margin-left: 4%;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre .reprendre-content p {
+  margin: 0;
+}
+#content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre .reprendre-content a {
+  font-size: 1.2em;
+  padding: 2% 2.5%;
+  margin-top: 2%;
+}
+#content-game .form_choix_joueur {
+  width: 100%;
+}
+#content-game .form_choix_joueur button.next_link {
+  width: 100%;
+  z-index: 1;
+}
+#content-game .form_choix_joueur button.next_link img {
+  right: -7.5%;
+}
+#content-game .form_choix_joueur button.next_link p {
+  right: -1%;
+}
+@media (min-width: 1456px) {
+  #content-game .form_choix_joueur button.next_link img {
+    right: -6%;
+  }
+}
+@media (min-width: 1716px) {
+  #content-game .form_choix_joueur button.next_link img {
+    right: -5%;
+  }
+}
+
+.titre-left {
+  position: relative;
+  height: 100px;
+  margin: 5% 0;
+}
+.titre-left h2 {
+  position: absolute;
+  top: 23px;
+  left: 20%;
+  z-index: 1;
+  color: black;
+  font-family: "Big Holidays";
+  font-size: 2.9em;
+  transform: rotate(-1deg);
+}
+.titre-left img {
+  position: absolute;
+  width: 142%;
+}
+.titre-left .titre-left-9 {
+  left: 9%;
+}
+
+.return_link {
+  position: relative;
+}
+.return_link p {
+  position: absolute;
+  top: 46px;
+  left: 11px;
+  font-size: 1.7em;
+  z-index: 1;
+  font-family: "Big Holidays";
+  transform: rotate(4deg);
+  transition: all 0.3s ease;
+}
+.return_link p:hover {
+  transform: rotate(1deg);
+  color: #223844;
+  cursor: pointer;
+}
+.return_link img {
+  position: absolute;
+  top: 35px;
+  left: -159px;
+}
+
+.next_link {
+  position: relative;
+  right: 0;
+  background: rgba(215, 212, 240, 0);
+  border: none;
+}
+.next_link p {
+  position: absolute;
+  top: 22px;
+  right: -434px;
+  font-size: 1.7em;
+  z-index: 1;
+  font-family: "Big Holidays";
+  transform: rotate(2deg);
+  transition: all 0.3s ease;
+}
+.next_link p:hover {
+  transform: rotate(4deg);
+  color: #223844;
+}
+.next_link img {
+  position: absolute;
+  right: -471px;
+}
+
+/*# sourceMappingURL=game.css.map */
