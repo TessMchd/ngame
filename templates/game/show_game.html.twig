@@ -2,7 +2,7 @@
 
 {% block body %}
     <style>
-
+        body{width:100%}
         #overlay {
             position:absolute;
             bottom:0;
@@ -13,6 +13,10 @@
             background-color: rgba(0,0,0,0); /* Black background with opacity */
             z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
             cursor: pointer; /* Add a pointer on hover */
+        }
+        #plateau{
+            width: 90vw;
+            margin-left: 50px;
         }
 
 
@@ -27,9 +31,7 @@
     
 {% endblock %}
 
-{% block title %}
 
-{% endblock %}
 {% block javascripts %}
     <script>
         var fintour=0

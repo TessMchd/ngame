@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+<form id="form_connexion" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -14,11 +14,13 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    {# <img class="img_ancre" src="{{ asset('img/security_icon/ancre - Copie.png')}}"> #}
+    <img class="img_logo_connexion" src="{{ asset('img/security_icon/logo.png')}}">
+    <h1 id="titre_connexion" class="h3 mb-3 font-weight-normal">Connexion</h1>
+    <label for="inputEmail"></label>
+    <input type="email" value="{{ last_username }}" placeholder="Email..." name="email" id="inputEmail" class="form-control" required autofocus>
+    <label for="inputPassword"></label>
+    <input type="password" placeholder="Mot de passe..." name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -35,9 +37,9 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+    <button id="button_connexion" class="btn btn-lg btn-primary" type="submit">
+        Se connecter
     </button>
-    <a href="{{ path('app_register') }}">S'inscrire</a>
+    <a class="lien_inscription" href="{{ path('app_register') }}">S'inscrire</a>
 </form>
 {% endblock %}

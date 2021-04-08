@@ -12,32 +12,68 @@
         justify-content: center;
         align-items: center;
     }
-
+    .container{
+        margin:0;
+        margin-right:0;
+        padding: 0 !important;
+        width: 100%;
+    }
     .choix_carte{
         width: 50%;
         height: 60%;
         background-color: white;
     }
-    .carte_top img:nth-child(2) {
+
+    .carte_top{
+        width:100px; display: flex;flex-direction: column;
+    }
+
+    .carte_bottom{
+        width:100px; display: flex;flex-direction: column;
+    }
+
+    .carte_bottom img:nth-child(2) {
         position:absolute;
         z-index: 2;
         margin-top: 10px;
     }
-    .carte_top img:nth-child(3) {
+    .carte_bottom img:nth-child(3) {
         position:absolute;
         z-index: 3;
         margin-top: 20px;
     }
-    .carte_top img:nth-child(4) {
+    .carte_bottom img:nth-child(4) {
         position:absolute;
         z-index: 4;
         margin-top: 30px;
     }
-    .carte_top img:nth-child(5) {
+    .carte_bottom img:nth-child(5) {
         position:absolute;
         z-index: 5;
         margin-top: 40px;
     }
+
+    .carte_top img:nth-child(2) {
+        position:absolute;
+        z-index: 2;
+        margin-top: -10px;
+    }
+    .carte_top img:nth-child(3) {
+        position:absolute;
+        z-index: 3;
+        margin-top: -20px;
+    }
+    .carte_top img:nth-child(4) {
+        position:absolute;
+        z-index: 4;
+        margin-top: -30px;
+    }
+    .carte_top img:nth-child(5) {
+        position:absolute;
+        z-index: 5;
+        margin-top: -40px;
+    }
+
 
 
 </style>
@@ -86,7 +122,7 @@
             {% endif %}
         </div>
         <div class="col-5 d-flex justify-content-center align-items-center">
-            <div id="mes_cartes">
+            <div id="adversaires_cartes">
                 {% for card in adversaire.handCards %}
                     <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
                 {% endfor %}
@@ -139,37 +175,41 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <div class="carte_top" style="width:100px" >
+        <div class="carte_top"  >
             {% for card in adversaire.board['jambe'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px; display: flex;flex-direction: column;">
+        <div class="carte_top" >
             {% for card in adversaire.board['balais'] %}
                 <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
+
             {% for card in adversaire.board['rhum'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
+                <img style="width:75px;" src="{{ asset('img/card/carte_main_3.png') }}" >
+
             {% endfor %}
+
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['longuevue'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['perroquet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['boulet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['sabre'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
             {% endfor %}
@@ -186,37 +226,37 @@
 
     </div>
     <div class="row d-flex justify-content-center" >
-        <div class="carte_top" style="width:100px" >
+        <div class="carte_bottom" >
             {% for card in moi.board['jambe'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px; display: flex;flex-direction: column;">
+        <div class="carte_bottom" >
             {% for card in moi.board['balais'] %}
                 <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_bottom" >
             {% for card in moi.board['rhum'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_bottom" >
             {% for card in moi.board['longuevue'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_bottom" >
             {% for card in moi.board['perroquet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_bottom" >
             {% for card in moi.board['boulet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_bottom" >
             {% for card in moi.board['sabre'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
             {% endfor %}
