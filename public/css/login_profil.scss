@@ -1,0 +1,52 @@
+@import "general"; //importation des variables dans le general
+
+
+#form_connexion{
+  margin-top: 40px;
+  padding-top: 40px;
+  background-color: $bleu-moyen;
+  width: 1127px;
+  height: 749px;
+  border-radius: 37px;
+  background-image: url("../img/security_icon/ancre - Copie.png");
+  background-repeat: no-repeat;
+  background-position: left top;
+
+  .img_ancre{
+    position: absolute;
+  }
+
+  .img_logo_connexion{
+    margin-left: 440px;
+  }
+
+  #titre_connexion{
+    margin-left: 22%;
+    color: white;
+  }
+
+  #inputEmail{
+    width: 802px;
+    height: 53px;
+    margin-left: 15%;
+  }
+
+  #inputPassword{
+    @extend #inputEmail
+  }
+
+  #button_connexion{
+    background-color: $jaune-connexion;
+    width: 347px;
+    height: 65px;
+    margin:60px 385px;
+    font-family: "Josefin Sans",sans-serif;
+    color: black;
+  }
+
+  .lien_inscription{
+    color: white;
+    font-family: "Josefin Sans",sans-serif;
+    margin-left: 525px;
+  }
+}
