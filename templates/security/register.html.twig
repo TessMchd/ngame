@@ -4,42 +4,45 @@
 
 {% block body %}
 
-    {{ form_start (form,{'action': path('app_register')}) }}
+    {{ form_start (form,{'action': path('app_register'),'attr':{'class':'form_inscription' } }) }}
 
-    <div>
-        {{  form_label(form.email)}}
-        {{  form_widget(form.email)}}
+
+    <img class="img_logo_inscription" src="{{ asset('img/security_icon/logo.png')}}">
+
+    <div class="inscription_champ">
+
+            {{ form_widget(form.firstname, {'attr':{'class':'prenom_inscription','placeholder':'Prénom...'}} )}}
+
+            {{  form_widget(form.lastname, {'attr':{'class':'nom_inscription','placeholder':'Nom...'}} )}}
+
+            {{  form_widget(form.email, {'attr':{'class':'email_inscription','placeholder':'Email...'}})}}
+
+            {{  form_widget(form.pseudo, {'attr':{'class':'pseudo_inscription','placeholder':'Pseudo...'}} )}}
     </div>
-    <div>
-        {{  form_label(form.pseudo )}}
-        {{  form_widget(form.pseudo )}}
-    </div>
-    <div>
-        {{  form_label(form.firstname,'Prénom' )}}
-        {{ form_widget(form.firstname )}}
-    </div>
-    <div>
-        {{  form_label(form.lastname,'Nom' )}}
-        {{  form_widget(form.lastname )}}
-    </div>
-    <div>
-        {{  form_label(form.birthday,'Date de naissance' )}}
+    <div >
+        <label class="anniversaire_inscription">Date de naissance</label>
         {{ form_widget(form.birthday.day,   {'attr':{'placeholder':'Jour' } })}}
         {{ form_widget(form.birthday.month, {'attr':{'placeholder':'Mois' } })}}
         {{ form_widget(form.birthday.year,  {'attr':{'placeholder':'Année' } })}}
     </div>
     <div>
-        {{  form_widget(form.password,{'type': 'password'} )}}
+        {{ form_widget(form.password.first, {'attr':{'placeholder':'Mot de passe' } }) }}
+        {{ form_widget(form.password.second, {'attr':{'placeholder':'Confirmer votre mot de passe' } }) }}
     </div>
 
     {{  form_widget(form.captcha )}}
 
-    <div >
+    <div class="checkbox_condition">
         <input type="checkbox" name="conditions" required>
         <label for="conditions"><p>J'ai lu et j'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#"> politique de confidentialité</a>.</p></label>
     </div>
 
-    <button type="submit">S'inscrire</button>
+    <button type="submit" id="button_inscription">S'inscrire</button>
+
+        <div>
+            <a class="lien_login" href="/ngame/public/index.php/login">Je suis déjà inscrit</a>
+        </div>
     {{ form_errors(form) }}
+
     {{ form_end(form) }}
 {% endblock %}
