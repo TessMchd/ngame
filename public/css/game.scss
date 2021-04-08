@@ -64,6 +64,9 @@ body{
   //------------------------------------------------------
   .mt-0{
     margin-top: 0;
+    @media (min-width: 1200px) {
+      margin-top: 10%!important;
+    }
   }
   .choix_joueur {
     margin-top: 10%;
