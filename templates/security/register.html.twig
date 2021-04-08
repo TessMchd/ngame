@@ -26,12 +26,14 @@
         {{ form_widget(form.birthday.year,  {'attr':{'placeholder':'Année' } })}}
     </div>
     <div>
-        {{ form_widget(form.password.first, {'attr':{'placeholder':'Mot de passe' } }) }}
-        {{ form_widget(form.password.second, {'attr':{'placeholder':'Confirmer votre mot de passe' } }) }}
+        <input class="mot_de_passe" type="password" id="user_registration_form_password_first" name="user_registration_form[password][first]" required="required" placeholder="Mot de passe">
+        {#  {{ form_widget(form.password.first, {'attr':{'placeholder':'Mot de passe' } }) }}#}
+        <input class="mot_de_passe" type="password" id="user_registration_form_password_second" name="user_registration_form[password][second]" required="required" placeholder="Confirmer votre mot de passe">
+        {#  {{ form_widget(form.password.second, {'attr':{'placeholder':'Confirmer votre mot de passe' } }) }}#}
     </div>
-
+    <div class="captcha">
     {{  form_widget(form.captcha )}}
-
+    </div>
     <div class="checkbox_condition">
         <input type="checkbox" name="conditions" required>
         <label for="conditions"><p>J'ai lu et j'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#"> politique de confidentialité</a>.</p></label>
@@ -39,10 +41,8 @@
 
     <button type="submit" id="button_inscription">S'inscrire</button>
 
-        <div>
-            <a class="lien_login" href="/ngame/public/index.php/login">Je suis déjà inscrit</a>
-        </div>
-    {{ form_errors(form) }}
+    <a class="lien_login" href="/ngame/public/index.php/login">Je suis déjà inscrit</a>
 
+    {{ form_errors(form) }}
     {{ form_end(form) }}
 {% endblock %}
