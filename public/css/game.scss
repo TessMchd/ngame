@@ -18,6 +18,9 @@ body{
   background-image: url("../img/fond/hublot1.jpg");
   background-size: cover;
   background-position: center;
+  //------------------------------------------------------
+  // mise en page des div à gauche
+  //------------------------------------------------------
   .left-content{
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
@@ -29,8 +32,11 @@ body{
     left: -50%;
     top: 0;
   }
+  //------------------------------------------------------
+  // choix de partie
+  //------------------------------------------------------
   #div1{
-    left: -50%;
+    left: 0;
     top: 0;
     #div1-liens{
       display: flex;
@@ -53,40 +59,94 @@ body{
     }
   }
 
-  #div2{
-    left: 0; // à retirer
-    z-index: 1; // à retirer
+  //------------------------------------------------------
+  // lien de retour et de suite
+  //------------------------------------------------------
+  .choix_joueur {
+    margin-top: 10%;
+    .joueurs-scroll {
+      height: 50%;
+      overflow-y: scroll;
 
-    #choix_joueur {
-      margin-top: 10%;
-      #joueurs-scroll {
-        height: 50%;
-        overflow-y: scroll;
-
-        .choix-joueur{
-          color: white;
+      .choix-joueur{
+        color: white;
+        display: flex;
+        align-items: flex-end;
+        margin: 4%;
+        label{
           display: flex;
-          align-items: center;
-          margin: 4%;
-          label{
-            display: flex;
-            align-items: flex-end;
-            margin-left: 3%;
-            width: 100%;
-            img{
-              width: 50px;
-              border-radius: 10px;
-              margin-right: 2%;
-            }
-            p{
-              margin: 0;
-            }
+          align-items: flex-end;
+          margin-left: 4%;
+          width: 100%;
+          img{
+            width: 60px;
+            border-radius: 10px;
+            margin-right: 2%;
+          }
+          p{
+            margin: 0;
+          }
+          .fin, .rang, .resultat{
+            font-size: 0.9em;
+          }
+        }
+      }
+      .choix-joueur-reprendre{
+        display: flex;
+        align-items: flex-end;
+        color: white;
+        width: 100%;
+        padding: 3% 4%;
+        img{
+          height: 50%;
+          border-radius: 10px;
+        }
+        .reprendre-content{
+          width: 50%;
+          margin-left: 4%;
+          p{
+            margin: 0;
+          }
+          a{
+            font-size: 1.2em;
+            padding: 2% 2.5%;
+            margin-top: 2%;
           }
         }
       }
     }
   }
+.form_choix_joueur{
+  width: 100%;
+  button.next_link{
+    width: 100%;
+    z-index: 1;
+    img{
+      right: -7.5%;
+    }
+    p{
+      right: -1%;
+    }
+  }
+  @media (min-width: 1456px) {
+    button.next_link{
+      img{
+        right: -6%;
+      }
+    }
+  }
+  @media (min-width: 1716px) {
+    button.next_link{
+      img{
+        right: -5%;
+      }
+    }
+  }
 }
+}
+//------------------------------------------------------
+      // titre de div
+//------------------------------------------------------
 .titre-left{
   position: relative;
   height: 100px;
@@ -105,38 +165,61 @@ body{
     position: absolute;
     width: 142%;
   }
+  .titre-left-9{
+    left: 9%;
+  }
 }
 
+//------------------------------------------------------
+// lien de retour et de suite
+//------------------------------------------------------
 .return_link{
   position: relative;
   p{
     position: absolute;
-    top: 78px;
-    left: 95px;
+    top: 46px;
+    left: 11px;
     font-size: 1.7em;
     z-index: 1;
     font-family: $holidays;
     transform: rotate(4deg);
     transition: all 0.3s ease;
     &:hover{
-      transform: rotate(354deg);
+      transform: rotate(1deg);
       color: $bleu-tres-fonce;
+      cursor: pointer;
     }
   }
   img{
     position: absolute;
-    left: -50px;
-    top: 71px;
+    top: 35px;
+    left: -159px;
+  }
+}
+
+.next_link {
+  position: relative;
+  right:0;
+  background: rgba(215, 212, 240, 0);
+  border: none;
+  p {
+    position: absolute;
+    top: 22px;
+    right: -434px;
+    font-size: 1.7em;
+    z-index: 1;
+    font-family: $holidays;
+    transform: rotate(2deg);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: rotate(4deg);
+      color: $bleu-tres-fonce;
+    }
   }
 
-  &:nth-child(3){
-    p{
-      top: 11px;
-      left: 23px;
-    }
-    img{
-      top: 5px;
-      left: -128px;
-    }
+  img {
+    position: absolute;
+    right: -471px;
   }
 }

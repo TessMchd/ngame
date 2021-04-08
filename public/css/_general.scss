@@ -73,6 +73,13 @@ p{
      background-color: $bleu-tres-fonce;
    }
  }
+.btn-secondary{
+  @extend .btn-primary;
+  background-color: $rouge;
+  &:hover{
+    background-color: darken($rouge,20%);
+  }
+}
 
 a{
   color: inherit;

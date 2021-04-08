@@ -120,8 +120,11 @@ a {
   padding-top: 40px;
   background-color: #34616E;
   width: 1127px;
-  height: 749px;
+  height: 860px;
   border-radius: 37px;
+  background-image: url("../img/security_icon/boussole.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
 }
 .form_inscription .img_logo_inscription {
   margin-left: 440px;
@@ -130,11 +133,13 @@ a {
   display: grid;
   grid-template-columns: 500px 500px;
   grid-template-rows: 50px 50px;
-  gap: 2px;
-  margin: 5%;
+  gap: 10px;
+  margin-left: 5%;
+  margin-top: 20px;
 }
 .form_inscription .inscription_champ .prenom_inscription, .form_inscription .inscription_champ .pseudo_inscription, .form_inscription .inscription_champ .email_inscription, .form_inscription .inscription_champ .nom_inscription {
   border-radius: 10px;
+  border: none;
 }
 .form_inscription .anniversaire_inscription {
   padding: 5px 5px 5px 5px;
@@ -143,9 +148,28 @@ a {
   background-color: white;
   width: auto;
   height: 30px;
+  margin-left: 5%;
+  margin-top: 10px;
+}
+.form_inscription .captcha_image {
+  margin-left: 5%;
+}
+.form_inscription #user_registration_form_captcha {
+  height: 60px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.form_inscription .mot_de_passe {
+  margin-left: 5%;
+  margin-top: 10px;
+  width: 1000px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
 }
 .form_inscription .checkbox_condition {
   color: white;
+  margin-left: 5%;
 }
 .form_inscription .checkbox_condition a {
   text-decoration: underline;
@@ -153,49 +177,103 @@ a {
 .form_inscription .checkbox_condition a:hover {
   color: black;
 }
-
-#form_connexion {
-  background-color: #34616E;
-  width: 1127px;
-  height: 749px;
-  border-radius: 37px;
-  background-image: url("../img/security_icon/ancre - Copie.png");
-  background-repeat: no-repeat;
-  background-position: left top;
-}
-#form_connexion .img_ancre {
-  position: absolute;
-}
-#form_connexion .img_logo_connexion {
-  margin-left: 440px;
-}
-#form_connexion #titre_connexion {
-  margin-left: 22%;
-  color: white;
-}
-#form_connexion #inputEmail, #form_connexion #inputPassword {
-  width: 802px;
-  height: 53px;
-  margin-left: 15%;
-}
-#form_connexion #button_connexion {
-  background-color: #BF4B4B;
+.form_inscription #button_inscription {
+  background-color: #FCE798;
+  border-radius: 25px;
   width: 347px;
   height: 65px;
-  margin: 60px 385px;
+  margin: 60px 0px 20px 385px;
+  font-family: "Josefin Sans", sans-serif;
+  color: black;
+}
+
+.lien_login {
+  color: white;
+  text-decoration: underline;
+  margin-left: 44%;
+}
+
+.form_inscription {
+  margin: 40px 5%;
+  padding-top: 40px;
+  background-color: #34616E;
+  width: 1127px;
+  height: 860px;
+  border-radius: 37px;
+  background-image: url("../img/security_icon/boussole.png");
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+.form_inscription .img_logo_inscription {
+  margin-left: 440px;
+}
+.form_inscription .inscription_champ {
+  display: grid;
+  grid-template-columns: 500px 500px;
+  grid-template-rows: 50px 50px;
+  gap: 10px;
+  margin-left: 5%;
+  margin-top: 20px;
+}
+.form_inscription .inscription_champ .prenom_inscription, .form_inscription .inscription_champ .nom_inscription, .form_inscription .inscription_champ .email_inscription, .form_inscription .inscription_champ .pseudo_inscription {
+  border-radius: 10px;
+  border: none;
+}
+.form_inscription .anniversaire_inscription {
+  padding: 5px 5px 5px 5px;
+  border-radius: 10px;
+  font-family: Roboto, sans-serif;
+  background-color: white;
+  width: auto;
+  height: 30px;
+  margin-left: 5%;
+  margin-top: 10px;
+}
+.form_inscription .captcha_image {
+  margin-left: 5%;
+}
+.form_inscription #user_registration_form_captcha {
+  height: 60px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.form_inscription .mot_de_passe {
+  margin-left: 5%;
+  margin-top: 10px;
+  width: 1000px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+}
+.form_inscription .checkbox_condition {
+  color: white;
+  margin-left: 5%;
+}
+.form_inscription .checkbox_condition a {
+  text-decoration: underline;
+}
+.form_inscription .checkbox_condition a:hover {
+  color: black;
+}
+.form_inscription #button_inscription {
+  background-color: #BF4B4B;
+  border-radius: 25px;
+  width: 347px;
+  height: 65px;
+  margin: 60px 0px 20px 385px;
   border:none;
   font-family: "Big Holidays";
   color: white;
 }
-#form_connexion #button_connexion:hover{
+
+.form_inscription #button_inscription:hover {
   background-color: #9b3a3a;
 }
 
-#form_connexion .lien_inscription {
+.lien_login {
   color: white;
-  font-family: "Josefin Sans", sans-serif;
-  margin-left: 525px;
   text-decoration: underline;
+  margin-left: 44%;
 }
 
-/*# sourceMappingURL=login_profil.css.map */
+/*# sourceMappingURL=register_profil.css.map */
