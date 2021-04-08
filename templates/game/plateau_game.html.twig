@@ -196,12 +196,12 @@
 
         </div>
         <div class="carte_top" >
-            {% for card in adversaire.board['longuevue'] %}
+            {% for card in adversaire.board['perroquet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
         <div class="carte_top" >
-            {% for card in adversaire.board['perroquet'] %}
+            {% for card in adversaire.board['longuevue'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
@@ -243,12 +243,12 @@
             {% endfor %}
         </div>
         <div class="carte_bottom" >
-            {% for card in moi.board['longuevue'] %}
+            {% for card in moi.board['perroquet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
         <div class="carte_bottom" >
-            {% for card in moi.board['perroquet'] %}
+            {% for card in moi.board['longuevue'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>

@@ -190,6 +190,7 @@
                             method: 'POST',
                             success: function (data) {
                                 if (data == true) {
+                                    document.getElementById("overlay").style.display = "block";
                                     $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
                                     boucle = setInterval(refreshGame, 3000);
                                 }
