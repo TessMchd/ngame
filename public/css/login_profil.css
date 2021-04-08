@@ -111,7 +111,7 @@ a {
 
 /*--------------------- Css Inscription ---------------*/
 .form_inscription {
-  margin-top: 40px;
+  margin: 40px 5%;
   padding-top: 40px;
   background-color: #34616E;
   width: 1127px;
@@ -125,6 +125,7 @@ a {
   display: grid;
   grid-template-columns: 500px 500px;
   grid-template-rows: 50px 50px;
+  gap: 2px;
   margin: 5%;
 }
 .form_inscription .inscription_champ .prenom_inscription, .form_inscription .inscription_champ .pseudo_inscription, .form_inscription .inscription_champ .email_inscription, .form_inscription .inscription_champ .nom_inscription {
@@ -138,9 +139,18 @@ a {
   width: auto;
   height: 30px;
 }
+.form_inscription .checkbox_condition {
+  color: white;
+}
+.form_inscription .checkbox_condition a {
+  text-decoration: underline;
+}
+.form_inscription .checkbox_condition a:hover {
+  color: black;
+}
 
 #form_connexion {
-  margin-top: 40px;
+  margin: 40px 5%;
   padding-top: 40px;
   background-color: #34616E;
   width: 1127px;
