@@ -105,7 +105,7 @@ body {
   top: 0;
 }
 #content-game #div1 {
-  left: -50%;
+  left: 0;
   top: 0;
 }
 #content-game #div1 #div1-liens {
@@ -157,10 +157,6 @@ body {
 #content-game .choix_joueur .joueurs-scroll .choix-joueur label .fin, #content-game .choix_joueur .joueurs-scroll .choix-joueur label .rang, #content-game .choix_joueur .joueurs-scroll .choix-joueur label .resultat {
   font-size: 0.9em;
 }
-#content-game .choix_joueur .joueurs-scroll .choix-joueur label .pseudo {
-  color: #ffd060;
-  font-weight: bold;
-}
 #content-game .choix_joueur .joueurs-scroll .choix-joueur-reprendre {
   display: flex;
   align-items: flex-end;
@@ -206,9 +202,6 @@ body {
   #content-game .form_choix_joueur button.next_link img {
     right: -5%;
   }
-}
-#content-game #div5 {
-  left: 0;
 }
 
 .titre-left {
