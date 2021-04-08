@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+    <div class="d-flex justify-content-center">
 <form id="form_connexion" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -42,4 +43,5 @@
     </button>
     <a class="lien_inscription" href="{{ path('app_register') }}">S'inscrire</a>
 </form>
+    </div>
 {% endblock %}

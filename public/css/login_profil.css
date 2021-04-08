@@ -111,7 +111,6 @@ a {
 
 /*--------------------- Css Inscription ---------------*/
 .form_inscription {
-  margin: 40px 5%;
   padding-top: 40px;
   background-color: #34616E;
   width: 1127px;
@@ -150,8 +149,6 @@ a {
 }
 
 #form_connexion {
-  margin: 40px 5%;
-  padding-top: 40px;
   background-color: #34616E;
   width: 1127px;
   height: 749px;
@@ -180,13 +177,15 @@ a {
   width: 347px;
   height: 65px;
   margin: 60px 385px;
-  font-family: "Josefin Sans", sans-serif;
+  border:none;
+  font-family: "Big Holidays";
   color: black;
 }
 #form_connexion .lien_inscription {
   color: white;
   font-family: "Josefin Sans", sans-serif;
   margin-left: 525px;
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=login_profil.css.map */
