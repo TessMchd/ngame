@@ -23,6 +23,11 @@
         height: 60%;
         background-color: white;
     }
+
+    .carte_top{
+        width:100px; display: flex;flex-direction: column;
+    }
+
     .carte_top img:nth-child(2) {
         position:absolute;
         z-index: 2;
@@ -144,37 +149,39 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <div class="carte_top" style="width:100px" >
+        <div class="carte_top"  >
             {% for card in adversaire.board['jambe'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px; display: flex;flex-direction: column;">
+        <div class="carte_top" >
             {% for card in adversaire.board['balais'] %}
                 <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
-            {% for card in adversaire.board['rhum'] %}
+        <div class="carte_top" >
+
                 <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
-            {% endfor %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
+
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['longuevue'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['perroquet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['boulet'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" style="width:100px">
+        <div class="carte_top" >
             {% for card in adversaire.board['sabre'] %}
                 <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
             {% endfor %}
