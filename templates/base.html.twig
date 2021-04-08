@@ -33,7 +33,7 @@
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
                     Bonjour {{ app.user.firstName }}. <a href="{{ path('app_logout') }}">Me déconnecter</a>
                 {% else %}
-                    <a href="{{ path('app_login') }}">Me connecter</a>
+                    <a href="{{ path('user_profil') }}">Me connecter</a>
                 {% endif %}
                     </span>
             </div>
@@ -42,7 +42,7 @@
             </a>
         </div>
     </header>
-    <main class="container">
+    <main class="container-fluid">
         {% block body %}{% endblock %}
     </main>
     </body>

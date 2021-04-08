@@ -1,127 +1,291 @@
-<div class="row">
-    <div class="col-6">
-        {% if player == null  %}
-            <p>En attente d'un adversaire</p>
-        {% else %}
-            <img width="100px" src="{{ asset('img/avatar/'~player.avatar) }}">
-            <p>{{ player.pseudo }}</p>
-        {% endif %}
-        {% for card in adversaire.handCards %}
-            <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
-        {% endfor %}
-    </div>
+<style>
+    #mon_offre, #adv_offre{
+        position: absolute;
+        width:  100%;
+        height: 100%;
+        display: block;
+        z-index: 2;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-    <div class="col-4" style="display:flex;justify-content: center;align-items: center">
-        {% if adversaire.actions['SECRET']==true %}
-            <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
-                <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
-                <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
-            </div>
-        {% endif %}
-        {% if adversaire.actions['DEPOT']==true %}
-            <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
-                <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
-                <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
-            </div>
-        {% endif %}
-    </div>
+    .choix_carte{
+        width: 50%;
+        height: 60%;
+        background-color: white;
+    }
+    .carte_top img:nth-child(2) {
+        position:absolute;
+        z-index: 2;
+        margin-top: 10px;
+    }
+    .carte_top img:nth-child(3) {
+        position:absolute;
+        z-index: 3;
+        margin-top: 20px;
+    }
+    .carte_top img:nth-child(4) {
+        position:absolute;
+        z-index: 4;
+        margin-top: 30px;
+    }
+    .carte_top img:nth-child(5) {
+        position:absolute;
+        z-index: 5;
+        margin-top: 40px;
+    }
 
-    <div class="col-2">
-        <div class="actions" style="display: flex;flex-wrap: wrap">
-            Actions de l'adversaire
-            {% if adversaire.actions['SECRET']==false %}
-                <img id=""  width="90px"  src="{{ asset('img/plateau/action2_1.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
-            {% endif %}
-            {% if adversaire.actions['DEPOT']==false %}
-                <img id=""  width="90px" src="{{ asset('img/plateau/action2_2.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
-            {% endif %}
-            {% if adversaire.actions['OFFRE']==false %}
-                <img id="" width=90px" src="{{ asset('img/plateau/action2_3.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
-            {% endif %}
-            {% if adversaire.actions['ECHANGE']==false %}
-                <img id=""   width="90px" src="{{ asset('img/plateau/action2_4.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
-            {% endif %}
+
+</style>
+
+
+{% if moi.actions['OFFRE']==true and moi.actions['OFFRE']!= "done"%}
+<div id="mon_offre">
+    <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+        <p>L'adversaire est en train de choisir une carte </p>
+        <div>
+            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][0]].picture ) }}">
+            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][1]].picture ) }}">
+            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][2]].picture ) }}">
         </div>
     </div>
 </div>
-<div class="row">
-    Plateau adversaire
-</div>
-<div class="row">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_1.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_2.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_3.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_4.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_5.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_6.png') }}">
-    <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_7.png') }}">
+{% endif %}
 
-</div>
-<div class="row">
-    Mon plateau
-</div>
-<div class="row">
-    <div class="col-6" id="mes_cartes">
-        <img width="100px" src="{{ asset('img/avatar/'~app.user.avatar) }}">
-        <p>{{ app.user.pseudo }}</p>
-        {% for card in moi.handCards %}
-            <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
-            <input type="checkbox"  name="carte_secret"  value="{{ card }}"
-                   style="display: none"
-                   class="choixSecret">
-        {% endfor %}
-    </div>
-    <div class="col-4" style="display:flex;justify-content: center;align-items: center">
-        {% if moi.actions['SECRET']==true %}
-            <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
-                <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
-                <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
+
+{% if adversaire.actions['OFFRE']==true and adversaire.actions['OFFRE']!="done" %}
+    <div id="adv_offre">
+        <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+            <p>Choississez une de ces cartes </p>
+            <div>
+                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][0]].picture ) }}">
+                <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][0]}}">
+                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][1]].picture ) }}">
+                <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][1]}}">
+                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][2]].picture ) }}">
+                <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][2] }}">
             </div>
-        {% endif %}
-        {% if moi.actions['DEPOT']==true %}
-            <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
-                <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
-                <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
-            </div>
-        {% endif %}
+            <button id="valid_offre">Choisir la carte</button>
+        </div>
     </div>
-    <div class="col-2" >
-        Mes Actions
-        <div class="actions" style="display: flex;flex-wrap: wrap">
-            {% if moi.actions['SECRET']==false %}
-                <img id="secret"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_1.png') }}">
+{% endif %}
+
+
+<div id="game_content">
+    <div class="row">
+        <div class="col-2">
+            {% if player == null  %}
+                <p>En attente d'un adversaire</p>
             {% else %}
-                <div style="width: 90px; height: 55px"></div>
+                <img width="100px" src="{{ asset('img/avatar/'~player.avatar) }}">
+                <p>{{ player.pseudo }}</p>
             {% endif %}
-            {% if moi.actions['DEPOT']==false %}
-                <img id="depot"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_2.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
+        </div>
+        <div class="col-5 d-flex justify-content-center align-items-center">
+            <div id="mes_cartes">
+                {% for card in adversaire.handCards %}
+                    <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-3" style="display:flex;justify-content: center;align-items: center">
+            {% if adversaire.actions['SECRET']==true %}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+                    <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
+                    <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
+                </div>
             {% endif %}
-            {% if moi.actions['OFFRE']==false %}
-                <img id="offre"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
-            {% else %}
-                <div style="width: 90px; height: 55px"></div>
-            {% endif %}
-            {% if moi.actions['ECHANGE']==false %}
-                <img id="echange"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_4.png') }}">
+            {% if adversaire.actions['DEPOT']==true %}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
+                    <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
+                    <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
+                </div>
             {% endif %}
         </div>
 
-        <br>
-        <button id="valider" style="display: none">Valider action</button>
-        <button id="finDeTour" disabled>Fin de tour</button>
+        <div class="col-2">
+            <div class="actions" style="display: flex;">
+                Actions de l'adversaire
+                <div style="height:55px">
+                    {% if adversaire.actions['SECRET']==false %}
+                        <img id=""  width="90px"  src="{{ asset('img/plateau/action2_1.png') }}">
+                    {% else %}
+                        <div style="width: 90px; height: 55px"></div>
+                    {% endif %}
+                    {% if adversaire.actions['DEPOT']==false %}
+                        <img id=""  width="90px" src="{{ asset('img/plateau/action2_2.png') }}">
+                    {% else %}
+                        <div style="width: 90px; height: 55px"></div>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if adversaire.actions['OFFRE']==false %}
+                        <img id="" width=90px" src="{{ asset('img/plateau/action2_3.png') }}">
+                    {% else %}
+                        <div style="width: 90px; height: 55px"></div>
+                    {% endif %}
+                    {% if adversaire.actions['ECHANGE']==false %}
+                        <img id=""   width="90px" src="{{ asset('img/plateau/action2_4.png') }}">
+                    {% else %}
+                        <div style="width: 90px; height: 55px"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="carte_top" style="width:100px" >
+            {% for card in adversaire.board['jambe'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px; display: flex;flex-direction: column;">
+            {% for card in adversaire.board['balais'] %}
+                <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in adversaire.board['rhum'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in adversaire.board['longuevue'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in adversaire.board['perroquet'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in adversaire.board['boulet'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in adversaire.board['sabre'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_1.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_2.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_3.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_4.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_5.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_6.png') }}">
+        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_7.png') }}">
+
+    </div>
+    <div class="row d-flex justify-content-center" >
+        <div class="carte_top" style="width:100px" >
+            {% for card in moi.board['jambe'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px; display: flex;flex-direction: column;">
+            {% for card in moi.board['balais'] %}
+                <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in moi.board['rhum'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in moi.board['longuevue'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in moi.board['perroquet'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in moi.board['boulet'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
+            {% endfor %}
+        </div>
+        <div class="carte_top" style="width:100px">
+            {% for card in moi.board['sabre'] %}
+                <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <img width="100px" src="{{ asset('img/avatar/'~app.user.avatar) }}">
+            <p>{{ app.user.pseudo }}</p>
+        </div>
+        <div class="col-5 d-flex justify-content-center align-items-center" >
+            <div id="mes_cartes">
+                {% for card in moi.handCards %}
+                    <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
+                    <input type="checkbox"  name="carte_secret"  value="{{ card }}"
+                           style="display: none"
+                           class="choixSecret">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-3" style="display:flex;justify-content: center;align-items: center">
+            {% if moi.actions['SECRET']==true %}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+                    <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
+                    <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
+                </div>
+            {% endif %}
+            {% if moi.actions['DEPOT']==true %}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;">
+                    <img style="width:98px;position: absolute;z-index: 0" id="depot_carte "  class="" src="{{ asset('img/plateau/verso_carte_double.png')}}">
+                    <img style="width:60px;position:relative;z-index:1;" id="depot_action" src="{{ asset('img/plateau/action1_2.png')}}">
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-2" >
+            Mes Actions
+            <div class="actions" style="">
+                <div class="flex-md-row">
+                {% if moi.actions['SECRET']==false %}
+                    <img id="secret"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_1.png') }}">
+                {% else %}
+                    <div style="width: 90px; height: 55px"></div>
+                {% endif %}
+                {% if moi.actions['DEPOT']==false %}
+                    <img id="depot"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_2.png') }}">
+                {% else %}
+                    <div style="width: 90px; height: 55px"></div>
+                {% endif %}
+                </div>
+                <div class="flex-md-row flex-wrap">
+                {% if moi.actions['OFFRE']==false %}
+                    <img  id="offre"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_3.png') }}">
+                {% else %}
+                    <div style="width: 90px; height: 55px"></div>
+                {% endif %}
+                {% if moi.actions['ECHANGE']==false %}
+                    <img id="echange"  style="cursor: pointer;width:90px" src="{{ asset('img/plateau/action1_4.png') }}">
+                {% endif %}
+                </div>
+            </div>
+
+            <br>
+            <button id="valider" style="display: none">Valider action</button>
+            <button id="finDeTour" disabled>Fin de tour</button>
+
+        </div>
+
 
     </div>
 
-
 </div>
-

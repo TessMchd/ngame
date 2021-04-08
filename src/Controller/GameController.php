@@ -143,6 +143,28 @@ class GameController extends AbstractController
                     'ECHANGE' => false
                 ]);
 
+                $set->setUser1BoardCards([
+                    'jambe'=>[],
+                    'balais'=>[],
+                    'rhum'=>[],
+                    'perroquet'=>[],
+                    'longuevue'=>[],
+                    'boulet'=>[],
+                    'sabre'=>[]
+
+                ]);
+
+                $set->setUser2BoardCards([
+                    'jambe'=>[],
+                    'balais'=>[],
+                    'rhum'=>[],
+                    'perroquet'=>[],
+                    'longuevue'=>[],
+                    'boulet'=>[],
+                    'sabre'=>[]
+
+                ]);
+
                 $set->setBoard([
                     'EMPL1' => ['N'],
                     'EMPL2' => ['N'],
@@ -205,14 +227,24 @@ class GameController extends AbstractController
      */
     public function ChangePlayer(
         Game $game,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Request $request
     ): Response {
+        $pioche= $request->request->get('pioche');
         if ($game->getQuiJoue()==1){
             $game->setQuiJoue(2);
-            $game->getSets()[0]->setUser2Pioche(0);
+            if($pioche == 1) {
+                $game->getSets()[0]->setUser2Pioche(0);
+            }else{
+                $game->getSets()[0]->setUser2Pioche(1);
+            }
         }else{
             $game->setQuiJoue(1);
-            $game->getSets()[0]->setUser1Pioche(0);
+            if($pioche == 1) {
+                $game->getSets()[0]->setUser1Pioche(0);
+            }else{
+                $game->getSets()[0]->setUser1Pioche(1);
+            }
         }
 
         $entityManager->persist($game);
@@ -378,11 +410,108 @@ class GameController extends AbstractController
                     $round->setUser2HandCards($main);
                 }
                 break;
+
+            case 'offre' :
+                $carte1 = $request->request->get('carte1');
+                $carte2=$request->request->get('carte2');
+                $carte3 = $request->request->get('carte3');
+                if ($joueur === 1) {
+                    $actions = $round->getUser1Action();
+                    $actions['OFFRE'] = [$carte1,$carte2,$carte3];
+                    $round->setUser1Action($actions);
+                    $main = $round->getUser1HandCards();
+                    $indexCarte = array_search($carte1, $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($carte2, $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($carte3, $main);
+                    unset($main[$indexCarte]);
+                    $round->setUser1HandCards($main);
+                }
+                if ($joueur === 2) {
+                    $actions = $round->getUser2Action();
+                    $actions['OFFRE'] = [$carte1,$carte2,$carte3];
+                    $round->setUser2Action($actions);
+                    $main = $round->getUser2HandCards();
+                    $indexCarte = array_search($carte1, $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($carte2, $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($carte3, $main);
+                    unset($main[$indexCarte]);
+                    $round->setUser2HandCards($main);
+                }
+                break;
         }
 
         $entityManager->flush();
         return $this->json([true,$action]);
 
+    }
+
+    /**
+     * @Route("/update-offre/{game}", name="update_offre")
+     */
+    public function updateOffre(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        CardRepository $cardRepository,
+        Game $game
+    ): Response {
+        $user = $this->getUser();
+        $round = $game->getSets()[0];
+        $carte = $request->request->get('carte');
+
+        if ($game->getUser1()->getId() === $user->getId())
+        {
+            $joueur = 1;
+        } elseif ($game->getUser2()->getId() === $user->getId()) {
+            $joueur = 2;
+        } else {
+            /// On a un problème... On pourrait rediriger vers une page d'erreur.
+        }
+
+        if ($joueur === 1) {
+            $actions=$round->getUser2Action();
+            $hands=$round->getUser1BoardCards();
+            $adv=$round->getUser2BoardCards();
+            $my_card=$cardRepository->find($carte);
+            array_push($hands[$my_card->getName()],$carte);
+            foreach ($actions['OFFRE'] as $card){
+                if ($card != $carte){
+                    $tcard=$cardRepository->find($card);
+                    array_push($adv[$tcard->getName()],$card);
+                }
+
+            }
+            $round->setUser2BoardCards($adv);
+            $round->setUser1BoardCards($hands);
+            $actions['OFFRE']= 'done';
+            $round->setUser2Action($actions);
+            $entityManager->flush();
+            return $this->json(true);
+        }
+
+        if ($joueur === 2) {
+            $actions=$round->getUser1Action();
+            $hands=$round->getUser2BoardCards();
+            $adv=$round->getUser1BoardCards();
+            $my_card=$cardRepository->find($carte);
+            array_push($hands[$my_card->getName()],$carte);
+            foreach ($actions['OFFRE'] as $card){
+                if ($card != $carte){
+                    $tcard=$cardRepository->find($card);
+                    array_push($adv[$tcard->getName()],$card);
+                }
+
+            }
+            $round->setUser1BoardCards($adv);
+            $round->setUser2BoardCards($hands);
+            $actions['OFFRE']= 'done';
+            $round->setUser1Action($actions);
+            $entityManager->flush();
+            return $this->json(true);
+        }
     }
 
     /**
