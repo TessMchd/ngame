@@ -59,6 +59,7 @@ class SecurityController extends AbstractController
             $stats->setVictoires(0);
             $stats->setPieces(0);
             $stats->setRang(1);
+            $stats->setGrade(1);
             $stats->setPartiesEnCours(0);
             $stats->setPartiesJouees(0);
             $stats->setPartiesTerminees(0);

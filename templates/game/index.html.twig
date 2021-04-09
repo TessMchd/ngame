@@ -68,7 +68,7 @@
                                                 <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
                                                 <div>
                                                     <p>{{ user.pseudo}}</p>
-                                                    <p>Rang {{  user.stats.rang}}</p>
+                                                    <p>Rang : {{  user.stats.rang}} Grade : {{ rangs[user.stats.grade] }}</p>
                                                 </div>
                                             </label>
                                         </div>
@@ -90,7 +90,7 @@
                                             <img src="{{ asset('img/avatar/'~tusers[user].avatar)}}" width="80px">
                                             <div>
                                                 <p>{{ tusers[user].pseudo}}</p>
-                                                <p>Rang {{  tusers[user].stats.rang}}</p>
+                                                <p>Rang : {{  tusers[user].stats.rang}} Grade : {{ rangs[tusers[user].stats.grade] }}</p>
                                             </div>
                                         </label>
                                     </div>
@@ -110,7 +110,7 @@
                                         <img src="{{ asset('img/avatar/'~game.user1.avatar)}}" width="80px">
                                         <div class="reprendre-content">
                                             <p>{{ game.user1.pseudo}}</p>
-                                            <p>Rang {{  game.user1.stats.rang}}</p>
+                                            <p>Rang : {{  game.user1.stats.rang}} Grade : {{ rangs[game.user1.stats.grade] }}</p>
                                              <a class="btn-secondary" href=" {{ path('join_game',{game: game.id}) }}">Rejoindre</a>
                                         </div>
                                     </div>
@@ -141,7 +141,7 @@
                             <div class="reprendre-content">
                                 <p>Crée le {{ game.created | date("m/d/Y") }} </p>
                                 <p>{{ game.user2.pseudo }}</p>
-                                <p>Rang {{ game.user2.stats.rang }}</p>
+                                <p>Rang : {{ game.user2.stats.rang }} Grade : {{ rangs[game.user2.stats.grade] }}</p>
                                 <a class="btn-secondary" href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
                             </div>
                         {% else %}
@@ -149,7 +149,7 @@
                             <div class="reprendre-content">
                                 <p>Crée le {{ game.created | date("m/d/Y") }} </p>
                                 <p>{{ game.user1.pseudo }}</p>
-                                <p>Rang {{ game.user1.stats.rang }}</p>
+                                <p>Rang : {{ game.user1.stats.rang }} Grade : {{ rangs[game.user1.stats.grade] }}</p>
                                 <a class="btn-secondary" href="{{ path('show_game',{game: game.id}) }}">Reprendre</a>
                             </div>
                         {% endif %}
@@ -181,7 +181,7 @@
                             <div>
                                 <p class="fin">Finie le {{ game.ended| date("m/d/Y") }}</p>
                                 <p class="pseudo">{{ game.user1.pseudo}}</p>
-                                <p class="rang">Rang {{  game.user1.stats.rang}}</p>
+                                <p class="rang">Rang : {{  game.user1.stats.rang}} Grade : {{ rangs[game.user1.stats.grade] }}</p>
                                 {% if game.winner.id == app.user.id %}
                                     <p class="resultat">Gagné</p>
                                 {% else %}
@@ -198,7 +198,7 @@
                             <div>
                                 <p class="fin">Finie le {{ game.ended| date("m/d/Y") }}</p>
                                 <p class="pseudo">{{ game.user2.pseudo}}</p>
-                                <p class="rang">Rang {{ game.user2.stats.rang }}</p>
+                                <p class="rang">Rang : {{ game.user2.stats.rang }} Grade : {{ rangs[game.user2.stats.grade] }}</p>
                                 {% if game.winner.id == app.user.id %}
                                     <p class="resultat">Gagné</p>
                                 {% else %}
@@ -236,7 +236,7 @@
                             <div class="reprendre-content">
                                 <p>Crée le {{ game.created | date("m/d/Y") }} </p>
                                 <p>{{ game.user2.pseudo }}</p>
-                                <p>Rang {{ game.user2.stats.rang }}</p>
+                                <p>Rang : {{ game.user2.stats.rang }} Grade : {{ rangs[game.user2.stats.grade] }}</p>
                                 <a class="btn-secondary" href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
                             </div>
                         {% else %}
@@ -244,7 +244,7 @@
                             <div class="reprendre-content">
                                 <p>Crée le {{ game.created | date("m/d/Y") }} </p>
                                 <p>{{ game.user1.pseudo }}</p>
-                                <p>Rang {{ game.user1.stats.rang }}</p>
+                                <p>Rang : {{ game.user1.stats.rang }} Grade : {{ rangs[game.user1.stats.grade] }}</p>
                                 <a class="btn-secondary" href="{{ path('delete_game',{game: game.id}) }}">Supprimer la partie</a>
                             </div>
                         {% endif %}

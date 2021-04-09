@@ -25,6 +25,18 @@ class GameController extends AbstractController
     ): Response {
         $users = $userRepository->findAll();
         $user = $this->getUser();
+        $rangs=[
+            1 => 'Vagabond puant du quartier',
+            2 => 'Brigand du vieux port',
+            3 => 'Pirate à influence mineure',
+            4 => "Petite frappe de l'ombre",
+            5 => 'Supernovae des mers',
+            6 => 'Grand Corsaire',
+            7 => "Courtier de l'ombre",
+            8 => 'Légende endormier',
+            9 => 'Empereur',
+            10 => 'Roi des Pirates'
+        ];
         $games=[];
         $revanches=[];
         $ouvertes=[];
@@ -64,7 +76,8 @@ class GameController extends AbstractController
             'en_cours'=> $games,
             'revanches'=> $revanches,
             'ouvertes'=> $ouvertes,
-            'tusers'=> $tUsers
+            'tusers'=> $tUsers,
+            'rangs'=>$rangs
 
         ]);
     }
@@ -442,6 +455,40 @@ class GameController extends AbstractController
                     $round->setUser2HandCards($main);
                 }
                 break;
+            case 'echange' :
+                $fpair = $request->request->get('firstpair');
+                $spair = $request->request->get('secondpair');
+                if ($joueur === 1) {
+                    $actions = $round->getUser1Action();
+                    $actions['ECHANGE'] = [$fpair,$spair];
+                    $round->setUser1Action($actions);
+                    $main = $round->getUser1HandCards();
+                    $indexCarte = array_search($fpair[0], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($fpair[1], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($spair[0], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($spair[1], $main);
+                    unset($main[$indexCarte]);
+                    $round->setUser1HandCards($main);
+                }
+                if ($joueur === 2) {
+                    $actions = $round->getUser2Action();
+                    $actions['ECHANGE'] = [$fpair,$spair];
+                    $round->setUser2Action($actions);
+                    $main = $round->getUser2HandCards();
+                    $indexCarte = array_search($fpair[0], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($fpair[1], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($spair[0], $main);
+                    unset($main[$indexCarte]);
+                    $indexCarte = array_search($spair[1], $main);
+                    unset($main[$indexCarte]);
+                    $round->setUser2HandCards($main);
+                }
+
         }
 
         $entityManager->flush();
@@ -513,6 +560,90 @@ class GameController extends AbstractController
             return $this->json(true);
         }
     }
+
+    /**
+     * @Route("/update-echange/{game}", name="update_echange")
+     */
+    public function updateEchange(EntityManagerInterface $entityManager,
+        Request $request,
+        CardRepository $cardRepository,
+        Game $game
+    ): Response {
+        $user = $this->getUser();
+        $round = $game->getSets()[0];
+        $choix = $request->request->get('choix');
+        $board1=$round->getUser1BoardCards();
+        $board2= $round->getUser2BoardCards();
+
+        if ($game->getUser1()->getId() === $user->getId())
+        {
+            $joueur = 1;
+        } elseif ($game->getUser2()->getId() === $user->getId()) {
+            $joueur = 2;
+        } else {
+            /// On a un problème... On pourrait rediriger vers une page d'erreur.
+        }
+        if ($joueur === 1) {
+            $actions = $round->getUser2Action();
+            if($choix == 'firstpair'){
+                foreach ($actions['ECHANGE'][0] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board1[$tcard->getName()],$card);
+                }
+                foreach ($actions['ECHANGE'][1] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board2[$tcard->getName()],$card);
+                }
+
+            }else{
+                foreach ($actions['ECHANGE'][0] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board2[$tcard->getName()],$card);
+                }
+                foreach ($actions['ECHANGE'][1] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board1[$tcard->getName()],$card);
+                }
+            }
+            $round->setUser2BoardCards($board2);
+            $round->setUser1BoardCards($board1);
+            $actions['ECHANGE']= 'done';
+            $round->setUser2Action($actions);
+            $entityManager->flush();
+        }
+
+        if ($joueur === 2) {
+            $actions = $round->getUser1Action();
+            if($choix == 'firstpair'){
+                foreach ($actions['ECHANGE'][0] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board2[$tcard->getName()],$card);
+                }
+                foreach ($actions['ECHANGE'][1] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board1[$tcard->getName()],$card);
+                }
+
+            }else{
+                foreach ($actions['ECHANGE'][0] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board1[$tcard->getName()],$card);
+                }
+                foreach ($actions['ECHANGE'][1] as $card){
+                    $tcard=$cardRepository->find($card);
+                    array_push($board2[$tcard->getName()],$card);
+                }
+
+            }
+            $round->setUser2BoardCards($board2);
+            $round->setUser1BoardCards($board1);
+            $actions['ECHANGE']= 'done';
+            $round->setUser1Action($actions);
+            $entityManager->flush();
+        }
+        return $this->json(true);
+    }
+
 
     /**
      * @Route("/delete-game/{game}", name="delete_game")

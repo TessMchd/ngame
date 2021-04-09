@@ -1,11 +1,11 @@
 
 <style>
-    #mon_offre, #adv_offre{
+    #mon_offre, #adv_offre, #mon_echange{
         position: absolute;
         width:  100%;
         height: 100%;
         display: block;
-        z-index: 2;
+        z-index: 10;
         bottom: 0;
         left: 0;
         background-color: rgba(0,0,0,0.1);
@@ -75,6 +75,10 @@
         margin-top: -40px;
     }
 
+    .card_actions{
+        width: 20%;
+        margin: 1%;
+    }
 
 
 </style>
@@ -84,13 +88,27 @@
 <div id="mon_offre">
     <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
         <p>L'adversaire est en train de choisir une carte </p>
-        <div>
-            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][0]].picture ) }}">
-            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][1]].picture ) }}">
-            <img style="width:200px" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][2]].picture ) }}">
+        <div class="d-flex justify-content-center align-items-center">
+            <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][0]].picture ) }}">
+            <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][1]].picture ) }}">
+            <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['OFFRE'][2]].picture ) }}">
         </div>
     </div>
 </div>
+{% endif %}
+
+{% if moi.actions['ECHANGE']==true and moi.actions['ECHANGE']!= "done"%}
+    <div id="mon_echange">
+        <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+            <p>L'adversaire est en train de choisir une carte </p>
+            <div class="d-flex justify-content-center align-items-center">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['ECHANGE'][0][0]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['ECHANGE'][0][1]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['ECHANGE'][1][0]].picture ) }}">
+                <img  class="card_actions" src="{{ asset('img/card/'~cards[moi.actions['ECHANGE'][1][1]].picture ) }}">
+            </div>
+        </div>
+    </div>
 {% endif %}
 
 
@@ -98,15 +116,32 @@
     <div id="adv_offre">
         <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
             <p>Choississez une de ces cartes </p>
-            <div>
-                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][0]].picture ) }}">
+            <div class="d-flex justify-content-center align-items-center">
+                <img class="card_actions"  src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][0]].picture ) }}">
                 <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][0]}}">
-                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][1]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][1]].picture ) }}">
                 <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][1]}}">
-                <img style="width:200px" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][2]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][2]].picture ) }}">
                 <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][2] }}">
             </div>
             <button id="valid_offre">Choisir la carte</button>
+        </div>
+    </div>
+{% endif %}
+
+{% if adversaire.actions['ECHANGE']==true and adversaire.actions['ECHANGE']!="done" %}
+    <div id="adv_offre">
+        <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+            <p>Choississez une de ces pairs de cartes </p>
+            <div class="d-flex justify-content-center align-items-center">
+                <img class="card_actions"  src="{{ asset('img/card/'~cards[adversaire.actions['ECHANGE'][0][0]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['ECHANGE'][0][1]].picture ) }}">
+                <input type="radio"  name="carte_echange"  value='firstpair'>
+                <img class="card_actions"  src="{{ asset('img/card/'~cards[adversaire.actions['ECHANGE'][1][0]].picture ) }}">
+                <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['ECHANGE'][1][1]].picture ) }}">
+                <input type="radio"  name="carte_echange"  value='secondpair'>
+            </div>
+            <button id="valid_echange">Choisir ces deux cartes</button>
         </div>
     </div>
 {% endif %}
@@ -122,7 +157,7 @@
                 <p>{{ player.pseudo }}</p>
             {% endif %}
         </div>
-        <div class="col-5 d-flex justify-content-center align-items-center">
+        <div class="col-6 d-flex justify-content-center align-items-center">
             <div id="adversaires_cartes">
                 {% for card in adversaire.handCards %}
                     <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
@@ -130,7 +165,7 @@
             </div>
         </div>
 
-        <div class="col-3" style="display:flex;justify-content: center;align-items: center">
+        <div class="col-2" style="display:flex;justify-content: center;align-items: center">
             {% if adversaire.actions['SECRET']==true %}
                 <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
                     <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
@@ -269,7 +304,7 @@
             <img width="100px" src="{{ asset('img/avatar/'~app.user.avatar) }}">
             <p>{{ app.user.pseudo }}</p>
         </div>
-        <div class="col-5 d-flex justify-content-center align-items-center" >
+        <div class="col-6 d-flex justify-content-center align-items-center" >
             <div id="mes_cartes">
                 {% for card in moi.handCards %}
                     <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
@@ -279,7 +314,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-3" style="display:flex;justify-content: center;align-items: center">
+        <div class="col-2" style="display:flex;justify-content: center;align-items: center">
             {% if moi.actions['SECRET']==true %}
                 <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
                     <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
@@ -326,6 +361,12 @@
 
         </div>
 
+    </div>
+    <div class="row d-flex flex-column justify-content-center align-items-center" style="width:90vw">
+        <p id="action_message" style="text-align: center"></p>
+        <p id="aide" style="text-align: center"></p>
+        <div id="game_help"  class="row d-flex flex-column justify-content-center align-items-center">
 
+        </div>
     </div>
 </div>

@@ -20,7 +20,12 @@
         }
 
         #message{
-            text-align: center;
+            text-align: right;
+            width: 90vw;
+        }
+
+        .readonly{
+            pointer-events: none;
         }
 
 
@@ -29,7 +34,7 @@
     <div id="plateau">
         {{ render(controller('App\\Controller\\GameController::refreshPlateauGame', {game:game.id})) }}
     </div>
-    <div id="message">...</div>
+    <div id="message" >...</div>
 
     <div id="overlay"></div>
     
@@ -39,6 +44,7 @@
 {% block javascripts %}
     <script>
         var fintour=0
+        var fpair = [];
         let boucle
         $(document).ready(function(){
             boucle = setInterval(refreshGame, 3000);
@@ -133,6 +139,11 @@
         let action
         $(document).on('click', '#secret', function(){
             if(localStorage.getItem('{{game.id}}')==0) {
+                $('.valid_pairs'). remove();
+                $("input[name='carte_secret']").removeAttr("disabled");
+                $("input[name='carte_secret']").prop('checked', false)
+                document.getElementById("action_message").innerHTML="<strong>SECRET</strong>"
+                document.getElementById("aide").innerHTML="Choisissez une carte à garder jusqu'à la fin de la partie"
                 console.log('secret')
                 action = 'secret' //mémorise l'action en cours
                 $('.choixSecret').show()
@@ -145,7 +156,12 @@
         })
 
         $(document).on('click', '#depot', function(){
+            $('.valid_pairs'). remove();
             if(localStorage.getItem('{{game.id}}')==0) {
+                $("input[name='carte_secret']").removeAttr("disabled");
+                $("input[name='carte_secret']").prop('checked', false)
+                document.getElementById("action_message").innerHTML="<strong>DEPOT</strong>"
+                document.getElementById("aide").innerHTML="Choisissez deux cartes à garder jusqu'à la fin de la partie"
                 console.log('depot')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'depot' //mémorise l'action en cours
@@ -159,7 +175,12 @@
         })
 
         $(document).on('click', '#offre', function(){
+            $('.valid_pairs'). remove();
             if(localStorage.getItem('{{game.id}}')==0) {
+                $("input[name='carte_secret']").removeAttr("disabled");
+                $("input[name='carte_secret']").prop('checked', false)
+                document.getElementById("action_message").innerHTML="<strong>OFFRE</strong>"
+                document.getElementById("aide").innerHTML="Choisissez trois cartes. Une d'elles sera choisie par l'adversaire."
                 console.log('offre')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'offre' //mémorise l'action en cours
@@ -179,6 +200,90 @@
                     url: "{{ path('update_offre', {game: game.id}) }}",
                     data: {
                         carte: $('input[name="carte_offre"]:checked').val()
+                    },
+                    method: 'POST',
+                    success: function (data) {
+                        $.ajax({
+                            url: "{{ path('change_player', {game: game.id}) }}",
+                            data: {
+                                pioche : 0
+                            },
+                            method: 'POST',
+                            success: function (data) {
+                                if (data == true) {
+                                    document.getElementById("overlay").style.display = "block";
+                                    $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                                    boucle = setInterval(refreshGame, 3000);
+                                }
+                            },
+                            error: function () {
+
+                            }
+                        })
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+        })
+        $(document).on('click', '#echange', function(){
+            $('#valider').hide()
+            if(localStorage.getItem('{{game.id}}')==0) {
+                $("input[name='carte_secret']").removeAttr("disabled");
+                $("input[name='carte_secret']").prop('checked', false)
+                document.getElementById("action_message").innerHTML="<strong>ECHANGE</strong>"
+                document.getElementById("aide").innerHTML="Choisissez deux paires de cartes. L'adversaire en choisira une."
+                console.log('echange')
+                $("#depot_carte").addClass("fadeInDown")
+                action = 'echange'
+                $('.choixSecret').show()
+                $("input:checkbox").click(function () {
+                    var bol = $("input:checkbox:checked").length >= 2;
+                    $("input:checkbox").not(":checked").attr("disabled", bol);
+                    if($("input:checkbox:checked").length == 2) {
+                        if(action=='echange'){
+                            document.getElementById("game_help").innerHTML = "<button class='valid_pairs' style='width: 250px'>Choisir une première paire</button>"
+                            $.each($("input[name='carte_secret']:checked"), function () {
+                                $(this).attr("disabled");
+                            });
+                        }
+                    }
+                    if($("input:checkbox:checked").length <2) {
+                        $('.valid_pairs'). remove();
+                    }
+                });
+            }
+        })
+        $(document).on('click', '.valid_pairs', function(){
+            $('.valid_pairs'). remove();
+            $.each($("input[name='carte_secret']:checked"), function () {
+                fpair.push($(this).val());
+                $(this).prop('checked', false);
+                $(this).hide();
+            });
+            console.log(fpair);
+            $("input[name='carte_secret']").removeAttr("disabled");
+            $("input:checkbox").click(function () {
+                var bol = $("input:checkbox:checked").length >= 2;
+                $("input:checkbox").not(":checked").attr("disabled", bol);
+                if($("input:checkbox:checked").length == 2) {
+                    if(action=='echange'){
+                        $('.valid_pairs'). remove();
+                        $('#valider').show()
+                    }}
+                if($("input:checkbox:checked").length <2) {
+                    $('#valider').hide()
+                }
+            });
+        })
+
+        $(document).on('click','#valid_echange',function(){
+            if ($("input:checkbox:checked").length = 1) {
+                $.ajax({
+                    url: "{{ path('update_echange', {game: game.id}) }}",
+                    data: {
+                        choix: $('input[name="carte_echange"]:checked').val()
                     },
                     method: 'POST',
                     success: function (data) {
@@ -247,7 +352,18 @@
 
                     break;
                 case 'echange':
-
+                    carte_number=2;
+                    console.log(fpair);
+                    var array = [];
+                    $.each($("input[name='carte_secret']:checked"), function () {
+                        array.push($(this).val());
+                    });
+                    console.log(array);
+                    donneesAction = {
+                        action: 'echange',
+                        firstpair: fpair,
+                        secondpair : array
+                    }
                     break;
             }
 
@@ -261,25 +377,44 @@
                         if (data[0] == true) {
                             console.log(data[1])
                             if (data[1] == 'offre') {
-                                    $.ajax({
-                                        url: "{{ path('change_player', {game: game.id}) }}",
-                                        data: {
-                                            pioche : 0
-                                        },
-                                        method: 'POST',
-                                        success: function (data) {
-                                            if (data == true) {
-                                                localStorage.setItem('{{ game.id }}', 1);
-                                                document.getElementById("finDeTour").disabled = true;
-                                                $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
-                                                boucle = setInterval(refreshGame, 3000);
-                                            }
-                                        },
-                                        error: function () {
-
+                                $.ajax({
+                                    url: "{{ path('change_player', {game: game.id}) }}",
+                                    data: {
+                                        pioche: 0
+                                    },
+                                    method: 'POST',
+                                    success: function (data) {
+                                        if (data == true) {
+                                            localStorage.setItem('{{ game.id }}', 1);
+                                            document.getElementById("finDeTour").disabled = true;
+                                            $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                                            boucle = setInterval(refreshGame, 3000);
                                         }
-                                    })
-                            } else {
+                                    },
+                                    error: function () {
+
+                                    }
+                                })
+                            }else if(data[1]=='echange'){
+                                $.ajax({
+                                    url: "{{ path('change_player', {game: game.id}) }}",
+                                    data: {
+                                        pioche: 0
+                                    },
+                                    method: 'POST',
+                                    success: function (data) {
+                                        if (data == true) {
+                                            localStorage.setItem('{{ game.id }}', 1);
+                                            document.getElementById("finDeTour").disabled = true;
+                                            $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                                            boucle = setInterval(refreshGame, 3000);
+                                        }
+                                    },
+                                    error: function () {
+
+                                    }
+                                })
+                            }else {
                                 $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}", function (responseTxt, statusTxt, xhr) {
                                     if (statusTxt == "success")
                                         document.getElementById("finDeTour").disabled = false;

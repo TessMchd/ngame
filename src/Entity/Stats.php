@@ -58,6 +58,11 @@ class Stats
      */
     private $parties_en_cours;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $grade;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,6 +162,18 @@ class Stats
     public function setPartiesEnCours(int $parties_en_cours): self
     {
         $this->parties_en_cours = $parties_en_cours;
+
+        return $this;
+    }
+
+    public function getGrade(): ?int
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(int $grade): self
+    {
+        $this->grade = $grade;
 
         return $this;
     }
