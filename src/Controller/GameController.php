@@ -392,25 +392,62 @@ class GameController extends AbstractController
         }
         $stats1=$game->getUser1()->getStats();
         $stats2=$game->getUser2()->getStats();
-        $stats1->setPieces($jetons_gagnes1);
-        $stats2->setPieces($jetons_gagnes2);
 
         if($winner!=0){
           if($winner==1){
               $game->setWinner($game->getUser1());
+              if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+                      $defaites = $stats2->getDefaites();
+                      $stats2->setDefaites($defaites + 1);
+                      $victoires = $stats1->getVictoires();
+                      $stats1->setVictoires($victoires + 1);
+                      $stats1->setPieces($stats1->getPieces()+$jetons_gagnes1);
+                      $stats2->setPieces($stats2->getPieces()+$jetons_gagnes2);
+                      $pj=$stats1->getPartiesJouees();
+                      $stats1->setPartiesJouees($pj+1);
+                      $pj=$stats2->getPartiesJouees();
+                      $stats2->setPartiesJouees($pj+1);
+                      if ($stats1->getGrade() < 10) {
+                          $stats1->setGrade($stats1->getGrade() + 1);
+                      }
+                      if ($stats2->getGrade() > 1) {
+                          $stats2->setGrade($stats2->getGrade() - 1);
+                      }
+                  }
+
           }else{
               $game->setWinner($game->getUser2());
+              if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+                  $stats1->setDefaites($stats1->getDefaites()+1);
+                  $stats2->setVictoires($stats2->getVictoires()+1);
+                  $stats1->setPieces($stats1->getPieces()+$jetons_gagnes1);
+                  $stats2->setPieces($stats2->getPieces()+$jetons_gagnes2);
+                  $pj=$stats1->getPartiesJouees();
+                  $stats1->setPartiesJouees($pj+1);
+                  $pj=$stats2->getPartiesJouees();
+                  $stats2->setPartiesJouees($pj+1);
+              }
+              if($stats2->getGrade()<10){
+                  $stats2->getGrade($stats2->getGrade()+1);
+              }
+              if ($stats1->getGrade() > 1) {
+                  $stats1->setGrade($stats1->getGrade() - 1);
+              }
           }
         }
-        $entityManager->flush();
+
 
         if ($this->getUser()->getId() === $game->getUser1()->getId()) {
             $mes_cartes= $win_card1;
             $adv_cartes=$win_card2;
+
+
         } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
             $mes_cartes= $win_card2;
             $adv_cartes=$win_card1;
         }
+
+        $entityManager->flush();
 
         if($winner!=0){
             return $this->json([$game->getWinner()->getId(),[$mes_cartes,$adv_cartes],$this->getUser()->getId()]);
