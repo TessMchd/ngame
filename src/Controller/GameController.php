@@ -217,6 +217,18 @@ class GameController extends AbstractController
             'cards' => $tCards
         ]);
     }
+    /**
+     * @Route("/check-adversaire/{game}", name="check_adversaire")
+     */
+    public function isUser2( Game $game
+    ): Response {
+        if($game->getUser2()!=null){
+            return $this->json(true);
+        }
+        else{
+            return $this->json(false);
+        }
+    }
 
     /**
      * @Route("/get-tour-game/{game}", name="get_tour")
@@ -232,6 +244,10 @@ class GameController extends AbstractController
                 return $this->json('ended');
             }
         }
+        if($game->getUser2()==null){
+            return $this->json('ouverte');
+        }
+
         if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
             return $this->json(true);
         }

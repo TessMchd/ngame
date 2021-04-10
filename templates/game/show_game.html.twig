@@ -93,25 +93,41 @@
                     if (data == false) {
                         $('#message').html('A votre adversaire de jouer')
 
-                    } else if(data == 'ended'){
+                    } else if(data == 'ended') {
                         clearInterval(boucle)
-                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}",function(responseTxt, statusTxt, xhr){
-                            if(statusTxt == "success")
+                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}", function (responseTxt, statusTxt, xhr) {
+                            if (statusTxt == "success")
                                 $('#message').html('La partie est terminée')
-                                console.log('partie finie')
-                                $('.carte_secret').fadeOut("slow", function() {
-                                });
-                                ended()
-                            if(statusTxt == "error")
+                            console.log('partie finie')
+                            $('.carte_secret').fadeOut("slow", function () {
+                            });
+                            ended()
+                            if (statusTxt == "error")
                                 console.log("Error: " + xhr.status + ": " + xhr.statusText);
                         });
 
+                    }else if (data == 'ouverte'){
+                            clearInterval(boucle)
+                            interval = setInterval(function (){
+                                $.ajax({
+                                    url: "{{ path('check_adversaire', {game: game.id}) }}",
+                                    success: function(data) {
+                                        if(data ==true){
+                                            clearInterval(interval)
+                                            boucle = setInterval(refreshGame, 3000);
+                                        }else{
+                                            console.log("pas d'adversaire");
+                                        }
+                                    },
+                                    error: function(){
+
+                                    }
+                                })
+                            },3000)
                     } else {
                         clearInterval(boucle)
                         $('#message').html('A vous de jouer')
-                        {% if game.user2 != null %}
                             document.getElementById("overlay").style.display = "none";
-                        {% endif %}
                          $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}",function(responseTxt, statusTxt, xhr){
                              if(statusTxt == "success")
                                     console.log("External content loaded successfully!")
@@ -146,8 +162,8 @@
                     }else{
                         console.log(cachées[0][0])
                         setTimeout(function () {
-                            document.getElementById("moi_"+cachées[0]).innerHTML += "<img class='discover' style='width:75px' src='../../GoldenRumMutinerie/img/card/"+images[cachées[0]]+"'>"
-                            document.getElementById("adv_"+cachées[1]).innerHTML += "<img class='discover' style='width:75px' src='../../GoldenRumMutinerie/img/card/"+images[cachées[1]]+"'>"
+                            document.getElementById("moi_"+cachées[0]).innerHTML += "<img class='discover card_main' style='width:75px' src='../../GoldenRumMutinerie/img/card/"+images[cachées[0]]+"'>"
+                            document.getElementById("adv_"+cachées[1]).innerHTML += "<img class='discover card_main' style='width:75px' src='../../GoldenRumMutinerie/img/card/"+images[cachées[1]]+"'>"
                             $('.discover').hide()
                             $('.discover').fadeIn(1000)
                         },1500)}
@@ -180,7 +196,7 @@
                     }
 
                     setTimeout(function () {
-                            $("#ended").fadeIn();
+                        $("#ended").fadeIn();
                         },7000
                     );
                 },
@@ -237,7 +253,7 @@
                 $("input[name='carte_secret']").removeAttr("disabled");
                 $("input[name='carte_secret']").prop('checked', false)
                 document.getElementById("action_message").innerHTML="<strong>DEPOT</strong>"
-                document.getElementById("aide").innerHTML="Choisissez deux cartes à garder jusqu'à la fin de la partie"
+                document.getElementById("aide").innerHTML="Choisissez deux cartes qui ne seront jamais utilisées."
                 console.log('depot')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'depot' //mémorise l'action en cours

@@ -1,6 +1,6 @@
 
 <style>
-    #mon_offre, #adv_offre, #mon_echange,#ended{
+    #mon_offre, #adv_offre, #mon_echange,{
         position: absolute;
         width:  100%;
         height: 100%;
@@ -15,7 +15,17 @@
     }
 
     #ended{
-        transition-duration: 1s;
+        transition-duration: 0.5s;
+        position: absolute;
+        width:  100%;
+        height: 100%;
+        z-index: 10;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .container{
         margin:0;
@@ -116,7 +126,7 @@
 </style>
 
 {% if set.ended!="" %}
-    <div id="ended">
+    <div id="ended" style="display: none">
         <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
             <h1>La manche est finie</h1>
             {% if game.winner==app.user.id %}
