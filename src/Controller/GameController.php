@@ -386,10 +386,10 @@ class GameController extends AbstractController
         }else if ($jetons_gagnes1>=4 or $jetons_gagnes2>=4){
             $game->setEnded(new \DateTime('now'));
             if ($jetons_gagnes1>=4) {
-                $game->setWinner($game->getUser1Id());
+                $game->setWinner($game->getUser1());
                 $winner=1;
             } else{
-                $game->setWinner($game->getUser2Id());
+                $game->setWinner($game->getUser2());
                 $winner=2;
             }
         }
