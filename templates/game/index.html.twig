@@ -182,7 +182,7 @@
                                 <p class="fin">Finie le {{ game.ended| date("m/d/Y") }}</p>
                                 <p class="pseudo">{{ game.user1.pseudo}}</p>
                                 <p class="rang">Rang : {{  game.user1.stats.rang}} Grade : {{ rangs[game.user1.stats.grade] }}</p>
-                                {% if game.winner == null%}
+                                {% if game.winner != null%}
                                     {% if game.winner.id == app.user.id %}
                                         <p class="resultat">Gagné</p>
                                      {% else%}
