@@ -42,7 +42,7 @@
 
     <button type="submit" id="button_inscription">S'inscrire</button>
 
-    <a class="lien_login" href="/ngame/public/index.php/login">Je suis déjà inscrit</a>
+    <a class="lien_login" href="{{ path('user_profil') }}">Je suis déjà inscrit</a>
 
     {{ form_errors(form) }}
     {{ form_end(form) }}
