@@ -28,6 +28,10 @@
             pointer-events: none;
         }
 
+        .card_main{
+            width: 100px;
+        }
+
 
     </style>
 
@@ -99,8 +103,9 @@
                             if (statusTxt == "success")
                                 $('#message').html('La partie est terminée')
                             console.log('partie finie')
-                            $('.carte_secret').fadeOut("slow", function () {
-                            });
+                            setTimeout(function () {
+                                $('.carte_secret').fadeOut("slow")
+                            },3000);
                             ended()
                             if (statusTxt == "error")
                                 console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -150,7 +155,12 @@
 
         function ended(){
             var images= {
+                'jambe': 'carte_main_1.png',
+                'balais': 'carte_main_2.png',
+                'rhum':'carte_main_3.png',
                 'perroquet': 'carte_main_4.png',
+                'longuevue':'carte_main_5.png',
+                'boulet': 'carte_main_6.png',
                 'sabre': 'carte_main_7.png'
             }
             $.ajax({
@@ -320,6 +330,7 @@
             }
         })
         $(document).on('click', '#echange', function(){
+            fpair=[]
             $('#valider').hide()
             if(localStorage.getItem('{{game.id}}')==0) {
                 $("input[name='carte_secret']").removeAttr("disabled");
