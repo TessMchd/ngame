@@ -377,19 +377,15 @@ class GameController extends AbstractController
         if($score1>=11 or $score2>=11) {
             $game->setEnded(new \DateTime('now'));
             if ($score1 >= 11) {
-                $game->setWinner($game->getUser1Id());
                 $winner=1;
             } else{
-            $game->setWinner($game->getUser2Id());
                 $winner=2;
             }
         }else if ($jetons_gagnes1>=4 or $jetons_gagnes2>=4){
             $game->setEnded(new \DateTime('now'));
             if ($jetons_gagnes1>=4) {
-                $game->setWinner($game->getUser1());
                 $winner=1;
             } else{
-                $game->setWinner($game->getUser2());
                 $winner=2;
             }
         }
@@ -397,6 +393,7 @@ class GameController extends AbstractController
         $stats2=$game->getUser2()->getStats();
         $stats1->setPieces($jetons_gagnes1);
         $stats2->setPieces($jetons_gagnes2);
+        
         if($winner!=0){
           if($winner==1){
               $game->setWinner($game->getUser1());
