@@ -40,11 +40,11 @@
     }
 
     .carte_top{
-        width:130px; display: flex;flex-direction: column;
+        width:120px; display: flex;flex-direction: column;
     }
 
     .carte_bottom{
-        width:130px; display: flex;flex-direction: column;
+        width:120px; display: flex;flex-direction: column;
     }
 
     .carte_bottom img:nth-child(2) {
@@ -100,17 +100,17 @@
     }
 
     .card_plateau{
-        width: 130px;
+        width: 120px;
     }
 
     .card_main{
-        width: 100px;
+        width: 90px;
     }
 
     .jeton_victoire{
         width:32px;
-        margin-left:50px;
-        margin-right: 50px;
+        margin-left:45px;
+        margin-right: 45px;
         display: none;
     }
     .jeton_bas{
@@ -125,7 +125,7 @@
 
 </style>
 
-{% if set.ended!="" %}
+
     <div id="ended" style="display: none">
         <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
             <h1>La manche est finie</h1>
@@ -135,8 +135,6 @@
 
         </div>
     </div>
-{% endif %}
-
 
 
 {% if moi.actions['OFFRE']==true and moi.actions['OFFRE']!= "done"%}
