@@ -209,6 +209,13 @@
                         $("#ended").fadeIn();
                         },7000
                     );
+                    if(score[0]==0) {
+                        $('#end_msg').html("Il n'y a pas de vainqueur")
+                    }else if(score[0]== {{ app.user.id }}){
+                        $('#end_msg').html("Vous avez gagné ! ")
+                    }else{
+                        $('#end_msg').html("Tu as perdu")
+                    }
                 },
                 error: function(){
 

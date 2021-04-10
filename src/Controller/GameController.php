@@ -393,7 +393,7 @@ class GameController extends AbstractController
         $stats2=$game->getUser2()->getStats();
         $stats1->setPieces($jetons_gagnes1);
         $stats2->setPieces($jetons_gagnes2);
-        
+
         if($winner!=0){
           if($winner==1){
               $game->setWinner($game->getUser1());

@@ -129,16 +129,9 @@
     <div id="ended" style="display: none">
         <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
             <h1>La manche est finie</h1>
-            {% if game.winner==app.user.id %}
-                <p>Tu as gagné ! </p>
+
+                <p id="end_msg"></p>
                 <a href="{{ path('new_game') }}">Retour</a>
-            {% elseif game.winner == 0 %}
-                <p>Il n'y a pas de vainqueur</p>
-                <a href="{{ path('new_game') }}">Commencer une deuxième manche</a>
-            {% else %}
-                <p>Tu as perdu </p>
-                <a href="{{ path('new_game') }}">Retour</a>
-            {% endif %}
 
         </div>
     </div>
