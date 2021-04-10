@@ -399,9 +399,9 @@ class GameController extends AbstractController
         $stats2->setPieces($jetons_gagnes2);
         if($winner!=0){
           if($winner==1){
-              $game->setWinner($game->getUser1Id());
+              $game->setWinner($game->getUser1());
           }else{
-              $game->setWinner($game->getUser2Id());
+              $game->setWinner($game->getUser2());
           }
         }
         $entityManager->flush();
