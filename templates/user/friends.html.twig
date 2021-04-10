@@ -73,6 +73,48 @@
     </div>
 
     <script>
+        function searchFriend(pseudo){
+            $.ajax({
+                url: "{{ path('search_friend') }}",
+                data: {pseudo: pseudo},
+                method: 'POST',
+                success: function (data) {
+                    if (data!=false) {
+                        $('#joueurs').hide()
+                        $('#retour_liste').show()
+                        document.getElementById('search').innerHTML = ""
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
+                                "                <img src=\"../../GoldenRumMutinerie/img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
+                                "                <div>\n" +
+                                "                    <p>" + data[i].pseudo + "</p>\n" +
+                                "                    <p>Rang " + data[i].rang + "</p>\n" +
+                                "                </div>\n" +
+                                "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
+                                "            </div>"
+                        }
+                    }
+                    $('.send').click(function(){
+                        var friend = $(this).val();
+                        $.ajax({
+                            url: "{{ path('friend_request') }}",
+                            data: {friend: friend},
+                            method: 'POST',
+                            success: function (data) {
+                                console.log(friend)
+                                document.location.reload();
+                            },
+                            error: function () {
+
+                            }
+                        })
+                    });
+                },
+                error: function () {
+
+                }
+            })
+        }
 
         $('.send').click(function(){
             var friend = $(this).val();
@@ -121,33 +163,6 @@
             $('#joueurs').show();
         })
 
-        function searchFriend(pseudo){
-            $.ajax({
-                url: "{{ path('search_friend') }}",
-                data: {pseudo: pseudo},
-                method: 'POST',
-                success: function (data) {
-                    if (data!=false) {
-                        $('#joueurs').hide()
-                        $('#retour_liste').show()
-                        document.getElementById('search').innerHTML = ""
-                        for (var i = 0; i < data.length; i++) {
-                            document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
-                                "                <img src=\"../../GoldenRumMutinerie/img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
-                                "                <div>\n" +
-                                "                    <p>" + data[i].pseudo + "</p>\n" +
-                                "                    <p>Rang " + data[i].rang + "</p>\n" +
-                                "                </div>\n" +
-                                "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
-                                "            </div>"
-                        }
-                    }
-                },
-                error: function () {
-
-                }
-            })
-        }
 
     </script>
 {% endblock %}
