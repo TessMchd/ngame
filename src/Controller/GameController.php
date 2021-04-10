@@ -239,8 +239,8 @@ class GameController extends AbstractController
         $round=$game->getSets()[0];
         $actions1=$round->getUser1Action();
         $actions2=$round->getUser2Action();
-        if($actions1['OFFRE']==true and $actions1['DEPOT']==true and $actions1['SECRET'] and $actions1['ECHANGE']==true){
-            if($actions2['OFFRE']==true and $actions2['DEPOT']==true and $actions2['SECRET'] and $actions2['ECHANGE']==true) {
+        if($actions1['OFFRE']=="done" and $actions1['DEPOT']==true and $actions1['SECRET'] and $actions1['ECHANGE']=="done"){
+            if($actions2['OFFRE']=="done" and $actions2['DEPOT']==true and $actions2['SECRET'] and $actions2['ECHANGE']=="done") {
                 return $this->json('ended');
             }
         }
