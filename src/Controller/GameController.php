@@ -410,7 +410,8 @@ class GameController extends AbstractController
             $mes_cartes= $win_card2;
             $adv_cartes=$win_card1;
         }
-        return $this->json([$winner,[$mes_cartes,$adv_cartes]]);
+
+        return $this->json([$winner,[$mes_cartes,$adv_cartes],$this->getUser()->getId()]);
 
     }
 

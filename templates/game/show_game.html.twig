@@ -211,7 +211,7 @@
                     );
                     if(score[0]==0) {
                         $('#end_msg').html("Il n'y a pas de vainqueur")
-                    }else if(score[0]== {{ app.user.id }}){
+                    }else if(score[0]==score[2]){
                         $('#end_msg').html("Vous avez gagné ! ")
                     }else{
                         $('#end_msg').html("Vous avez perdu !")

@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/game/show_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/show_game.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +217,7 @@
       <workItem from="1617868799147" duration="23682000" />
       <workItem from="1617902308488" duration="12954000" />
       <workItem from="1617976184435" duration="7067000" />
-      <workItem from="1618043986483" duration="24341000" />
+      <workItem from="1618043986483" duration="25163000" />
     </task>
     <servers />
   </component>
@@ -275,10 +277,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1618068470568" />
-    <state x="392" y="153" width="1582" height="740" key="dock-window-1" timestamp="1617791053683">
+    <state x="345" y="117" width="1550" height="778" key="dock-window-1" timestamp="1618073963593">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="392" y="153" width="1582" height="740" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1617791053683" />
+    <state x="345" y="117" width="1550" height="778" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1618073963593" />
     <state x="667" y="76" width="585" height="888" key="find.popup" timestamp="1615983892162">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
