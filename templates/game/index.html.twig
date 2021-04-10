@@ -184,7 +184,9 @@
                                 <p class="rang">Rang : {{  game.user1.stats.rang}} Grade : {{ rangs[game.user1.stats.grade] }}</p>
                                 {% if game.winner.id == app.user.id %}
                                     <p class="resultat">Gagné</p>
-                                {% else %}
+                                {% else if game.winner == null%}
+                                    <p> Pas de vainqueur </p>
+                                 {% else%}
                                     <p class="resultat">Perdu</p>
                                 {% endif %}
                             </div>
