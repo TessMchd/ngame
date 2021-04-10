@@ -224,6 +224,14 @@ class GameController extends AbstractController
     public function getTour(
         Game $game
     ): Response {
+        $round=$game->getSets()[0];
+        $actions1=$round->getUser1Action();
+        $actions2=$round->getUser2Action();
+        if($actions1['OFFRE']==true and $actions1['DEPOT']==true and $actions1['SECRET'] and $actions1['ECHANGE']==true){
+            if($actions2['OFFRE']==true and $actions2['DEPOT']==true and $actions2['SECRET'] and $actions2['ECHANGE']==true) {
+                return $this->json('ended');
+            }
+        }
         if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
             return $this->json(true);
         }
@@ -264,6 +272,133 @@ class GameController extends AbstractController
         $entityManager->flush();
 
         return $this->json(true);
+    }
+
+    /**
+     * @Route("/end-game/{game}", name="end_game")
+     */
+    public function endGame(
+        Game $game,
+        EntityManagerInterface $entityManager,
+        CardRepository $cardRepository
+    ): Response {
+        $round = $game->getSets()[0]; //a gérer selon le round en cours
+
+        $actions1=$round->getUser1Action();
+        $actions2=$round->getUser2Action();
+
+        if ($actions1['SECRET']=='done'){
+            return $this->json('done');
+        }else{
+            if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+                $moi_secret=$actions1['SECRET'][0];
+                $adv_secret=$actions2['SECRET'][0];
+                $carte= $cardRepository->find($moi_secret);
+
+
+            } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+                $moi_secret=$actions2['SECRET'][0];
+                $adv_secret=$actions1['SECRET'][0];
+                $carte= $cardRepository->find($moi_secret);
+
+
+            }   else {
+                return $this->redirectToRoute('user_profil');
+            }
+
+
+            $board1=$round->getUser1BoardCards();
+            $board2=$round->getUser2BoardCards();
+            $carte_secret1=$cardRepository->find($actions1['SECRET'][0]);
+            array_push($board1[$carte_secret1->getName()],$carte_secret1->getId());
+            $carte_secret2=$cardRepository->find($actions2['SECRET'][0]);
+            array_push($board2[$carte_secret2->getName()],$carte_secret2->getId());
+            $actions1['SECRET']="done";
+            $actions2['SECRET']="done";
+            $round->setUser1BoardCards($board1);
+            $round->setUser2BoardCards($board2);
+            $round->setUser1Action($actions1);
+            $round->setUser2Action($actions2);
+            $entityManager->flush();
+            return $this->json([$carte->getName(),$cardRepository->find($adv_secret)->getName()]);
+        }
+
+    }
+
+    /**
+     * @Route("/win/{game}", name="win")
+     */
+    public function win(Game $game, EntityManagerInterface $entityManager, CardRepository $cardRepository
+    ): Response {
+        $round = $game->getSets()[0];
+        if ($round->getEnded()== "") {
+            $round->setEnded(new \DateTime('now'));
+            $entityManager->flush();
+        }
+        $board1=$round->getUser1BoardCards();
+        $board2=$round->getUser2BoardCards();
+        $score1=0;
+        $score2=0;
+        $jetons_gagnes1=0;
+        $jetons_gagnes2=0;
+        $winner=0;
+        $win_card1=[];
+        $win_card2=[];
+
+        foreach ($board1 as $key => $value){
+            if(count($board1[$key]) > count($board2[$key])){
+                $point= $cardRepository->find($value[0]);
+                $score1+=$point->getNumber();
+                $jetons_gagnes1+=1;
+                array_push($win_card1,$point->getName());
+            }else if (count($board2[$key]) > count($board1[$key])) {
+                $point= $cardRepository->find($board2[$key][0]);
+                $score2+=$point->getNumber();
+                $jetons_gagnes2+=1;
+                array_push($win_card2,$point->getName());
+            }
+        }
+        if($score1>=11 or $score2>=11) {
+            $game->setEnded(new \DateTime('now'));
+            if ($score1 >= 11) {
+                $game->setWinner($game->getUser1Id());
+                $winner=1;
+            } else{
+            $game->setWinner($game->getUser2Id());
+                $winner=2;
+            }
+        }else if ($jetons_gagnes1>=4 or $jetons_gagnes2>=4){
+            $game->setEnded(new \DateTime('now'));
+            if ($jetons_gagnes1>=4) {
+                $game->setWinner($game->getUser1Id());
+                $winner=1;
+            } else{
+                $game->setWinner($game->getUser2Id());
+                $winner=2;
+            }
+        }
+        $stats1=$game->getUser1()->getStats();
+        $stats2=$game->getUser2()->getStats();
+        $stats1->setPieces($jetons_gagnes1);
+        $stats2->setPieces($jetons_gagnes2);
+        if($winner!=0){
+          if($winner==1){
+              $game->setWinner($game->getUser1Id());
+          }else{
+              $game->setWinner($game->getUser2Id());
+          }
+        }
+        $entityManager->flush();
+
+        if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+            $mes_cartes= $win_card1;
+            $adv_cartes=$win_card2;
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+            $mes_cartes= $win_card2;
+            $adv_cartes=$win_card1;
+        }
+        return $this->json([$winner,[$mes_cartes,$adv_cartes]]);
+
     }
 
     /**

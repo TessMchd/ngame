@@ -76,6 +76,7 @@
                         document.getElementById("overlay").style.display = "block";
 
                     }
+
                 },
                 error: function(){
 
@@ -91,6 +92,19 @@
                     console.log(data)
                     if (data == false) {
                         $('#message').html('A votre adversaire de jouer')
+
+                    } else if(data == 'ended'){
+                        clearInterval(boucle)
+                        $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}",function(responseTxt, statusTxt, xhr){
+                            if(statusTxt == "success")
+                                $('#message').html('La partie est terminée')
+                                console.log('partie finie')
+                                $('.carte_secret').fadeOut("slow", function() {
+                                });
+                                ended()
+                            if(statusTxt == "error")
+                                console.log("Error: " + xhr.status + ": " + xhr.statusText);
+                        });
 
                     } else {
                         clearInterval(boucle)
@@ -117,6 +131,66 @@
             })
 
         }
+
+        function ended(){
+            var images= {
+                'perroquet': 'carte_main_4.png',
+                'sabre': 'carte_main_7.png'
+            }
+            $.ajax({
+                url: "{{ path('end_game', {game: game.id}) }}",
+                method: 'POST',
+                success: function (cachées) {
+                    if (cachées=='done'){
+                        console.log('carte cache decouverte')
+                    }else{
+                        console.log(cachées[0][0])
+                        setTimeout(function () {
+                            document.getElementById("moi_"+cachées[0]).innerHTML += "<img class='discover' style='width:75px' src='../../img/card/"+images[cachées[0]]+"'>"
+                            document.getElementById("adv_"+cachées[1]).innerHTML += "<img class='discover' style='width:75px' src='../../img/card/"+images[cachées[1]]+"'>"
+                            $('.discover').hide()
+                            $('.discover').fadeIn(1000)
+                        },1500)}
+                    winner()
+
+
+                },
+                error: function(){
+
+                }
+            })
+        }
+        function winner(){
+            $.ajax({
+                url: "{{ path('win', {game: game.id}) }}",
+                method: 'POST',
+                success: function (score) {
+                    $('.jeton_victoire').fadeIn();
+                    console.log(score[0])
+                    console.log(score[1][0],score[1][1])
+                    for (let i = 0; i < score[1][0].length; i++) {
+                        setTimeout(function () {
+                            document.getElementById("victoire_"+score[1][0][i]).classList.add("jeton_bas");
+                        },3000)
+                    }
+                    for (let i = 0; i < score[1][1].length; i++) {
+                        setTimeout(function () {
+                            document.getElementById("victoire_"+score[1][1][i]).classList.add("jeton_haut");
+                        },3000)
+                    }
+
+                    setTimeout(function () {
+                            $("#ended").fadeIn();
+                        },7000
+                    );
+                },
+                error: function(){
+
+                }
+            })
+
+        }
+
          function pioche(){
             $.ajax({
                 url: "{{ path('pioche', {game: game.id}) }}",
@@ -134,6 +208,8 @@
                 }
             })
         }
+
+
 
 
         let action

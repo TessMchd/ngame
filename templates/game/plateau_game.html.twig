@@ -1,6 +1,6 @@
 
 <style>
-    #mon_offre, #adv_offre, #mon_echange{
+    #mon_offre, #adv_offre, #mon_echange,#ended{
         position: absolute;
         width:  100%;
         height: 100%;
@@ -12,6 +12,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    #ended{
+        transition-duration: 1s;
     }
     .container{
         margin:0;
@@ -26,11 +30,11 @@
     }
 
     .carte_top{
-        width:100px; display: flex;flex-direction: column;
+        width:130px; display: flex;flex-direction: column;
     }
 
     .carte_bottom{
-        width:100px; display: flex;flex-direction: column;
+        width:130px; display: flex;flex-direction: column;
     }
 
     .carte_bottom img:nth-child(2) {
@@ -80,8 +84,56 @@
         margin: 1%;
     }
 
+    .card{
+        width: 80px;
+        margin: 5px;
+    }
+
+    .card_plateau{
+        width: 130px;
+    }
+
+    .card_main{
+        width: 100px;
+    }
+
+    .jeton_victoire{
+        width:32px;
+        margin-left:50px;
+        margin-right: 50px;
+        display: none;
+    }
+    .jeton_bas{
+       padding-top: 95px;
+        transition-duration: 1s
+    }
+
+    .jeton_haut{
+        padding-bottom: 95px;
+        transition-duration: 1s
+    }
 
 </style>
+
+{% if set.ended!="" %}
+    <div id="ended">
+        <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+            <h1>La manche est finie</h1>
+            {% if game.winner==app.user.id %}
+                <p>Tu as gagné ! </p>
+                <a href="{{ path('new_game') }}">Retour</a>
+            {% elseif game.winner == 0 %}
+                <p>Il n'y a pas de vainqueur</p>
+                <a href="{{ path('new_game') }}">Commencer une deuxième manche</a>
+            {% else %}
+                <p>Tu as perdu </p>
+                <a href="{{ path('new_game') }}">Retour</a>
+            {% endif %}
+
+        </div>
+    </div>
+{% endif %}
+
 
 
 {% if moi.actions['OFFRE']==true and moi.actions['OFFRE']!= "done"%}
@@ -158,16 +210,16 @@
             {% endif %}
         </div>
         <div class="col-6 d-flex justify-content-center align-items-center">
-            <div id="adversaires_cartes">
+            <div id="adversaires_cartes" class="d-flex justify-content-center align-items-center">
                 {% for card in adversaire.handCards %}
-                    <img style="width:80px" src="{{ asset('img/plateau/verso_carte.png') }}">
+                    <img class="card" src="{{ asset('img/plateau/verso_carte.png') }}">
                 {% endfor %}
             </div>
         </div>
 
         <div class="col-2" style="display:flex;justify-content: center;align-items: center">
-            {% if adversaire.actions['SECRET']==true %}
-                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+            {% if adversaire.actions['SECRET']==true and adversaire.actions['SECRET']!="done"%}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px" class="carte_secret">
                     <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
                     <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
                 </div>
@@ -211,90 +263,116 @@
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <div class="carte_top"  >
+        <div class="carte_top" id="adv_jambe" >
             {% for card in adversaire.board['jambe'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_1.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" >
+        <div class="carte_top" id="adv_balais" >
             {% for card in adversaire.board['balais'] %}
-                <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+                <img class="card_main" src="{{ asset('img/card/carte_main_2.png') }}" >
 
             {% endfor %}
         </div>
-        <div class="carte_top" >
+        <div class="carte_top"  id="adv_rhum">
 
             {% for card in adversaire.board['rhum'] %}
-                <img style="width:75px;" src="{{ asset('img/card/carte_main_3.png') }}" >
+                <img class="card_main" src="{{ asset('img/card/carte_main_3.png') }}" >
 
             {% endfor %}
 
         </div>
-        <div class="carte_top" >
+        <div class="carte_top" id="adv_perroquet" >
             {% for card in adversaire.board['perroquet'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" >
+        <div class="carte_top" id="adv_longuevue">
             {% for card in adversaire.board['longuevue'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" >
+        <div class="carte_top" id="adv_boulet">
             {% for card in adversaire.board['boulet'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_6.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_top" >
+        <div class="carte_top" id="adv_sabre">
             {% for card in adversaire.board['sabre'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_7.png') }}">
             {% endfor %}
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_1.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_2.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_3.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_4.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_5.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_6.png') }}">
-        <img style="width:100px" src="{{ asset('img/plateau/carte_plateau_7.png') }}">
+        <div class=" d-flex justify-content-center align-items-center" style="position: absolute;z-index: 1; margin-top: 15px;height:130px ">
+            <div >
+                <img class="jeton_victoire"  id="victoire_jambe"  src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div >
+                <img class="jeton_victoire" id="victoire_balais" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div>
+                <img class="jeton_victoire"  id="victoire_rhum" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div>
+                <img class="jeton_victoire"  id="victoire_perroquet" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div>
+                <img class="jeton_victoire"  id="victoire_longuevue" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div>
+            <img class="jeton_victoire"  id="victoire_boulet" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
+            <div>
+            <img class="jeton_victoire"  id="victoire_sabre" src="{{ asset('img/plateau/jeton_victoire.png') }}" >
+            </div>
 
+        </div>
+        <div class="row d-flex justify-content-center " style="margin-bottom: 10px;margin-top: 10px">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_1.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_2.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_3.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_4.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_5.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_6.png') }}">
+            <img class="card_plateau" src="{{ asset('img/plateau/carte_plateau_7.png') }}">
+
+        </div>
     </div>
     <div class="row d-flex justify-content-center" >
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_jambe" >
             {% for card in moi.board['jambe'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_1.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_1.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_balais" >
             {% for card in moi.board['balais'] %}
-                <img style="width:75px;" src="{{ asset('img/card/carte_main_2.png') }}" >
+                <img <img class="card_main" src="{{ asset('img/card/carte_main_2.png') }}" >
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_rhum">
             {% for card in moi.board['rhum'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_3.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_3.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_perroquet" >
             {% for card in moi.board['perroquet'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_4.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_4.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_longuevue">
             {% for card in moi.board['longuevue'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_5.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_5.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_boulet" >
             {% for card in moi.board['boulet'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_6.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_6.png') }}">
             {% endfor %}
         </div>
-        <div class="carte_bottom" >
+        <div class="carte_bottom" id="moi_sabre">
             {% for card in moi.board['sabre'] %}
-                <img style="width:75px" src="{{ asset('img/card/carte_main_7.png') }}">
+                <img class="card_main" src="{{ asset('img/card/carte_main_7.png') }}">
             {% endfor %}
         </div>
 
@@ -305,9 +383,9 @@
             <p>{{ app.user.pseudo }}</p>
         </div>
         <div class="col-6 d-flex justify-content-center align-items-center" >
-            <div id="mes_cartes">
+            <div id="mes_cartes" class="d-flex justify-content-center align-items-center">
                 {% for card in moi.handCards %}
-                    <img style="width:80px" src="{{ asset('img/card/'~cards[card].picture) }}">
+                    <img class="card" src="{{ asset('img/card/'~cards[card].picture) }}">
                     <input type="checkbox"  name="carte_secret"  value="{{ card }}"
                            style="display: none"
                            class="choixSecret">
@@ -315,8 +393,8 @@
             </div>
         </div>
         <div class="col-2" style="display:flex;justify-content: center;align-items: center">
-            {% if moi.actions['SECRET']==true %}
-                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px">
+            {% if moi.actions['SECRET']==true and moi.actions['SECRET']!="done" %}
+                <div style="text-align: center;display:flex;justify-content: center;align-items: center;margin-right: 50px" class="carte_secret">
                     <img style="width:90px;position: absolute;z-index: 0" src="{{ asset('img/plateau/verso_carte.png')}}">
                     <img style="width:60px;position:relative;z-index:1;" src="{{ asset('img/plateau/action1_1.png')}}">
                 </div>
