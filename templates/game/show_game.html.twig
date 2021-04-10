@@ -252,7 +252,7 @@
                 $("input[name='carte_secret']").removeAttr("disabled");
                 $("input[name='carte_secret']").prop('checked', false)
                 document.getElementById("action_message").innerHTML="<strong>SECRET</strong>"
-                document.getElementById("aide").innerHTML="Choisissez une carte à garder jusqu'à la fin de la partie"
+                document.getElementById("aide").innerHTML="Choisissez une carte à cacher qui ne sera dévoilée qu'à la fin de la partie"
                 console.log('secret')
                 action = 'secret' //mémorise l'action en cours
                 $('.choixSecret').show()
@@ -270,7 +270,7 @@
                 $("input[name='carte_secret']").removeAttr("disabled");
                 $("input[name='carte_secret']").prop('checked', false)
                 document.getElementById("action_message").innerHTML="<strong>DEPOT</strong>"
-                document.getElementById("aide").innerHTML="Choisissez deux cartes qui ne seront jamais utilisées."
+                document.getElementById("aide").innerHTML="Choisissez deux cartes qui ne seront jamais utilisées lors de la manche."
                 console.log('depot')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'depot' //mémorise l'action en cours
@@ -289,7 +289,7 @@
                 $("input[name='carte_secret']").removeAttr("disabled");
                 $("input[name='carte_secret']").prop('checked', false)
                 document.getElementById("action_message").innerHTML="<strong>OFFRE</strong>"
-                document.getElementById("aide").innerHTML="Choisissez trois cartes. Une d'elles sera choisie par l'adversaire."
+                document.getElementById("aide").innerHTML="Choisissez trois cartes. Une d'elles sera choisie par l'adversaire et déposé de son côté devant le pirate correspondant. Les restantes seront posées du votre"
                 console.log('offre')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'offre' //mémorise l'action en cours
@@ -343,7 +343,7 @@
                 $("input[name='carte_secret']").removeAttr("disabled");
                 $("input[name='carte_secret']").prop('checked', false)
                 document.getElementById("action_message").innerHTML="<strong>ECHANGE</strong>"
-                document.getElementById("aide").innerHTML="Choisissez deux paires de cartes. L'adversaire en choisira une."
+                document.getElementById("aide").innerHTML="Choisissez deux paires de cartes. L'adversaire en choisira une, l'autre sera pour vous. Les cartes seront déposées sur le plateau"
                 console.log('echange')
                 $("#depot_carte").addClass("fadeInDown")
                 action = 'echange'
