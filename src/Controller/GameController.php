@@ -348,6 +348,7 @@ class GameController extends AbstractController
     ): Response {
         $round = $game->getSets()[0];
         if ($round->getEnded()== "") {
+            $game->setEnded(new \DateTime('now'));
             $round->setEnded(new \DateTime('now'));
             $entityManager->flush();
         }
