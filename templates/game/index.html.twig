@@ -56,7 +56,7 @@
                         <button class="nav-link" id="amis-tab" data-bs-toggle="tab" data-bs-target="#amis" type="button" role="tab" aria-controls="amis" aria-selected="false">Amis</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="ouvertes-tab" data-bs-toggle="tab" data-bs-target="#ouvertes" type="button" role="tab" aria-controls="ouvertes" aria-selected="false">En attente</button>
+                        <button class="nav-link" id="ouvertes-tab" data-bs-toggle="tab" data-bs-target="#ouvertes" type="button" role="tab" aria-controls="ouvertes" aria-selected="false">En attente d'adversaire</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -76,6 +76,7 @@
                                         </div>
                                     {% endfor %}
                             </div>
+                            <p style="text-align: left;color:white;width: 70%; margin-left: 20px ;">Commencer la partie sans choisir d'adversaire pour créer une partie ouverte !</p>
                             <button class="next_link" type="submit">
                                 <p>Commencer la partie</p>
                                 <img src="{{ asset('img/ban_droite.png')}}" alt="">
