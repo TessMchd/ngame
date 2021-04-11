@@ -478,7 +478,8 @@ class GameController extends AbstractController
                     $set = new Round();
                     $set->setGame($game);
                     $set->setCreated(new \DateTime('now'));
-                    $set->setSetNumber($set->getSetNumber() + 1);
+                    $number=$set->getSetNumber();
+                    $set->setSetNumber($number + 1);
 
                     $cards = $cardRepository->findAll();
                     $tCards = [];
