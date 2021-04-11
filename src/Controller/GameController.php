@@ -563,6 +563,7 @@ class GameController extends AbstractController
                     ]);
                     $entityManager->persist($set);
                     $entityManager->flush();
+                    return $this->json(true);
 
                 } else {
                     return $this->json(false);
@@ -570,6 +571,8 @@ class GameController extends AbstractController
             }else{
                 return $this->json(false);
             }
+        }else{
+            return $this->json(false);
         }
 
     }
