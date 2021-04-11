@@ -219,6 +219,7 @@
                                 success: function(data) {
                                     console.log(data)
                                     if (data == true) {
+                                        localStorage.setItem('{{ game.id }}', 0);
                                         clearInterval(verif_fin)
                                         $('#next_manche').show();
 
