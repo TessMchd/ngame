@@ -472,6 +472,12 @@ class GameController extends AbstractController
     public function nextRound(Game $game, EntityManagerInterface $entityManager, CardRepository $cardRepository
     ): Response {
         $round = $game->getSets()[count($game->getSets())-1];
+        if(count($game->getSets()) >1  ){
+            if($game->getSets()[count($game->getSets())-2]->getEnd1()==1 and $game->getSets()[count($game->getSets())-2]->getEnd2()==1 ){
+                return $this->json(true);
+            }
+
+        }
         if($round->getEnd1()==1 and $round->getEnd2()==1) {
             if($round->getSetNumber() <= 3){
                 if ($this->getUser()->getId() === $game->getUser1()->getId()) {
@@ -564,10 +570,10 @@ class GameController extends AbstractController
             }else{
                 return $this->json(false);
             }
-
-            return $this->json(true);
         }
+
     }
+
 
     /**
      * @Route("/pioche/{game}", name="pioche")
