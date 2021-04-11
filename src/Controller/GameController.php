@@ -210,12 +210,15 @@ class GameController extends AbstractController
         foreach ($cards as $card) {
             $tCards[$card->getId()] = $card;
         }
-
-        return $this->render('game/show_game.html.twig', [
-            'game' => $game,
-            'set' => $game->getSets()[count($game->getSets())-1],
-            'cards' => $tCards
-        ]);
+        if($this->getUser()!=null) {
+            return $this->render('game/show_game.html.twig', [
+                'game' => $game,
+                'set' => $game->getSets()[count($game->getSets()) - 1],
+                'cards' => $tCards
+            ]);
+        }else{
+            return $this->redirectToRoute('user_profil');
+        }
     }
     /**
      * @Route("/check-adversaire/{game}", name="check_adversaire")
