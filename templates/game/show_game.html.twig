@@ -245,7 +245,7 @@
         }
 
         $(document).on('click', '#next_manche', function(){
-            boucle = setInterval(refreshGame, 3000);
+            document.location.reload();
 
         })
 
@@ -345,7 +345,9 @@
                             method: 'POST',
                             success: function (data) {
                                 if (data == true) {
-                                    document.location.reload();
+                                    document.getElementById("overlay").style.display = "block";
+                                    $('#plateau').load("{{ path('refresh_plateau_game', {game:game.id}) }}")
+                                    boucle = setInterval(refreshGame, 3000);
                                 }
                             },
                             error: function () {
