@@ -236,35 +236,39 @@ class GameController extends AbstractController
     public function getTour(
         Game $game,EntityManagerInterface $entityManager
     ): Response {
-        $round = $game->getSets()[count($game->getSets())-1];
-        $actions1=$round->getUser1Action();
-        $actions2=$round->getUser2Action();
-        if($actions1['OFFRE']=="done" and $actions1['DEPOT']==true and $actions1['SECRET'] and $actions1['ECHANGE']=="done"){
-            if($actions2['OFFRE']=="done" and $actions2['DEPOT']==true and $actions2['SECRET'] and $actions2['ECHANGE']=="done") {
-                if ($this->getUser()->getId() === $game->getUser1()->getId() ) {
-                    $round->setEnd1(1);
+        if($this->getUser()!=null){
+            $round = $game->getSets()[count($game->getSets()) - 1];
+            $actions1 = $round->getUser1Action();
+            $actions2 = $round->getUser2Action();
+            if ($actions1['OFFRE'] == "done" and $actions1['DEPOT'] == true and $actions1['SECRET'] and $actions1['ECHANGE'] == "done") {
+                if ($actions2['OFFRE'] == "done" and $actions2['DEPOT'] == true and $actions2['SECRET'] and $actions2['ECHANGE'] == "done") {
+                    if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+                        $round->setEnd1(1);
+                    }
+                    if ($this->getUser()->getId() === $game->getUser2()->getId()) {
+                        $round->setEnd2(1);
+                    }
+                    $entityManager->flush();
+                    return $this->json('ended');
                 }
-                if ($this->getUser()->getId() === $game->getUser2()->getId() ) {
-                    $round->setEnd2(1);
-                }
-                $entityManager->flush();
-                return $this->json('ended');
+
+            }
+            if ($game->getUser2() == null) {
+                return $this->json('ouverte');
             }
 
-        }
-        if($game->getUser2()==null){
-            return $this->json('ouverte');
-        }
+            if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
+                return $this->json(true);
+            }
 
-        if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
-            return $this->json(true);
-        }
+            if ($this->getUser()->getId() === $game->getUser2()->getId() && $game->getQuiJoue() === 2) {
+                return $this->json(true);
+            }
 
-        if ($this->getUser()->getId() === $game->getUser2()->getId() && $game->getQuiJoue() === 2) {
-            return $this->json(true);
+            return $this->json(false);
+        }else{
+            return $this->redirectToRoute('user_profil');
         }
-
-        return $this->json( false);
     }
 
     /**
