@@ -93,6 +93,16 @@ class Round
      */
     private $user2_pioche = 0;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $end1 = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $end2=0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -274,6 +284,30 @@ class Round
     public function setUser2Pioche(int $user2_pioche): self
     {
         $this->user2_pioche = $user2_pioche;
+
+        return $this;
+    }
+
+    public function getEnd1(): ?int
+    {
+        return $this->end1;
+    }
+
+    public function setEnd1(int $end1): self
+    {
+        $this->end1 = $end1;
+
+        return $this;
+    }
+
+    public function getEnd2(): ?int
+    {
+        return $this->end2;
+    }
+
+    public function setEnd2(int $end2): self
+    {
+        $this->end2 = $end2;
 
         return $this;
     }

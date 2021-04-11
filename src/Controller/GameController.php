@@ -213,7 +213,7 @@ class GameController extends AbstractController
 
         return $this->render('game/show_game.html.twig', [
             'game' => $game,
-            'set' => $game->getSets()[0],
+            'set' => $game->getSets()[count($game->getSets())-1],
             'cards' => $tCards
         ]);
     }
@@ -234,15 +234,23 @@ class GameController extends AbstractController
      * @Route("/get-tour-game/{game}", name="get_tour")
      */
     public function getTour(
-        Game $game
+        Game $game,EntityManagerInterface $entityManager
     ): Response {
-        $round=$game->getSets()[0];
+        $round = $game->getSets()[count($game->getSets())-1];
         $actions1=$round->getUser1Action();
         $actions2=$round->getUser2Action();
         if($actions1['OFFRE']=="done" and $actions1['DEPOT']==true and $actions1['SECRET'] and $actions1['ECHANGE']=="done"){
             if($actions2['OFFRE']=="done" and $actions2['DEPOT']==true and $actions2['SECRET'] and $actions2['ECHANGE']=="done") {
+                if ($this->getUser()->getId() === $game->getUser1()->getId() ) {
+                    $round->setEnd1(1);
+                }
+                if ($this->getUser()->getId() === $game->getUser2()->getId() ) {
+                    $round->setEnd2(1);
+                }
+                $entityManager->flush();
                 return $this->json('ended');
             }
+
         }
         if($game->getUser2()==null){
             return $this->json('ouverte');
@@ -268,19 +276,20 @@ class GameController extends AbstractController
         Request $request
     ): Response {
         $pioche= $request->request->get('pioche');
+        $round = $game->getSets()[count($game->getSets())-1];
         if ($game->getQuiJoue()==1){
             $game->setQuiJoue(2);
             if($pioche == 1) {
-                $game->getSets()[0]->setUser2Pioche(0);
+                $round->setUser2Pioche(0);
             }else{
-                $game->getSets()[0]->setUser2Pioche(1);
+                $round->setUser2Pioche(1);
             }
         }else{
             $game->setQuiJoue(1);
             if($pioche == 1) {
-                $game->getSets()[0]->setUser1Pioche(0);
+                $round->setUser1Pioche(0);
             }else{
-                $game->getSets()[0]->setUser1Pioche(1);
+                $round->setUser1Pioche(1);
             }
         }
 
@@ -298,8 +307,7 @@ class GameController extends AbstractController
         EntityManagerInterface $entityManager,
         CardRepository $cardRepository
     ): Response {
-        $round = $game->getSets()[0]; //a gérer selon le round en cours
-
+        $round = $game->getSets()[count($game->getSets())-1];
         $actions1=$round->getUser1Action();
         $actions2=$round->getUser2Action();
 
@@ -346,9 +354,8 @@ class GameController extends AbstractController
      */
     public function win(Game $game, EntityManagerInterface $entityManager, CardRepository $cardRepository
     ): Response {
-        $round = $game->getSets()[0];
+        $round = $game->getSets()[count($game->getSets())-1];
         if ($round->getEnded()== "") {
-            $game->setEnded(new \DateTime('now'));
             $round->setEnded(new \DateTime('now'));
             $entityManager->flush();
         }
@@ -450,11 +457,116 @@ class GameController extends AbstractController
         $entityManager->flush();
 
         if($winner!=0){
+            $game->setEnded(new \DateTime('now'));
+            $entityManager->flush();
             return $this->json([$game->getWinner()->getId(),[$mes_cartes,$adv_cartes],$this->getUser()->getId()]);
         }else{
+
             return $this->json([0,[$mes_cartes,$adv_cartes],$this->getUser()->getId()]);
         }
 
+    }
+    /**
+     * @Route("/next-round/{game}", name="next_round")
+     */
+    public function nextRound(Game $game, EntityManagerInterface $entityManager, CardRepository $cardRepository
+    ): Response {
+        $round = $game->getSets()[count($game->getSets())-1];
+        if($round->getEnd1()==1 and $round->getEnd2()==1) {
+            if($round->getSetNumber() <= 3){
+                if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+                    $set = new Round();
+                    $set->setGame($game);
+                    $set->setCreated(new \DateTime('now'));
+                    $set->setSetNumber($set->getSetNumber() + 1);
+
+                    $cards = $cardRepository->findAll();
+                    $tCards = [];
+                    foreach ($cards as $card) {
+                        $tCards[$card->getId()] = $card;
+
+                    }
+                    shuffle($tCards);
+                    $carte = array_pop($tCards);
+                    $set->setRemovedCard($carte->getId());
+
+                    $tMainJ1 = [];
+                    $tMainJ2 = [];
+                    for ($i = 0; $i < 6; $i++) {
+                        //on distribue 6 cartes aux deux joueurs
+                        $carte = array_pop($tCards);
+                        $tMainJ1[] = $carte->getId();
+                        $carte = array_pop($tCards);
+                        $tMainJ2[] = $carte->getId();
+                    }
+                    $set->setUser1HandCards($tMainJ1);
+                    $set->setUser2HandCards($tMainJ2);
+
+                    $tPioche = [];
+
+                    foreach ($tCards as $card) {
+                        $carte = array_pop($tCards);
+                        $tPioche[] = $carte->getId();
+                    }
+                    $set->setPioche($tPioche);
+                    $set->setUser1Action([
+                        'SECRET' => false,
+                        'DEPOT' => false,
+                        'OFFRE' => false,
+                        'ECHANGE' => false
+                    ]);
+
+                    $set->setUser2Action([
+                        'SECRET' => false,
+                        'DEPOT' => false,
+                        'OFFRE' => false,
+                        'ECHANGE' => false
+                    ]);
+
+                    $set->setUser1BoardCards([
+                        'jambe' => [],
+                        'balais' => [],
+                        'rhum' => [],
+                        'perroquet' => [],
+                        'longuevue' => [],
+                        'boulet' => [],
+                        'sabre' => []
+
+                    ]);
+
+                    $set->setUser2BoardCards([
+                        'jambe' => [],
+                        'balais' => [],
+                        'rhum' => [],
+                        'perroquet' => [],
+                        'longuevue' => [],
+                        'boulet' => [],
+                        'sabre' => []
+
+                    ]);
+
+                    $set->setBoard([
+                        'EMPL1' => ['N'],
+                        'EMPL2' => ['N'],
+                        'EMPL3' => ['N'],
+                        'EMPL4' => ['N'],
+                        'EMPL5' => ['N'],
+                        'EMPL6' => ['N'],
+                        'EMPL7' => ['N']
+                    ]);
+                    $entityManager->persist($set);
+                    $entityManager->flush();
+                    return $this->json(true);
+
+                } else {
+                    return $this->json(true);
+                }
+            }else{
+                return $this->json(false);
+            }
+        }else{
+            return $this->json(false);
+        }
     }
 
     /**
@@ -465,33 +577,34 @@ class GameController extends AbstractController
         EntityManagerInterface $entityManager,
         CardRepository $cardRepository
     ): Response {
+        $round = $game->getSets()[count($game->getSets())-1];
         if ($this->getUser()->getId() === $game->getUser1()->getId()) {
-            if($game->getSets()[0]->getUser1Pioche()== 0 and (sizeof($game->getSets()[0]->getPioche()))>0 ){
-                $game->getSets()[0]->setUser1Pioche(1);
-                $hands=$game->getSets()[0]->getUser1HandCards();
-                $carte=$game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] ;
+            if($round->getUser1Pioche()== 0 and (sizeof($round->getPioche()))>0 ){
+                $round->setUser1Pioche(1);
+                $hands=$round->getUser1HandCards();
+                $carte=$round->getPioche()[(sizeof($round->getPioche()))-1] ;
                 array_push($hands, $carte);
-                $game->getSets()[0]->setUser1HandCards($hands);
-                $pioche=$game->getSets()[0]->getPioche();
-                unset($pioche[(sizeof($game->getSets()[0]->getPioche()))-1]);
-                $game->getSets()[0]->setPioche($pioche);
-                $entityManager->persist($game->getSets()[0]);
+                $round->setUser1HandCards($hands);
+                $pioche=$round->getPioche();
+                unset($pioche[(sizeof($round->getPioche()))-1]);
+                $round->setPioche($pioche);
+                $entityManager->persist($round);
                 $entityManager->flush();
                 $response=$cardRepository->findBy(array('id'=>$carte));
                 return $this->json([$response[0]->getId(),$response[0]->getPicture()]);
             }
 
-        } elseif ($this->getUser()->getId() === $game->getUser2()->getId() and (sizeof($game->getSets()[0]->getPioche()))>0 ) {
-            if ($game->getSets()[0]->getUser2Pioche() == 0) {
-                $game->getSets()[0]->setUser2Pioche(1);
-                $hands=$game->getSets()[0]->getUser2HandCards();
-                $carte=$game->getSets()[0]->getPioche()[(sizeof($game->getSets()[0]->getPioche()))-1] ;
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId() and (sizeof($round->getPioche()))>0 ) {
+            if ($round->getUser2Pioche() == 0) {
+                $round->setUser2Pioche(1);
+                $hands=$round->getUser2HandCards();
+                $carte=$round->getPioche()[(sizeof($round->getPioche()))-1] ;
                 array_push($hands, $carte);
-                $game->getSets()[0]->setUser2HandCards($hands);
-                $pioche=$game->getSets()[0]->getPioche();
-                unset($pioche[(sizeof($game->getSets()[0]->getPioche()))-1]);
-                $game->getSets()[0]->setPioche($pioche);
-                $entityManager->persist($game->getSets()[0]);
+                $round->setUser2HandCards($hands);
+                $pioche=$round->getPioche();
+                unset($pioche[(sizeof($round->getPioche()))-1]);
+                $round->setPioche($pioche);
+                $entityManager->persist($round);
                 $entityManager->flush();
                 $response=$cardRepository->findBy(array('id'=>$carte));
                 return $this->json([$response[0]->getId(),$response[0]->getPicture()]);
@@ -513,21 +626,23 @@ class GameController extends AbstractController
         foreach ($cards as $card) {
             $tCards[$card->getId()] = $card;
         }
+        $round = $game->getSets()[count($game->getSets())-1];
+
         if ($this->getUser()->getId() === $game->getUser1()->getId()) {
-            $moi['handCards'] = $game->getSets()[0]->getUser1HandCards();
-            $moi['actions'] = $game->getSets()[0]->getUser1Action();
-            $moi['board'] = $game->getSets()[0]->getUser1BoardCards();
-            $adversaire['handCards'] = $game->getSets()[0]->getUser2HandCards();
-            $adversaire['actions'] = $game->getSets()[0]->getUser2Action();
-            $adversaire['board'] = $game->getSets()[0]->getUser2BoardCards();
+            $moi['handCards'] = $round->getUser1HandCards();
+            $moi['actions'] = $round->getUser1Action();
+            $moi['board'] = $round->getUser1BoardCards();
+            $adversaire['handCards'] = $round->getUser2HandCards();
+            $adversaire['actions'] = $round->getUser2Action();
+            $adversaire['board'] = $round->getUser2BoardCards();
             $player=$game->getUser2();
         } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
-            $moi['handCards'] = $game->getSets()[0]->getUser2HandCards();
-            $moi['actions'] = $game->getSets()[0]->getUser2Action();
-            $moi['board'] = $game->getSets()[0]->getUser2BoardCards();
-            $adversaire['handCards'] = $game->getSets()[0]->getUser1HandCards();
-            $adversaire['actions'] = $game->getSets()[0]->getUser1Action();
-            $adversaire['board'] = $game->getSets()[0]->getUser1BoardCards();
+            $moi['handCards'] = $round->getUser2HandCards();
+            $moi['actions'] = $round->getUser2Action();
+            $moi['board'] = $round->getUser2BoardCards();
+            $adversaire['handCards'] = $round->getUser1HandCards();
+            $adversaire['actions'] = $round->getUser1Action();
+            $adversaire['board'] = $round->getUser1BoardCards();
             $player=$game->getUser1();
         } else {
             return $this->redirectToRoute('user_profil');
@@ -535,7 +650,7 @@ class GameController extends AbstractController
 
         return $this->render('game/plateau_game.html.twig', [
             'game' => $game,
-            'set' => $game->getSets()[0],
+            'set' => $round,
             'cards' => $tCards,
             'moi' => $moi,
             'adversaire' => $adversaire,
@@ -553,7 +668,7 @@ class GameController extends AbstractController
 
         $action = $request->request->get('action');
         $user = $this->getUser();
-        $round = $game->getSets()[0]; //a gérer selon le round en cours
+        $round = $game->getSets()[count($game->getSets())-1]; //a gérer selon le round en cours
 
         if ($game->getUser1()->getId() === $user->getId())
         {
@@ -697,7 +812,7 @@ class GameController extends AbstractController
         Game $game
     ): Response {
         $user = $this->getUser();
-        $round = $game->getSets()[0];
+        $round = $game->getSets()[count($game->getSets())-1];
         $carte = $request->request->get('carte');
 
         if ($game->getUser1()->getId() === $user->getId())
@@ -761,7 +876,7 @@ class GameController extends AbstractController
         Game $game
     ): Response {
         $user = $this->getUser();
-        $round = $game->getSets()[0];
+        $round = $game->getSets()[count($game->getSets())-1];
         $choix = $request->request->get('choix');
         $board1=$round->getUser1BoardCards();
         $board2= $round->getUser2BoardCards();

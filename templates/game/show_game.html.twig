@@ -211,7 +211,25 @@
                     );
                     if(score[0]==0) {
                         $('#end_msg').html("Il n'y a pas de vainqueur")
-                        
+                        console.log('new game')
+                        verif_fin=setInterval(function () {
+                            $.ajax({
+                                url: "{{ path('next_round', {game: game.id}) }}",
+                                method: 'POST',
+                                success: function(data) {
+                                    console.log(data)
+                                    if (data == true) {
+                                        clearInterval(verif_fin)
+                                        $('#next_manche').show();
+
+                                    }
+
+                                },
+                                error: function(){
+
+                                }
+                            })
+                        },3000)
                     }else if(score[0]=={{ app.user.id}}){
                         $('#end_msg').html("Vous avez gagné ! ")
                     }else{
@@ -223,7 +241,13 @@
                 }
             })
 
+
         }
+
+        $(document).on('click', '#next_manche', function(){
+            boucle = setInterval(refreshGame, 3000);
+
+        })
 
          function pioche(){
             $.ajax({

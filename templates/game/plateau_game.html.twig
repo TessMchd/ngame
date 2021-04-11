@@ -33,7 +33,7 @@
         padding: 0 !important;
         width: 100%;
     }
-    .choix_carte{
+    .choix_carte, .ended_content{
         width: 50%;
         height: 60%;
         background-color: white;
@@ -131,11 +131,13 @@
 
 
     <div id="ended" style="display: none">
-        <div class="choix_carte" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
+        <div class="ended_content" style="display: flex;align-items: center; flex-direction: column;justify-content: center">
             <h1>La manche est finie</h1>
 
                 <p id="end_msg"></p>
+                <button style="display: none" id="next_manche">Rejoindre la seconde manche</button>
                 <a href="{{ path('new_game') }}">Retour</a>
+
 
         </div>
     </div>
@@ -412,7 +414,7 @@
             {% endif %}
         </div>
         <div class="col-2" >
-            Mes Actions
+            Mes Actions | Manche {{ set.setnumber }}
             <div class="actions" >
                 <div class="d-inline-flex ">
                 {% if moi.actions['SECRET']==false %}
