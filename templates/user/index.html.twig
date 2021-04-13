@@ -4,20 +4,66 @@
 
 {% block body %}
     <div id="profil_content">
-        <h1>Bonjour {{ user.pseudo }}</h1>
-        <div>
-             <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
-            <div> Nom : {{ user.lastname }}</div>
-            <div> Prénom : {{ user.firstname }}</div>
-            <div> Pseudo : {{ user.pseudo }}</div>
-            <div> Anniversaire : {{ user.birthday|date("m/d/Y") }}</div>
+        <div class="titre">
+            <h1>Au rapport ! </h1>
+            <img src="{{ asset('img/banniere_centre.png')}}" alt="">
         </div>
-        <div>
-            <h2>Statistiques</h2>
-            <div> Parties gagnées : {{ stats.victoires }}</div>
-            <div> Parties perdues : {{ stats.defaites }} </div>
+        <div id="info_profil">
+            <div class="info_img">
+                <img id="info_avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
+            </div>
+            <div id="info_txt">
+                <div class="ligne">
+                    <p id="info_capitaine">Capitaine {{ user.lastname }} {{ user.firstname }}</p>
+                    <p id="info_alias"> Alias {{ user.pseudo }}</p>
+                </div>
+                <div class="ligne">
+                    <p id="info_anniv"> {{ user.birthday|date("m/d/Y") }}</p>
+                    <p id="info_email">Adressemail@mail.com</p>
+                </div>
+                <p id="info_grade">Le grade</p>
+            </div>
         </div>
-        <a href="{{ path('app_modify') }}"/>Modifier le profil</a>
+        <div id="stats">
+            <div>
+                <img src="{{ asset('img/profil/or.png') }}" alt="">
+                <p>{{ stats.victoires }} pièces d'or</p>
+            </div>
+            <div>
+                <img src="{{ asset('img/profil/victoire.png') }}" alt="">
+                <p>{{ stats.victoires }} victoires</p>
+            </div>
+            <div>
+                <img src="{{ asset('img/profil/defaites.png') }}" alt="">
+                <p>{{ stats.defaites }} défaites</p>
+            </div>
+            <div>
+                <img src="{{ asset('img/profil/temps.png') }}" alt="">
+                <p>{{ stats.victoires }} de jeu</p>
+            </div>
+            <div>
+                <img src="{{ asset('img/profil/rang.png') }}" alt="">
+                <p>{{ stats.defaites }} Rang</p>
+            </div>
+        </div>
+        <div id="liens">
+            <a class="btn-secondary" href="{{ path('app_modify') }}"/>Modifier le profil</a>
+            <a class="btn-tercary" href="{{ path('friends') }}"/>Amis</a>
+        </div>
+        <img src="{{ asset('img/profil/longue_vue.png')}}" alt="" id="longue_vue">
+        <br><br><br><br>
+        <div id="deconnexion">
+            <div class="ban">
+                <a href="#">Déconnexion</a>
+                <img src="{{ asset('img/ban_droite.png') }}" alt="">
+            </div>
+        </div>
+        <div id="jouer">
+            <div class="ban">
+                <a href="#">Jouer !</a>
+                <img src="{{ asset('img/ban_gauche.png') }}" alt="">
+            </div>
+        </div>
     </div>
 
 {% endblock %}
