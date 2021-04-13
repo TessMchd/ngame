@@ -1,0 +1,240 @@
+.container{
+  display: flex;
+  justify-content: center;
+}
+#modify_content {
+  @extend #profil_content;
+  position: absolute !important;
+  width: 88% !important;
+
+  #modif_img {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      font-size: 1em;
+      margin-top: 10%;
+    }
+  }
+
+  section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+    width: 100%;
+  }
+
+  #modif_right {
+    width: 80%;
+    z-index: 1;
+
+    .champ-form {
+      background-color: #fafafa;
+      border-radius: 8px;
+      padding: 1.5% 4%;
+      margin-bottom: 2%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      label {
+        margin-right: 6%;
+      }
+
+      input {
+        width: 80%;
+        border-right: none;
+        border-left: none;
+        border-top: none;
+        border-bottom-color: lighten($bleu-fonce, 10%);
+      }
+
+      select {
+        margin-right: 2%;
+        border-radius: 10px;
+      }
+    }
+
+    .ligne {
+      display: flex;
+      justify-content: space-between;
+
+      #nom {
+        width: 50%;
+        margin-right: 2%;
+      }
+
+      #prenom {
+        width: 50%;
+      }
+
+      #pseudo {
+        width: 50%;
+        margin-right: 2%;
+      }
+
+      #anniv {
+        width: 50%;
+      }
+    }
+  }
+}
+  #popup, #popup_mdp {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: rgba(255, 255, 255, 0.50);
+  }
+
+  #pwd_modify_form {
+    height: auto;
+    width: 500px;
+    background-color: white;
+    margin: 0 auto;
+    border: 1px solid black;
+  }
+
+
+  #avatar_form {
+    height: auto;
+    width: 800px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 20px;
+  }
+
+
+  #avatar_form ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  #avatar_form li {
+    display: inline-block;
+  }
+
+  #avatar_form input[type="radio"][id^="cb"] {
+    display: none;
+  }
+
+  #avatar_form label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .close {
+    width: 95%;
+    margin: 10px;
+    margin-right: 20px;
+  }
+
+  .close img {
+    float: right;
+    width: 18px;
+    text-align: left;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  #avatar_form label::before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+  }
+
+  #avatar_form label img {
+    height: 200px;
+    width: 150px;
+    border-radius: 20px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+  }
+
+  :checked + label {
+    border-color: #ddd;
+  }
+
+
+  :checked + label img {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
+  }
+
+  form button {
+    margin-bottom: 40px;
+    transition-duration: 0.5s;
+    font-size: 15pt;
+  }
+
+  #popup_mdp form{
+    @extend #avatar_form;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 9%;
+    .ligne-popup{
+      display: flex;
+      align-items: flex-end;
+      label{
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      input{
+        border-top: none;
+        border-right: none;
+        border-left: none;
+      }
+    }
+  }
+
+@media screen and (min-width: 1491px){
+  .ban-modify{
+    right: 20.5%!important;
+  }
+}
+@media screen and (min-width: 1700px) {
+  #modify_content{
+    width: 76%!important;
+  }
+}
+@media screen and (min-width: 1790px){
+  .ban-modify{
+    right: 19.5%!important;
+  }
+}
