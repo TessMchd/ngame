@@ -19,7 +19,7 @@
                 </div>
                 <div class="ligne">
                     <p id="info_anniv"> {{ user.birthday|date("m/d/Y") }}</p>
-                    <p id="info_email">Adressemail@mail.com</p>
+                    <p id="info_email">{{user.email}}</p>
                 </div>
                 <p id="info_grade">Grade {{ stats.grade }} : {{ grade }}</p>
             </div>
