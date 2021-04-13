@@ -5,54 +5,67 @@
 {% block body %}
 
     <div  id="modify_content">
-
+        <div class="titre">
+            <h1>Au rapport ! </h1>
+            <img src="{{ asset('img/banniere_centre.png')}}" alt="">
+        </div>
         {% for message in app.flashes('message') %}
-            <h2 style="color: green;">{{ message }}</h2>
+            <h2 style="color: white; text-decoration: underline">{{ message }}</h2>
         {% endfor %}
+        <section>
+            <div id="modif_img">
+                <div class="info_img">
+                    <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
+                </div>
+                <button class="btn-tercary" id="button_modif_img">Modifier l'avatar</button>
+                <button class="btn-tercary" id="modif_mdp">Modifier le mot de passe</button>
+            </div>
+
+            <div id="modif_right">
+                {{ form_start (form,{'action': path('app_modify')}) }}
+
+                <div class="champ-form" id="email">
+                    {{  form_label(form.email)}}
+                    {{  form_widget(form.email,{'value':user.email,'disabled':"disabled"})}}
+                </div>
+                <div class="ligne">
+                    <div class="champ-form" id="nom">
+                        {{  form_label(form.lastname,'Nom' )}}
+                        {{  form_widget(form.lastname,{'value':user.lastname} )}}
+                    </div>
+                    <div class="champ-form" id="prenom">
+                        {{  form_label(form.firstname,'Prénom' )}}
+                        {{ form_widget(form.firstname,{'value':user.firstname} )}}
+                    </div>
+                </div>
+                <div class="ligne">
+                    <div class="champ-form" id="pseudo">
+                        {{  form_label(form.pseudo )}}
+                        {{  form_widget(form.pseudo,{'value':user.pseudo} )}}
+                    </div>
+                    <div class="champ-form" id="anniv">
+                        {{  form_label(form.birthday,'Date de naissance' )}}
+                        {{ form_widget(form.birthday.day,   {'attr':{'placeholder':'Jour' } })}}
+                        {{ form_widget(form.birthday.month, {'attr':{'placeholder':'Mois' } })}}
+                        {{ form_widget(form.birthday.year,  {'attr':{'placeholder':'Année' } })}}
+                    </div>
+                </div>
 
 
-        <div id="modif_img">
-            <img id="avatar" src="{{ asset('img/avatar/'~user.avatar) }}">
-            <button id="button_modif_img">Modifier l'avatar du profil</button>
-        </div>
+                <button class="btn-secondary" type="submit">Sauvegarder</button>
 
+                {{ form_end(form) }}
 
-        {{ form_start (form,{'action': path('app_modify')}) }}
-
-        <div>
-            {{  form_label(form.email)}}
-            {{  form_widget(form.email,{'value':user.email,'disabled':"disabled"})}}
-        </div>
-        <div>
-            {{  form_label(form.pseudo )}}
-            {{  form_widget(form.pseudo,{'value':user.pseudo} )}}
-        </div>
-        <div>
-            {{  form_label(form.firstname,'Prénom' )}}
-            {{ form_widget(form.firstname,{'value':user.firstname} )}}
-        </div>
-        <div>
-            {{  form_label(form.lastname,'Nom' )}}
-            {{  form_widget(form.lastname,{'value':user.lastname} )}}
-        </div>
-        <div>
-            {{  form_label(form.birthday,'Date de naissance' )}}
-            {{ form_widget(form.birthday.day,   {'attr':{'placeholder':'Jour' } })}}
-            {{ form_widget(form.birthday.month, {'attr':{'placeholder':'Mois' } })}}
-            {{ form_widget(form.birthday.year,  {'attr':{'placeholder':'Année' } })}}
-        </div>
-
-
-        <button type="submit">Sauvegarder</button>
-
-        {{ form_end(form) }}
-
-        <button id="modif_mdp">Modifier le mot de passe</button>
-        <div>
-            <a href="{{ path("user_profil") }}">Retour au profil</a>
-        </div>
+                <div class="ban-droite ban-modify">
+                    <div class="ban">
+                        <a href="{{ path("user_profil") }}">Retour</a>
+                        <img src="{{ asset('img/ban_droite.png') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <img src="{{ asset('img/profil/longue_vue.png')}}" alt="" id="longue_vue">
     </div>
-
     <div id="popup" style="visibility: hidden">
 
         <form id="avatar_form" method="POST" action="">
@@ -75,10 +88,9 @@
                 </li>
             </ul>
 
-            <button type="submit">Changer l'avatar</button>
+            <button class="btn-tercary" type="submit">Changer l'avatar</button>
         </form>
     </div>
-
     <div id="popup_mdp">
 
         {{ form_start (pwd,{'action': path('app_modify'), 'attr': {id:'pwd_modify_form'}}) }}
@@ -87,15 +99,16 @@
             <img class="close-img" src="{{ asset('img/avatar/times-solid.svg' )}}">
         </div>
 
-        <h2>Modifier le mot de passe</h2>
-        <div>
+        <div class="ligne-popup">
             <label for="actual_pwd">Mot de passe actuel</label>
-            <input type="password" name="actual_pwd" required>
+            :<input type="password" name="actual_pwd" required>
         </div>
-        <div>
-            {{ form_label(pwd.password.first) }}
+        <div class="ligne-popup">
+            {{ form_label(pwd.password.first) }} :
             {{ form_widget(pwd.password.first) }}
-            {{ form_label(pwd.password.second) }}
+        </div>
+        <div class="ligne-popup">
+            {{ form_label(pwd.password.second) }} :
             {{ form_widget(pwd.password.second) }}
         </div>
 
@@ -106,7 +119,7 @@
             <p id="error">{{ error }}</p>
         {% endif %}
 
-        <button type="submit">Valider</button>
+        <button class="btn-tercary mt-4" type="submit">Valider</button>
 
         {{ form_end(pwd) }}
 
