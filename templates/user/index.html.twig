@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}{{ user.pseudo }}{% endblock %}
 
 {% block body %}
     <div id="profil_content">
@@ -21,13 +21,13 @@
                     <p id="info_anniv"> {{ user.birthday|date("m/d/Y") }}</p>
                     <p id="info_email">Adressemail@mail.com</p>
                 </div>
-                <p id="info_grade">Le grade</p>
+                <p id="info_grade">Grade {{ stats.grade }} : {{ grade }}</p>
             </div>
         </div>
         <div id="stats">
             <div>
                 <img src="{{ asset('img/profil/or.png') }}" alt="">
-                <p>{{ stats.victoires }} pièces d'or</p>
+                <p>{{ stats.pieces }} pièces d'or</p>
             </div>
             <div>
                 <img src="{{ asset('img/profil/victoire.png') }}" alt="">
@@ -36,14 +36,6 @@
             <div>
                 <img src="{{ asset('img/profil/defaites.png') }}" alt="">
                 <p>{{ stats.defaites }} défaites</p>
-            </div>
-            <div>
-                <img src="{{ asset('img/profil/temps.png') }}" alt="">
-                <p>{{ stats.victoires }} de jeu</p>
-            </div>
-            <div>
-                <img src="{{ asset('img/profil/rang.png') }}" alt="">
-                <p>{{ stats.defaites }} Rang</p>
             </div>
         </div>
         <div id="liens">
@@ -54,13 +46,13 @@
         <br><br><br><br>
         <div class="ban-droite">
             <div class="ban">
-                <a href="#">Déconnexion</a>
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
                 <img src="{{ asset('img/ban_droite.png') }}" alt="">
             </div>
         </div>
         <div class="ban-gauche">
             <div class="ban">
-                <a href="#">Jouer !</a>
+                <a href="{{ path('new_game') }}">Jouer !</a>
                 <img src="{{ asset('img/ban_gauche.png') }}" alt="">
             </div>
         </div>

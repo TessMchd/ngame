@@ -25,8 +25,20 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
         $stats=$user->getStats();
+        $rangs=[
+            1 => 'Vagabond puant du quartier',
+            2 => 'Brigand du vieux port',
+            3 => 'Pirate à influence mineure',
+            4 => "Petite frappe de l'ombre",
+            5 => 'Supernovae des mers',
+            6 => 'Grand Corsaire',
+            7 => "Courtier de l'ombre",
+            8 => 'Légende endormier',
+            9 => 'Empereur',
+            10 => 'Roi des Pirates'
+        ];
         return $this->render('user/index.html.twig', [
-            'user' => $user, 'stats'=>$stats
+            'user' => $user, 'stats'=>$stats, 'grade' =>$rangs[$stats->getGrade()]
         ]);
     }
 

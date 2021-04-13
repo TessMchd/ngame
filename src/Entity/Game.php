@@ -180,4 +180,5 @@ class Game
     public function getUser2Id(){
         return $this->getUser2()->getId();
     }
+
 }
