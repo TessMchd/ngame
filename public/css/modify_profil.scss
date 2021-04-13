@@ -1,0 +1,187 @@
+@import "_general.scss";
+@import "_modify_profil.scss";
+//------------------------------------------------------
+// titre
+//------------------------------------------------------
+body{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#profil_content{
+  margin: 6% 0;
+  padding: 5% 4%;
+  width: 100%;
+  background-color: $bleu-fonce;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+  position: relative;
+  #longue_vue{
+    position: absolute;
+    right: 184px;
+    top: 94px;
+    height: 85%;
+    transform: rotate(-28deg);
+  }
+  .titre{
+    position: relative;
+    height: 120px;
+    margin-bottom: 4%;
+    z-index: 1;
+    h1{
+      position: absolute;
+      top: 11px;
+      left: 33%;
+      font-size: 2.7em;
+      z-index: 1;
+      color: black;
+      font-family: $holidays;
+      transform: rotate(-1deg);
+    }
+    img{
+      height: 120px;
+    }
+  }//fin .titre
+  #info_profil{
+    width: 93%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    z-index: 1;
+    .info_img{
+      overflow: hidden;
+      width: 157px;
+      height: 157px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 3%;
+    }
+    #info_txt{
+      width: 80%;
+      .ligne{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2%;
+        width: 100%;
+        p{
+          background-color: #fafafa;
+          border-radius: 8px;
+          padding: 1.5% 4%;
+          margin-bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #info_capitaine{
+          width: 60%;
+          margin-right: 2%;
+        }
+        #info_alias{
+          width: 40%;
+        }
+        #info_anniv{
+          width: 40%;margin-right: 2%;
+        }
+        #info_email{
+          width: 60%;
+        }
+      }
+      #info_grade{
+        background-color: #fafafa;
+        border-radius: 8px;
+        padding: 1.5% 4%;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  }//fin #info_profil
+  #stats{
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    margin-top: 4%;
+    div{
+      width: 40%;
+      background-color: lighten($bleu-fonce,20%);
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 2%;
+      padding: 2%;
+      p{
+        color: white;
+        margin-bottom: 0;
+        margin-top: 3%;
+      }
+    }
+  }//fin #stats
+  #liens{
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    margin-top: 4%;
+    a:last-child{
+      width: 40%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+  #deconnexion{
+    position: absolute;
+    right: 24.2%;
+    bottom: 12%;
+    .ban{
+      position: relative;
+      a{
+        z-index: 1;
+        font-family: $holidays;
+        font-size: 2em;
+        position: absolute;
+        left: 73px;
+        top: 19px;
+        &:hover{
+          color: $rouge;
+          transform: rotate(4deg);
+        }
+      }
+      img{
+        position: absolute;
+      }
+    }
+  }
+  #jouer{
+    @extend #deconnexion;
+    left: -2.6%;
+    .ban{
+      a{
+        top:5px;
+        &:hover{
+          transform: rotate(-4deg);
+        }
+      }
+    }
+  }
+}//fin #profil_content
+
+@media screen and (min-width:1399px) {
+  #deconnexion{
+    right: 20.9%!important;
+  }
+  #jouer{
+    left: -2.3%!important;
+  }
+}

@@ -64,7 +64,7 @@ p{
    background-color: $bleu-fonce;
    font-family: $holidays;
    text-decoration: none;
-   padding: 1% 3% 1% 3%;
+   padding: 1% 3%;
    border-radius: 25px;
    transition: all 0.3s ease;
    font-size: 1.5em;
@@ -78,6 +78,16 @@ p{
   background-color: $rouge;
   &:hover{
     background-color: darken($rouge,20%);
+  }
+}
+
+.btn-tercary{
+  @extend .btn-primary;
+  background-color: $bleu-clair;
+  color: $bleu-fonce;
+  &:hover{
+    background-color: darken($bleu-clair,20%);
+    color: $bleu-tres-fonce;
   }
 }
 
