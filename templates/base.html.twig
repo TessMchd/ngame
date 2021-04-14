@@ -29,7 +29,7 @@
             {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('new_game') }}" class="lien_nav"></a>
             {% else %}
-            <a href="{{ path('app_login') }}" class="lien_nav">
+            <a href="{{ path('user_profil') }}" class="lien_nav">
                 {% endif %}
                 <strong style="margin-right: 10px" class="titre_nav">Profil</strong>
             </a>

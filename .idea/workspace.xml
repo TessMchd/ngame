@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="" />
+    <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -218,7 +220,7 @@
       <workItem from="1618168887769" duration="391000" />
       <workItem from="1618302685745" duration="2071000" />
       <workItem from="1618324288141" duration="5533000" />
-      <workItem from="1618402585759" duration="17163000" />
+      <workItem from="1618402585759" duration="17193000" />
     </task>
     <servers />
   </component>
