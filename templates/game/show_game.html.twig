@@ -2,7 +2,9 @@
 
 {% block body %}
     <style>
-        body{width:100%}
+        body{
+            width:100%;
+        }
         #overlay {
             position:absolute;
             bottom:0;
@@ -28,19 +30,52 @@
             pointer-events: none;
         }
 
+
+
         .card_main{
             width: 100px;
         }
 
+        #plateau_content{
+            margin:0;
+            padding: 0;
+            padding-top: 110px;
+            height: 100vh;
+            background-position: center;
+        }
+        .container{
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        @media (min-width: 1200px) {
+            .container, .container-lg, .container-md, .container-sm, .container-xl {
+                max-width: 100% !important;
+            }
+        }
+
+        #message{
+           font-family: "Big Holidays";
+            font-size: 25px;
+            margin-top: 20px;
+        }
+
+        #action_message{
+            font-family: "Big Holidays";
+            font-size: 20px;
+        }
+
 
     </style>
+    <div id="plateau_content">
+        <div id="plateau">
+            {{ render(controller('App\\Controller\\GameController::refreshPlateauGame', {game:game.id})) }}
+        </div>
 
-    <div id="plateau">
-        {{ render(controller('App\\Controller\\GameController::refreshPlateauGame', {game:game.id})) }}
+        <div id="message" style="width:300px;" >...</div>
+        <div id="overlay"></div>
     </div>
-    <div id="message" >...</div>
-
-    <div id="overlay"></div>
     
 {% endblock %}
 
@@ -379,7 +414,7 @@
                     $("input:checkbox").not(":checked").attr("disabled", bol);
                     if($("input:checkbox:checked").length == 2) {
                         if(action=='echange'){
-                            document.getElementById("game_help").innerHTML = "<button class='valid_pairs' style='width: 250px'>Choisir une première paire</button>"
+                            document.getElementById("game_help").innerHTML = "<button class='valid_pairs btn-tercary' style='width: 250px'>Choisir une première paire</button>"
                             $.each($("input[name='carte_secret']:checked"), function () {
                                 $(this).attr("disabled");
                             });

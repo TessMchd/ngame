@@ -31,11 +31,11 @@
             {% else %}
             <a href="{{ path('app_login') }}" class="lien_nav">
                 {% endif %}
-                <strong class="titre_nav">Profil</strong>
+                <strong style="margin-right: 10px" class="titre_nav">Profil</strong>
             </a>
             <span class="text-white">
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
-                    Bonjour {{ app.user.firstName }}. <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
+                    <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
                 {% else %}
                     <a class="lien_nav2" href="{{ path('user_profil') }}">Connexion</a>
                 {% endif %}

@@ -211,10 +211,10 @@
                 <p>En attente d'un adversaire</p>
             {% else %}
                 <img width="100px" src="{{ asset('img/avatar/'~player.avatar) }}">
-                <p>{{ player.pseudo }}</p>
+                <p style="font-size: 20px">{{ player.pseudo }}</p>
             {% endif %}
         </div>
-        <div class="col-6 d-flex justify-content-center align-items-center">
+        <div class="col-6 d-flex justify-content-center align-items-center" style="margin-top: -5%">
             <div id="adversaires_cartes" class="d-flex justify-content-center align-items-center">
                 {% for card in adversaire.handCards %}
                     <img class="card" src="{{ asset('img/plateau/verso_carte.png') }}">
@@ -352,7 +352,7 @@
         </div>
         <div class="carte_bottom" id="moi_balais" >
             {% for card in moi.board['balais'] %}
-                <img <img class="card_main" src="{{ asset('img/card/carte_main_2.png') }}" >
+               <img class="card_main" src="{{ asset('img/card/carte_main_2.png') }}" >
             {% endfor %}
         </div>
         <div class="carte_bottom" id="moi_rhum">
@@ -385,7 +385,7 @@
     <div class="row">
         <div class="col-2">
             <img width="100px" src="{{ asset('img/avatar/'~app.user.avatar) }}">
-            <p>{{ app.user.pseudo }}</p>
+            <p style="font-size: 20px">{{ app.user.pseudo }}</p>
         </div>
         <div class="col-6 d-flex justify-content-center align-items-center" >
             <div id="mes_cartes" class="d-flex justify-content-center align-items-center">
@@ -439,17 +439,17 @@
             </div>
 
             <br>
-            <button id="valider" style="display: none">Valider action</button>
+            <button id="valider" class="btn-tercary" style="display: none">Valider action</button>
             <div id="game_help">
             </div>
-            <button id="finDeTour" disabled>Fin de tour</button>
+            <button id="finDeTour" class="btn-secondary" disabled>Fin de tour</button>
 
         </div>
 
     </div>
     <div class="row d-flex flex-column justify-content-center align-items-center" style="width:90vw">
         <p id="action_message" style="text-align: center"></p>
-        <p id="aide" style="text-align: center"></p>
+        <p id="aide" style="text-align: center;width: 700px"></p>
 
     </div>
 </div>
