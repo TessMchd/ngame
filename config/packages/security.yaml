@@ -40,3 +40,4 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/jeu, roles: ROLE_JOUEUR }
         - { path: ^/profil, roles: ROLE_JOUEUR }
+        - { path: ^/new-game, roles: ROLE_JOUEUR }
