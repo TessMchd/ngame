@@ -11,6 +11,7 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/modify_profil.css') }}" />
             <link rel="stylesheet" type="text/css" href="{{ asset('css/login_profil.css') }}" />
             <link rel="stylesheet" type="text/css" href="{{ asset('css/register_profil.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />
         {% endblock %}
         <script
                 src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -22,30 +23,59 @@
     </head>
     <body>
     <header>
-        <div class="navbar navbar-dark bg-dark shadow-sm">
-            <div class="container">
+        <div id="nav_acceuil">
+            <div class="container_nav">
                 {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="{{ path('new_game') }}" class="navbar-brand d-flex align-items-center">
+                <a href="{{ path('new_game') }}" class="lien_nav"></a>
                     {% else %}
-                    <a href="{{ path('app_login') }}" class="navbar-brand d-flex align-items-center">
+                    <a href="{{ path('app_login') }}" class="lien_nav">
                         {% endif %}
-                    <strong>Jeu</strong>
+                    <strong class="titre_nav">Profil</strong>
                 </a>
                 <span class="text-white">
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
-                    Bonjour {{ app.user.firstName }}. <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                    Bonjour {{ app.user.firstName }}. <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
                 {% else %}
-                    <a href="{{ path('user_profil') }}">Me connecter</a>
+                    <a class="lien_nav2" href="{{ path('user_profil') }}">Connection</a>
                 {% endif %}
                     </span>
             </div>
-            <a href="{{ path('admin') }}" class="navbar-brand d-flex align-items-center">
-                <strong>Back office</strong>
-            </a>
+            <a href="{{ path('default') }}" class="lien_nav">Accueil</a>
         </div>
     </header>
     <main class="container">
         {% block body %}{% endblock %}
     </main>
     </body>
+    <footer>
+        <div id="content-footer">
+            <section id="gauche-footer">
+                <img src="{{ asset("img/security_icon/logo.png")}}">
+            </section>
+            <section id="nav-footer">
+                <h3>besoin d'aide ?</h3>
+                <ul>
+                    <li><a href="https://mmi19b11.mmi-troyes.fr/promo/">N-Game</a></li>
+                    <li><a href="https://mmi19b11.mmi-troyes.fr/promo/boutique.php">Boutique</a></li>
+                </ul>
+            </section>
+            <section id="nav-footer">
+                <h3>rejoindre l'aventure ?</h3>
+                <div id="reseaux">
+                    <a href="https://www.instagram.com/golden_rum_mutinerie/" target="_blank"><img  style="width: 60%" src="{{ asset("img/icon/instagram.svg")}}"></a>
+                    <a href="https://twitter.com/GMutinerie"  target="_blank"><img style="width: 60%" src="{{ asset("img/icon/twitter.svg")}}"></a>
+                    <a href="#"  target="_blank"><img  style="width: 60%" src="{{ asset("img/icon/facebook.svg")}}"></a>
+                    <a href="https://www.youtube.com/channel/UCdDKyp3u4TRbIWJ6chHUR3Q"  target="_blank"><img style="width: 60%" src="{{ asset("img/icon/youtube.svg")}}"></a>
+                </div>
+            </section>
+
+        </div>
+
+        <div id="fin-footer">
+            <p>@2021 N-Game | <a href="<?php echo $base_url?>mentions.php">Mentions Légales </a> -  <a href="{{ path('admin') }}">
+                    <strong>Back office</strong>
+                </a></p>
+            <p></p>
+        </div>
+    </footer>
 </html>

@@ -76,7 +76,6 @@
                                         </div>
                                     {% endfor %}
                             </div>
-                            <p style="text-align: left;color:white;width: 70%; margin-left: 20px ;">Commencer la partie sans choisir d'adversaire pour créer une partie ouverte !</p>
                             <button class="next_link" type="submit">
                                 <p>Commencer la partie</p>
                                 <img src="{{ asset('img/ban_droite.png')}}" alt="">
@@ -269,7 +268,7 @@
         </a>
     </div>
 
-
+    <p id="ouverte_msg" style="float: right;text-align: right;font-size: 20px;font-weight: bold;color:white;width: 50%; padding-right: 50px ;height: 100%;bottom: 0;padding-top: 45%">Commencer la partie sans choisir d'adversaire pour créer une partie ouverte !</p>
 
     <script>
         var div1 = new Vue({
@@ -358,6 +357,7 @@
             }
         })
     </script>
+
 </div>
 {% endblock %}
 
