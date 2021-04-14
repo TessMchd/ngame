@@ -1,81 +1,82 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}GoldenRum&Mutinerie{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/modify_profil.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/login_profil.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/register_profil.css') }}" />
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />
-        {% endblock %}
-        <script
-                src="https://code.jquery.com/jquery-3.6.0.min.js"
-                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-                crossorigin="anonymous"></script>
-        {% block javascripts %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}GoldenRum&Mutinerie{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
+       and uncomment the following Encore helpers to start using Symfony UX #}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/modify_profil.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/login_profil.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/register_profil.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/accueil.css') }}" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% endblock %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    {% block javascripts %}
 
-        {% endblock %}
-    </head>
-    <body>
-    <header>
-        <div id="nav_acceuil">
-            <div class="container_nav">
-                {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="{{ path('new_game') }}" class="lien_nav"></a>
-                    {% else %}
-                    <a href="{{ path('app_login') }}" class="lien_nav">
-                        {% endif %}
-                    <strong class="titre_nav">Profil</strong>
-                </a>
-                <span class="text-white">
+    {% endblock %}
+</head>
+<body>
+<header>
+    <div id="nav_acceuil">
+        <div class="container_nav">
+            {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('new_game') }}" class="lien_nav"></a>
+            {% else %}
+            <a href="{{ path('app_login') }}" class="lien_nav">
+                {% endif %}
+                <strong class="titre_nav">Profil</strong>
+            </a>
+            <span class="text-white">
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
-                   <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
+                    Bonjour {{ app.user.firstName }}. <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
                 {% else %}
-                    <a class="lien_nav2" href="{{ path('user_profil') }}">Connection</a>
+                    <a class="lien_nav2" href="{{ path('user_profil') }}">Connexion</a>
                 {% endif %}
                     </span>
+        </div>
+        <img src="{{ asset("img/security_icon/logo.png") }}" alt="">
+        <a href="{{ path('default') }}" class="lien_nav">Accueil</a>
+    </div>
+</header>
+<main class="container">
+    {% block body %}{% endblock %}
+</main>
+</body>
+<footer>
+    <div id="content-footer">
+        <section id="gauche-footer">
+            <img src="{{ asset("img/security_icon/logo.png")}}">
+        </section>
+        <section id="nav-footer">
+            <h3>besoin d'aide ?</h3>
+            <ul>
+                <li><a href="https://mmi19b11.mmi-troyes.fr/promo/">N-Game</a></li>
+                <li><a href="https://mmi19b11.mmi-troyes.fr/promo/boutique.php">Boutique</a></li>
+                <li><a class="bold" href="{{ path('admin') }}">Back Office</a></li>
+            </ul>
+        </section>
+        <section id="nav-footer">
+            <h3>rejoindre l'aventure ?</h3>
+            <div id="reseaux">
+                <a href="https://www.instagram.com/golden_rum_mutinerie/" class="fa fa-instagram" target="_blank"></a>
+                <a href="https://twitter.com/GMutinerie" class="fa fa-twitter" target="_blank"></a>
+                <a href="https://www.youtube.com/channel/UCdDKyp3u4TRbIWJ6chHUR3Q" class="fa fa-youtube"  target="_blank"></a>
             </div>
-            <a href="{{ path('default') }}" class="lien_nav">Accueil</a>
-        </div>
-    </header>
-    <main class="container">
-        {% block body %}{% endblock %}
-    </main>
-    </body>
-    <footer>
-        <div id="content-footer">
-            <section id="gauche-footer">
-                <img src="{{ asset("img/security_icon/logo.png")}}">
-            </section>
-            <section id="nav-footer">
-                <h3>besoin d'aide ?</h3>
-                <ul>
-                    <li><a href="https://mmi19b11.mmi-troyes.fr/promo/">N-Game</a></li>
-                    <li><a href="https://mmi19b11.mmi-troyes.fr/promo/boutique.php">Boutique</a></li>
-                </ul>
-            </section>
-            <section id="nav-footer">
-                <h3>rejoindre l'aventure ?</h3>
-                <div id="reseaux">
-                    <a href="https://www.instagram.com/golden_rum_mutinerie/" target="_blank"><img  style="width: 60%" src="{{ asset("img/icon/instagram.svg")}}"></a>
-                    <a href="https://twitter.com/GMutinerie"  target="_blank"><img style="width: 60%" src="{{ asset("img/icon/twitter.svg")}}"></a>
-                    <a href="#"  target="_blank"><img  style="width: 60%" src="{{ asset("img/icon/facebook.svg")}}"></a>
-                    <a href="https://www.youtube.com/channel/UCdDKyp3u4TRbIWJ6chHUR3Q"  target="_blank"><img style="width: 60%" src="{{ asset("img/icon/youtube.svg")}}"></a>
-                </div>
-            </section>
+        </section>
 
-        </div>
+    </div>
 
-        <div id="fin-footer">
-            <p>@2021 N-Game | <a href="<?php echo $base_url?>mentions.php">Mentions Légales </a> -  <a href="{{ path('admin') }}">
-                    <strong>Back office</strong>
-                </a></p>
-            <p></p>
-        </div>
-    </footer>
+    <div id="fin-footer">
+        <p>@2021 N-Game | <a href="<?php echo $base_url?>mentions.php">Mentions Légales </a></p>
+        <p></p>
+    </div>
+</footer>
 </html>
