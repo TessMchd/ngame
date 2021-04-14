@@ -34,7 +34,7 @@
                 </a>
                 <span class="text-white">
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
-                    Bonjour {{ app.user.firstName }}. <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
+                   <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
                 {% else %}
                     <a class="lien_nav2" href="{{ path('user_profil') }}">Connection</a>
                 {% endif %}
