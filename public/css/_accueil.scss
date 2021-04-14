@@ -8,18 +8,18 @@
 
   #titre-jeu{
     position: relative;
-    width: 70%;
+    width: 100%;
     h1{
       z-index: 1;
       position: absolute;
       font-family: $holidays;
-      left: 48%;
+      left: 35%;
       top: 146px;
       font-size: 3em;
     }
     img{
       position: absolute;
-      left: 20%;
+      left: 15%;
       top: 114px;
       height: 180px;
     }
@@ -40,6 +40,7 @@
   background-size: cover;
   h2{
     font-family: $holidays;
+    color: darken($rouge,10%);
   }
   #corde{
     position: absolute;
@@ -135,5 +136,36 @@
   }
   &:hover{
     color: darken($rouge, 10%);
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  #titre-jeu{
+    h1{
+      left: 37%!important;
+    }
+    img{
+      left: 20%!important;
+    }
+  }
+}
+@media screen and (min-width: 1600px) {
+  #titre-jeu{
+    h1{
+      left: 38%!important;
+    }
+    img{
+      left: 24%!important;
+    }
+  }
+}
+@media screen and (min-width: 1900px) {
+  #titre-jeu{
+    h1{
+      left: 40%!important;
+    }
+    img{
+      left: 26%!important;
+    }
   }
 }

@@ -650,19 +650,19 @@ body {
 }
 #accueil-header #titre-jeu {
   position: relative;
-  width: 70%;
+  width: 100%;
 }
 #accueil-header #titre-jeu h1 {
   z-index: 1;
   position: absolute;
   font-family: "Big Holidays";
-  left: 48%;
+  left: 35%;
   top: 146px;
   font-size: 3em;
 }
 #accueil-header #titre-jeu img {
   position: absolute;
-  left: 20%;
+  left: 15%;
   top: 114px;
   height: 180px;
 }
@@ -683,6 +683,7 @@ body {
 }
 #content-accueil h2 {
   font-family: "Big Holidays";
+  color: #a33838;
 }
 #content-accueil #corde {
   position: absolute;
@@ -780,6 +781,30 @@ body {
   color: #a33838;
 }
 
+@media screen and (min-width: 1500px) {
+  #titre-jeu h1 {
+    left: 37% !important;
+  }
+  #titre-jeu img {
+    left: 20% !important;
+  }
+}
+@media screen and (min-width: 1600px) {
+  #titre-jeu h1 {
+    left: 38% !important;
+  }
+  #titre-jeu img {
+    left: 24% !important;
+  }
+}
+@media screen and (min-width: 1900px) {
+  #titre-jeu h1 {
+    left: 40% !important;
+  }
+  #titre-jeu img {
+    left: 26% !important;
+  }
+}
 #nav_acceuil {
   background-color: #34616F;
   position: relative;
