@@ -1,0 +1,137 @@
+#accueil-header{
+  background-image: url("../img/accueil/ile.png");
+  background-size: cover;
+  background-position: bottom;
+  position: relative;
+  height: 700px;
+  width: 100%;
+
+  #titre-jeu{
+    position: relative;
+    width: 70%;
+    h1{
+      z-index: 1;
+      position: absolute;
+      font-family: $holidays;
+      left: 48%;
+      top: 146px;
+      font-size: 3em;
+    }
+    img{
+      position: absolute;
+      left: 20%;
+      top: 114px;
+      height: 180px;
+    }
+  }
+  a{
+    position: absolute;
+    bottom: 40%;
+    left: 41%;
+    width: 19%;
+    display: flex;
+    justify-content: center;
+  }
+}
+#content-accueil{
+  margin: 0 20% 0 10%;
+  position: relative;
+  h2{
+    font-family: $holidays;
+  }
+  #corde{
+    position: absolute;
+    right: -15%;
+    top: -5%;
+    z-index: -1;
+  }
+  #pirate{
+    height: 200px;
+    position: fixed;
+    right: 2%;
+    top: 50%;
+    z-index: -1;
+    transform: rotate(13deg);
+  }
+}
+#golden{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6%;
+  img{
+    width: 40%;
+    padding:4%;
+    background-color: darken(white,5%);
+    border-radius: 50px;
+  }
+  .txt-accueil{
+    text-align: center;
+    width: 60%;
+    p{
+      margin-top: 3%;
+      line-height: 2;
+      font-weight: bold;
+    }
+  }
+}
+#ile{
+  @extend #golden;
+  flex-direction: column;
+  .ile-txt{
+    margin-top: 4%;
+    width: 100%;
+    margin-left: 0;
+  }
+  img{
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+#tresor{
+  @extend #golden;
+  .tresor-txt{
+    margin-left: 0;
+    margin-right: 4%;
+  }
+}
+#mutinerie{
+  @extend #golden;
+  flex-direction: column;
+  .mutinerie-txt{
+    width: 100%;
+    margin-top: 4%;
+  }
+  .mutinerie-persos{
+    display: flex;
+    justify-content: center;
+    img{
+      background-color: rgba(255, 255, 255, 0);
+
+    }
+  }
+}
+#comment{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 6% 0;
+  video{
+    margin: 3% 0;
+  }
+}
+#fleche{
+  position: fixed;
+  left: 5%;
+  bottom: 5%;
+  z-index: 1;
+  color: $rouge;
+  span{
+    font-size: 3em!important;
+  }
+  &:hover{
+    color: darken($rouge, 10%);
+  }
+}

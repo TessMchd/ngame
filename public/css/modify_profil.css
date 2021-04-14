@@ -643,24 +643,250 @@ body {
 #accueil-header {
   background-image: url("../img/accueil/ile.png");
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   position: relative;
-  height: 800px;
+  height: 700px;
   width: 100%;
 }
-#accueil-header img {
-  height: 300px;
+#accueil-header #titre-jeu {
+  position: relative;
+  width: 70%;
+}
+#accueil-header #titre-jeu h1 {
+  z-index: 1;
+  position: absolute;
+  font-family: "Big Holidays";
+  left: 48%;
+  top: 146px;
+  font-size: 3em;
+}
+#accueil-header #titre-jeu img {
+  position: absolute;
+  left: 20%;
+  top: 114px;
+  height: 180px;
+}
+#accueil-header a {
+  position: absolute;
+  bottom: 40%;
+  left: 41%;
+  width: 19%;
+  display: flex;
+  justify-content: center;
+}
+
+#content-accueil {
+  margin: 0 20% 0 10%;
   position: relative;
 }
-#accueil-header img:nth-child(1) {
-  left: 10%;
-  top: 5%;
+#content-accueil h2 {
+  font-family: "Big Holidays";
 }
-#accueil-header img:nth-child(5) {
-  height: 220px;
+#content-accueil #corde {
+  position: absolute;
+  right: -15%;
+  top: -5%;
+  z-index: -1;
 }
-#accueil-header img:nth-child(6) {
-  height: 350px;
+#content-accueil #pirate {
+  height: 200px;
+  position: fixed;
+  right: 2%;
+  top: 50%;
+  z-index: -1;
+  transform: rotate(13deg);
+}
+
+#golden, #mutinerie, #tresor, #ile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6%;
+}
+#golden img, #mutinerie img, #tresor img, #ile img {
+  width: 40%;
+  padding: 4%;
+  background-color: #f2f2f2;
+  border-radius: 50px;
+}
+#golden .txt-accueil, #mutinerie .txt-accueil, #tresor .txt-accueil, #ile .txt-accueil {
+  text-align: center;
+  width: 60%;
+}
+#golden .txt-accueil p, #mutinerie .txt-accueil p, #tresor .txt-accueil p, #ile .txt-accueil p {
+  margin-top: 3%;
+  line-height: 2;
+  font-weight: bold;
+}
+
+#ile {
+  flex-direction: column;
+}
+#ile .ile-txt {
+  margin-top: 4%;
+  width: 100%;
+  margin-left: 0;
+}
+#ile img {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+#tresor .tresor-txt {
+  margin-left: 0;
+  margin-right: 4%;
+}
+
+#mutinerie {
+  flex-direction: column;
+}
+#mutinerie .mutinerie-txt {
+  width: 100%;
+  margin-top: 4%;
+}
+#mutinerie .mutinerie-persos {
+  display: flex;
+  justify-content: center;
+}
+#mutinerie .mutinerie-persos img {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+#comment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 6% 0;
+}
+#comment video {
+  margin: 3% 0;
+}
+
+#fleche {
+  position: fixed;
+  left: 5%;
+  bottom: 5%;
+  z-index: 1;
+  color: #C24C4C;
+}
+#fleche span {
+  font-size: 3em !important;
+}
+#fleche:hover {
+  color: #a33838;
+}
+
+#nav_acceuil {
+  background-color: #34616F;
+  position: relative;
+  padding: 1% 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+#nav_acceuil img {
+  position: absolute;
+  bottom: -35px;
+  left: 46%;
+  height: 140%;
+}
+#nav_acceuil .container_nav {
+  width: 40%;
+}
+
+.titre_nav, .lien_nav, .lien_nav2 {
+  color: #fff;
+  font-family: "Big Holidays";
+  font-size: 1.4em;
+}
+.titre_nav:hover, .lien_nav:hover, .lien_nav2:hover {
+  color: #C24C4C;
+}
+
+.lien_nav, .lien_nav2 {
+  font-size: 1.2em;
+}
+
+.lien_nav2 {
+  padding-left: 5%;
+}
+
+footer {
+  margin-top: 10%;
+  background-color: #34616F;
+  color: white;
+  font-family: "Century Gothic", sans-serif;
+  position: relative;
+}
+footer a {
+  text-decoration: underline;
+}
+footer #content-footer {
+  display: flex;
+  flex-direction: row;
+  padding: 4%;
+}
+footer #content-footer h3 {
+  font-size: 1.6em;
+}
+footer #content-footer a:hover {
+  color: #d6d6d6;
+}
+footer #content-footer #gauche-footer {
+  width: 35%;
+  text-align: justify;
+  margin-right: 3%;
+}
+footer #content-footer #nav-footer {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+footer #content-footer #nav-footer h3 {
+  font-family: "Big Holidays", sans-serif;
+}
+footer #content-footer #nav-footer ul {
+  padding-left: 0;
+}
+footer #content-footer #nav-footer ul li {
+  padding-bottom: 8px;
+}
+footer #content-footer #nav-footer div {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-around;
+}
+footer #content-footer #nav-footer div img {
+  width: 110px;
+}
+footer #content-footer #reseaux {
+  width: 110%;
+  margin-top: 5%;
+  justify-content: space-between !important;
+}
+footer #content-footer #reseaux a {
+  text-decoration: none;
+  font-size: 2em;
+  background: white;
+  color: #34616F;
+  padding: 5%;
+  border-radius: 100px;
+}
+footer #content-footer #reseaux a:hover {
+  background-color: #e6e6e6;
+}
+
+#fin-footer {
+  padding-top: 1%;
+  background-color: #5F838D;
+  border-top: 1.5px solid white;
+  display: flex;
+  justify-content: center;
+}
+#fin-footer a:hover {
+  color: #e7e7e7;
 }
 
 /*# sourceMappingURL=modify_profil.css.map */
