@@ -17,7 +17,6 @@ body{
   #choix{
     z-index: 1;
     position: absolute;
-    left: -150%;//à retirer
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -145,7 +144,6 @@ body{
 }
 #Invitations{
   @extend #friends;
-  left: 0;
 }
 .ban-amis{
   bottom: 20%!important;
