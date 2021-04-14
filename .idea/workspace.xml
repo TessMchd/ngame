@@ -19,7 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="" />
+    <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/_modify_profil.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/_modify_profil.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/modify_profil.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/modify_profil.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/modify_profil.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/modify_profil.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/modify_profil.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/modify_profil.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/avatar/image_avatar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/avatar/image_avatar.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/avatar/image_avatar2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/avatar/image_avatar2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/avatar/image_avatar3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/avatar/image_avatar3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/avatar/image_avatar4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/avatar/image_avatar4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/modify.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/modify.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/friends.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/friends.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -217,7 +230,8 @@
       <workItem from="1618134112514" duration="16784000" />
       <workItem from="1618168887769" duration="391000" />
       <workItem from="1618302685745" duration="2071000" />
-      <workItem from="1618324288141" duration="5228000" />
+      <workItem from="1618324288141" duration="5533000" />
+      <workItem from="1618402585759" duration="2405000" />
     </task>
     <servers />
   </component>

@@ -85,6 +85,11 @@ a {
   color: #F9B000;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 body {
   height: 100%;
   width: 100%;
@@ -92,8 +97,8 @@ body {
   padding: 0;
 }
 
-#profil_content, #modify_content {
-  margin: 6% 0;
+#profil_content, #friends_content, #modify_content {
+  margin: 5% 0;
   padding: 5% 4%;
   width: 100%;
   background-color: #395462;
@@ -104,20 +109,20 @@ body {
   justify-content: center;
   position: relative;
 }
-#profil_content #longue_vue, #modify_content #longue_vue {
+#profil_content #longue_vue, #friends_content #longue_vue, #modify_content #longue_vue {
   position: absolute;
   right: 184px;
   top: 94px;
   height: 85%;
   transform: rotate(-28deg);
 }
-#profil_content .titre, #modify_content .titre {
+#profil_content .titre, #friends_content .titre, #modify_content .titre {
   position: relative;
   height: 120px;
   margin-bottom: 4%;
   z-index: 1;
 }
-#profil_content .titre h1, #modify_content .titre h1 {
+#profil_content .titre h1, #friends_content .titre h1, #modify_content .titre h1 {
   position: absolute;
   top: 11px;
   left: 33%;
@@ -127,26 +132,26 @@ body {
   font-family: "Big Holidays";
   transform: rotate(-1deg);
 }
-#profil_content .titre img, #modify_content .titre img {
+#profil_content .titre img, #friends_content .titre img, #modify_content .titre img {
   height: 120px;
 }
-#profil_content #info_profil, #modify_content #info_profil {
+#profil_content #info_profil, #friends_content #info_profil, #modify_content #info_profil {
   width: 93%;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   z-index: 1;
 }
-#profil_content #info_profil #info_txt, #modify_content #info_profil #info_txt {
+#profil_content #info_profil #info_txt, #friends_content #info_profil #info_txt, #modify_content #info_profil #info_txt {
   width: 80%;
 }
-#profil_content #info_profil #info_txt .ligne, #modify_content #info_profil #info_txt .ligne {
+#profil_content #info_profil #info_txt .ligne, #friends_content #info_profil #info_txt .ligne, #modify_content #info_profil #info_txt .ligne {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2%;
   width: 100%;
 }
-#profil_content #info_profil #info_txt .ligne p, #modify_content #info_profil #info_txt .ligne p {
+#profil_content #info_profil #info_txt .ligne p, #friends_content #info_profil #info_txt .ligne p, #modify_content #info_profil #info_txt .ligne p {
   background-color: #fafafa;
   border-radius: 8px;
   padding: 1.5% 4%;
@@ -155,21 +160,21 @@ body {
   align-items: center;
   justify-content: center;
 }
-#profil_content #info_profil #info_txt .ligne #info_capitaine, #modify_content #info_profil #info_txt .ligne #info_capitaine {
+#profil_content #info_profil #info_txt .ligne #info_capitaine, #friends_content #info_profil #info_txt .ligne #info_capitaine, #modify_content #info_profil #info_txt .ligne #info_capitaine {
   width: 60%;
   margin-right: 2%;
 }
-#profil_content #info_profil #info_txt .ligne #info_alias, #modify_content #info_profil #info_txt .ligne #info_alias {
+#profil_content #info_profil #info_txt .ligne #info_alias, #friends_content #info_profil #info_txt .ligne #info_alias, #modify_content #info_profil #info_txt .ligne #info_alias {
   width: 40%;
 }
-#profil_content #info_profil #info_txt .ligne #info_anniv, #modify_content #info_profil #info_txt .ligne #info_anniv {
+#profil_content #info_profil #info_txt .ligne #info_anniv, #friends_content #info_profil #info_txt .ligne #info_anniv, #modify_content #info_profil #info_txt .ligne #info_anniv {
   width: 40%;
   margin-right: 2%;
 }
-#profil_content #info_profil #info_txt .ligne #info_email, #modify_content #info_profil #info_txt .ligne #info_email {
+#profil_content #info_profil #info_txt .ligne #info_email, #friends_content #info_profil #info_txt .ligne #info_email, #modify_content #info_profil #info_txt .ligne #info_email {
   width: 60%;
 }
-#profil_content #info_profil #info_txt #info_grade, #modify_content #info_profil #info_txt #info_grade {
+#profil_content #info_profil #info_txt #info_grade, #friends_content #info_profil #info_txt #info_grade, #modify_content #info_profil #info_txt #info_grade {
   background-color: #fafafa;
   border-radius: 8px;
   padding: 1.5% 4%;
@@ -179,13 +184,13 @@ body {
   justify-content: center;
   width: 100%;
 }
-#profil_content #stats, #modify_content #stats {
+#profil_content #stats, #friends_content #stats, #modify_content #stats {
   z-index: 1;
   display: flex;
   width: 100%;
   margin-top: 4%;
 }
-#profil_content #stats div, #modify_content #stats div {
+#profil_content #stats div, #friends_content #stats div, #modify_content #stats div {
   width: 40%;
   background-color: #5f8ba2;
   border-radius: 15px;
@@ -196,32 +201,32 @@ body {
   margin: 2%;
   padding: 2%;
 }
-#profil_content #stats div p, #modify_content #stats div p {
+#profil_content #stats div p, #friends_content #stats div p, #modify_content #stats div p {
   color: white;
   margin-bottom: 0;
   margin-top: 3%;
 }
-#profil_content #liens, #modify_content #liens {
+#profil_content #liens, #friends_content #liens, #modify_content #liens {
   display: flex;
   justify-content: space-between;
   width: 30%;
   margin-top: 4%;
 }
-#profil_content #liens a:last-child, #modify_content #liens a:last-child {
+#profil_content #liens a:last-child, #friends_content #liens a:last-child, #modify_content #liens a:last-child {
   width: 40%;
   display: flex;
   justify-content: center;
 }
-#profil_content .ban-droite, #modify_content .ban-droite, #profil_content .ban-gauche, #modify_content .ban-gauche {
+#profil_content .ban-droite, #friends_content .ban-droite, #modify_content .ban-droite, #profil_content .ban-gauche, #friends_content .ban-gauche, #modify_content .ban-gauche {
   position: absolute;
   right: 24.2%;
   bottom: 12%;
   z-index: 1;
 }
-#profil_content .ban-droite .ban, #modify_content .ban-droite .ban, #profil_content .ban-gauche .ban, #modify_content .ban-gauche .ban {
+#profil_content .ban-droite .ban, #friends_content .ban-droite .ban, #modify_content .ban-droite .ban, #profil_content .ban-gauche .ban, #friends_content .ban-gauche .ban, #modify_content .ban-gauche .ban {
   position: relative;
 }
-#profil_content .ban-droite .ban a, #modify_content .ban-droite .ban a, #profil_content .ban-gauche .ban a, #modify_content .ban-gauche .ban a {
+#profil_content .ban-droite .ban a, #friends_content .ban-droite .ban a, #modify_content .ban-droite .ban a, #profil_content .ban-gauche .ban a, #friends_content .ban-gauche .ban a, #modify_content .ban-gauche .ban a {
   z-index: 1;
   font-family: "Big Holidays";
   font-size: 2em;
@@ -229,25 +234,25 @@ body {
   left: 73px;
   top: 19px;
 }
-#profil_content .ban-droite .ban a:hover, #modify_content .ban-droite .ban a:hover, #profil_content .ban-gauche .ban a:hover, #modify_content .ban-gauche .ban a:hover {
+#profil_content .ban-droite .ban a:hover, #friends_content .ban-droite .ban a:hover, #modify_content .ban-droite .ban a:hover, #profil_content .ban-gauche .ban a:hover, #friends_content .ban-gauche .ban a:hover, #modify_content .ban-gauche .ban a:hover {
   color: #C24C4C;
   transform: rotate(4deg);
 }
-#profil_content .ban-droite .ban img, #modify_content .ban-droite .ban img, #profil_content .ban-gauche .ban img, #modify_content .ban-gauche .ban img {
+#profil_content .ban-droite .ban img, #friends_content .ban-droite .ban img, #modify_content .ban-droite .ban img, #profil_content .ban-gauche .ban img, #friends_content .ban-gauche .ban img, #modify_content .ban-gauche .ban img {
   position: absolute;
 }
-#profil_content .ban-gauche, #modify_content .ban-gauche {
+#profil_content .ban-gauche, #friends_content .ban-gauche, #modify_content .ban-gauche {
   left: -2.6%;
 }
-#profil_content .ban-gauche .ban a, #modify_content .ban-gauche .ban a {
+#profil_content .ban-gauche .ban a, #friends_content .ban-gauche .ban a, #modify_content .ban-gauche .ban a {
   top: 5px;
 }
-#profil_content .ban-gauche .ban a:hover, #modify_content .ban-gauche .ban a:hover {
+#profil_content .ban-gauche .ban a:hover, #friends_content .ban-gauche .ban a:hover, #modify_content .ban-gauche .ban a:hover {
   transform: rotate(-4deg);
 }
 
 @media screen and (min-width: 1399px) {
-  .ban-droite, #profil_content .ban-gauche, #modify_content .ban-gauche {
+  .ban-droite, #profil_content .ban-gauche, #friends_content .ban-gauche, #modify_content .ban-gauche {
     right: 20.9% !important;
   }
 
@@ -264,11 +269,6 @@ body {
   align-items: center;
   justify-content: center;
   margin-right: 3%;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
 }
 
 #modify_content {
@@ -489,6 +489,160 @@ form button {
   .ban-modify {
     right: 19.5% !important;
   }
+}
+body {
+  height: 100%;
+}
+
+.navbar {
+  z-index: 2;
+}
+
+#friends_content {
+  height: 100%;
+  width: 88%;
+  position: absolute !important;
+}
+#friends_content #titre {
+  position: absolute;
+  top: -80%;
+  left: 8%;
+}
+#friends_content #choix {
+  z-index: 1;
+  position: absolute;
+  left: -150%;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-top: 4%;
+}
+#friends_content #choix a {
+  font-family: "Century Gothic";
+  background-color: #fafafa;
+  width: 100%;
+  height: 50px;
+  margin: 2% 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#friends_content #choix a:hover {
+  background-color: #B9E4F0;
+  cursor: pointer;
+}
+#friends_content #choix a span {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #C24C4C;
+  color: #fafafa;
+  border-radius: 100px;
+  padding: 1%;
+  margin-left: 1%;
+}
+
+#friends, #Invitations, #inviter {
+  z-index: 1;
+  background-color: #223844;
+  width: 100%;
+  height: 100%;
+  padding: 5% 4%;
+  border-radius: 20px;
+  position: absolute;
+  left: -150%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+#friends .titre-section, #Invitations .titre-section, #inviter .titre-section {
+  position: absolute;
+  top: 2%;
+  left: 25%;
+}
+#friends .scroll, #Invitations .scroll, #inviter .scroll {
+  margin-top: 10%;
+  margin-right: 35%;
+  width: 50%;
+  height: 60%;
+  overflow-y: scroll;
+  background-color: #395462;
+  padding: 2% 4%;
+  border-radius: 15px;
+  z-index: 1;
+}
+#friends .scroll .user_info, #Invitations .scroll .user_info, #inviter .scroll .user_info {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 4%;
+}
+#friends .scroll .user_info img, #Invitations .scroll .user_info img, #inviter .scroll .user_info img {
+  border-radius: 10px;
+}
+#friends .scroll .user_info div, #Invitations .scroll .user_info div, #inviter .scroll .user_info div {
+  width: 100%;
+  margin-left: 2%;
+}
+#friends .scroll .user_info div p, #Invitations .scroll .user_info div p, #inviter .scroll .user_info div p {
+  margin-bottom: 0;
+  color: whitesmoke;
+}
+#friends .ancre, #Invitations .ancre, #inviter .ancre {
+  z-index: -1;
+  position: absolute;
+  right: -6%;
+  top: -22%;
+  height: 126%;
+}
+
+.pseudo {
+  color: #F9B000 !important;
+}
+
+#inviter .titre-section .titre h1 {
+  font-size: 2.5em;
+  top: 20px;
+  left: 21%;
+}
+#inviter #inviter-content {
+  width: 100%;
+  margin-top: 10%;
+}
+#inviter #inviter-content #search_section {
+  margin-bottom: 2%;
+  display: flex;
+  align-items: flex-end;
+}
+#inviter #inviter-content #search_section input {
+  background-color: #fafafa;
+  margin-right: 2%;
+  padding: 1% 2%;
+  border-radius: 15px;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+}
+#inviter #inviter-content .scroll {
+  margin-top: 0;
+  width: 65%;
+}
+#inviter #inviter-content .scroll p {
+  color: white;
+}
+
+#Invitations {
+  left: 0;
+}
+
+.ban-amis {
+  bottom: 20% !important;
+}
+.ban-amis a:hover {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=modify_profil.css.map */

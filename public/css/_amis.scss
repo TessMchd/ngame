@@ -1,0 +1,156 @@
+body{
+  height: 100%;
+}
+.navbar{
+  z-index: 2;
+}
+#friends_content{
+  @extend #profil_content;
+  height: 100%;
+  width: 88%;
+  position: absolute!important;
+  #titre{
+    position: absolute;
+    top: -80%;
+    left: 8%;
+  }
+  #choix{
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-top: 4%;
+    a{
+      font-family: $century;
+      background-color: darken(white,2%);
+      width: 100%;
+      height: 50px;
+      margin: 2% 0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover{
+        background-color: $bleu-clair;
+        cursor: pointer;
+      }
+      span{
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $rouge;
+        color: darken(white, 2%);
+        border-radius: 100px;
+        padding: 1%;
+        margin-left: 1%;
+      }
+    }
+  }
+}
+
+#friends, #search{
+  z-index: 1;
+  background-color: $bleu-tres-fonce;
+  width: 100%;
+  height: 100%;
+  padding: 5% 4%;
+  border-radius: 20px;
+  position: absolute;
+  left: -150%;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+
+  transition: all 0.3s ease;
+  .titre-section{
+    position: absolute;
+    top: 2%;
+    left: 25%;
+  }
+  .scroll{
+    margin-top: 10%;
+    margin-right: 35%;
+    width: 50%;
+    height: 60%;
+    overflow-y: scroll;
+    background-color: $bleu-fonce;
+    padding: 2% 4%;
+    border-radius: 15px;
+    z-index: 1;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    .user_info{
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 4%;
+      img{
+        border-radius: 10px;
+      }
+      div{
+        width: 100%;
+        margin-left: 2%;
+        p{
+          margin-bottom: 0;
+          color: whitesmoke;
+        }
+      }
+    }
+  }
+  .ancre{
+    z-index: -1;
+    position: absolute;
+    right: -6%;
+    top: -22%;
+    height: 126%;
+  }
+}
+.pseudo{
+  color: $jaune-fonce!important;
+}
+#inviter{
+  @extend #friends;
+  .titre-section .titre h1{
+    font-size: 2.5em;
+    top: 20px;
+    left: 21%;
+  }
+  #inviter-content{
+    width: 100%;
+    margin-top: 10%;
+    #search_section{
+      margin-bottom: 2%;
+      display: flex;
+      align-items: flex-end;
+      input{
+        background-color: darken(white,2%);
+        margin-right: 2%;
+        padding: 1% 2%;
+        border-radius: 15px;
+        border-left: none;
+        border-top: none;
+        border-right: none;
+      }
+    }
+    .scroll{
+      margin-top: 0;
+      width: 65%;
+      p{
+        color: white;
+      }
+    }
+  }
+}
+#Invitations{
+  @extend #friends;
+}
+.ban-amis{
+  bottom: 20%!important;
+  a:hover{
+    cursor: pointer;
+  }
+}
+
