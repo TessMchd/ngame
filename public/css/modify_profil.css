@@ -678,6 +678,8 @@ body {
 #content-accueil {
   margin: 0 20% 0 10%;
   position: relative;
+  background-image: url("../img/accueil/piste.png");
+  background-size: cover;
 }
 #content-accueil h2 {
   font-family: "Big Holidays";

@@ -36,6 +36,8 @@
 #content-accueil{
   margin: 0 20% 0 10%;
   position: relative;
+  background-image: url("../img/accueil/piste.png");
+  background-size: cover;
   h2{
     font-family: $holidays;
   }
