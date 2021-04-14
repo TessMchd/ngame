@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5626aded-3733-4201-b3cc-96c781d331a7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/plateau_game.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/game/show_game.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/game/show_game.html.twig" afterDir="false" />
     </list>
@@ -223,7 +222,7 @@
       <workItem from="1618168887769" duration="391000" />
       <workItem from="1618302685745" duration="2071000" />
       <workItem from="1618324288141" duration="5533000" />
-      <workItem from="1618402585759" duration="15930000" />
+      <workItem from="1618402585759" duration="16570000" />
     </task>
     <servers />
   </component>
