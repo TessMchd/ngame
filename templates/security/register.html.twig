@@ -4,9 +4,8 @@
 
 {% block body %}
 
-    <div class="d-flex justify-content-center">
 
-    {{ form_start (form,{'action': path('app_register'),'attr':{'class':'form_inscription' } }) }}
+    {{ form_start (form,{'action': path('app_register'),'attr':{'class':'form_inscription mt-4' } }) }}
 
 
     <img class="img_logo_inscription" src="{{ asset('img/security_icon/logo.png')}}">
@@ -39,12 +38,10 @@
         <input type="checkbox" name="conditions" required>
         <label for="conditions"><p>J'ai lu et j'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#"> politique de confidentialité</a>.</p></label>
     </div>
-
+    <p style="text-align: center; color:darkred">{{ form_errors(form) }}</p>
     <button type="submit" id="button_inscription">S'inscrire</button>
 
     <a class="lien_login" href="{{ path('user_profil') }}">Je suis déjà inscrit</a>
 
-    {{ form_errors(form) }}
     {{ form_end(form) }}
-    </div>
 {% endblock %}
