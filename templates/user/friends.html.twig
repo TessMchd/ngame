@@ -1,0 +1,294 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div id="friends_content">
+    <div id="choix">
+        <div id="titre">
+            <div class="titre">
+                <h1>Gérez vos amis ! </h1>
+                <img src="{{ asset('img/banniere_centre.png')}}" alt="">
+            </div>
+        </div>
+        <a v-on:click="amis">Vos amis</a>
+        <a v-on:click="envoyer">Envoyer une invitation</a>
+        <a v-on:click="invit">Invitations <span id="invit_nb">0</span></a>
+    </div>
+    <div id="friends">
+        <div class="titre-section">
+            <div class="titre">
+                <h1>Invitations</h1>
+                <img src="{{ asset('img/banniere_centre.png')}}" alt="">
+            </div>
+        </div>
+        <div class="scroll">
+            {% if user.amis!="" %}
+                {% for user in user.amis%}
+                    <div class="user_info">
+                        <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
+                        <div>
+                            <p class="pseudo">{{ invit_users[user].pseudo}}</p>
+                            <p>Rang {{  invit_users[user].stats.rang}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Vous n'avez pas d'amis
+            {% endif %}
+        </div>
+        <div class="ban-gauche ban-amis">
+            <div class="ban">
+                <a v-on:click="retourAmis">Retour</a>
+                <img src="{{ asset('img/ban_gauche.png') }}" alt="">
+            </div>
+        </div>
+        <img src="{{ asset('img/security_icon/ancre.png')}}" alt="" class="ancre">
+    </div>
+
+    <div id="inviter">
+        <div class="titre-section">
+            <div class="titre">
+                <h1>Envoyer une invitation</h1>
+                <img src="{{ asset('img/banniere_centre.png')}}" alt="">
+            </div>
+        </div>
+        <div id="inviter-content">
+            <div id="search_section">
+                <input type="text" id="search_friend" placeholder="Chercher un joueur">
+                <button class="btn-tercary" id="search_button">Trouver</button>
+                <button class="btn-tercary" id="retour_liste" style="display:none"> Retour</button>
+                <div id="search"></div>
+            </div>
+            <div id="joueurs" class="scroll">
+                {% for user in users|filter(user => user.id != app.user.id) %}
+                    <div class="user_info">
+                        <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
+                        <div>
+                            <p class="pseudo">{{ user.pseudo}}</p>
+                            <p>Rang {{  user.stats.rang}}</p>
+                        </div>
+                        {% if app.user.id in user.amis %}
+                            <p>Amis</p>
+                        {% elseif app.user.id in user.invitations%}
+                            <p>Invitation envoyée</p>
+                        {% elseif user.id in app.user.invitations %}
+                            <p>Vous a ajouté</p>
+                        {% else %}
+                            <button class="send btn-secondary"  value="{{ user.id }}">Ajouter</button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ban-gauche ban-amis">
+            <div class="ban">
+                <a v-on:click="retourInviter">Retour</a>
+                <img src="{{ asset('img/ban_gauche.png') }}" alt="">
+            </div>
+        </div>
+        <img src="{{ asset('img/security_icon/ancre.png')}}" alt="" class="ancre">
+    </div>
+
+    <div id="Invitations">
+        <div class="titre-section">
+            <div class="titre">
+                <h1>Invitations</h1>
+                <img src="{{ asset('img/banniere_centre.png')}}" alt="">
+            </div>
+        </div>
+        <div class="scroll">
+            {% if user.invitations!="" %}
+                {% for user in invitations %}
+                    <div class="user_info">
+                        <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
+                        <div>
+                            <p class="pseudo">{{ invit_users[user].pseudo}}</p>
+                            <p>Rang {{  invit_users[user].stats.rang}}</p>
+                        </div>
+                        <button class="accept btn-tercary"  value="{{ user }}">Accepter</button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Vous n'avez pas d'invitations
+            {% endif %}
+        </div>
+        <div class="ban-gauche ban-amis">
+            <div class="ban">
+                <a v-on:click="retourInvitations">Retour</a>
+                <img src="{{ asset('img/ban_gauche.png') }}" alt="">
+            </div>
+        </div>
+        <img src="{{ asset('img/security_icon/ancre.png')}}" alt="" class="ancre">
+        </div>
+        <div class="ban-droite ban-amis">
+            <div class="ban">
+                <a href="{{ path("user_profil") }}">profil</a>
+                <img src="{{ asset('img/ban_droite.png') }}" alt="">
+            </div>
+        </div>
+
+    <img src="{{ asset('img/profil/longue_vue.png')}}" alt="" id="longue_vue">
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        var choix = new Vue({
+            el: '#choix',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                amis: function () {
+                    document.getElementById("friends").style.left = "0";
+                    document.getElementById("choix").style.left = "-150%";
+                },
+                envoyer: function () {
+                    document.getElementById("inviter").style.left = "0";
+                    document.getElementById("choix").style.left = "-150%";
+                },
+                invit: function () {
+                    document.getElementById("Invitations").style.left = "0";
+                    document.getElementById("choix").style.left = "-150%";
+                }
+            }
+        });
+        //---------------Retour Amis---------------------------
+        var friends = new Vue({
+            el: '#friends',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                retourAmis: function () {
+                    document.getElementById("friends").style.left = "-150%";
+                    document.getElementById("choix").style.left = "20%";
+                }
+            }
+        })
+        //---------------Retour Inviter---------------------------
+        var inviter = new Vue({
+            el: '#inviter',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                retourInviter: function () {
+                    document.getElementById("inviter").style.left = "-150%";
+                    document.getElementById("choix").style.left = "20%";
+                }
+            }
+        })
+        //---------------Retour Invitations---------------------------
+        var invitation = new Vue({
+            el: '#Invitations',
+            data: {
+                name: 'Vue.js'
+            },
+            // Définissez les méthodes de l'objet
+            methods: {
+                retourInvitations: function () {
+                    document.getElementById("Invitations").style.left = "-150%";
+                    document.getElementById("choix").style.left = "20%";
+                }
+            }
+        })
+
+        function searchFriend(pseudo){
+            $.ajax({
+                url: "{{ path('search_friend') }}",
+                data: {pseudo: pseudo},
+                method: 'POST',
+                success: function (data) {
+                    if (data!=false) {
+                        $('#joueurs').hide()
+                        $('#retour_liste').show()
+                        document.getElementById('search').innerHTML = ""
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById('search').innerHTML += "<div class=\"user_info\">\n" +
+                                "                <img src=\"../../GoldenRumMutinerie/img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
+                                "                <div>\n" +
+                                "                    <p>" + data[i].pseudo + "</p>\n" +
+                                "                    <p>Rang " + data[i].rang + "</p>\n" +
+                                "                </div>\n" +
+                                "                <button class=\"send\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
+                                "            </div>"
+                        }
+                    }
+                    $('.send').click(function(){
+                        var friend = $(this).val();
+                        $.ajax({
+                            url: "{{ path('friend_request') }}",
+                            data: {friend: friend},
+                            method: 'POST',
+                            success: function (data) {
+                                console.log(friend)
+                                document.location.reload();
+                            },
+                            error: function () {
+
+                            }
+                        })
+                    });
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        $('.send').click(function(){
+            var friend = $(this).val();
+            $.ajax({
+                url: "{{ path('friend_request') }}",
+                data: {friend: friend},
+                method: 'POST',
+                success: function (data) {
+                    console.log(friend)
+                    document.location.reload();
+                },
+                error: function () {
+
+                }
+            })
+        });
+        $('.accept').click(function(){
+            var friend = $(this).val();
+            $.ajax({
+                url: "{{ path('friend_accept') }}",
+                data: {friend: friend},
+                method: 'POST',
+                success: function (data) {
+                    document.location.reload();
+                },
+                error: function () {
+
+                }
+            })
+        });
+        $( "#search_friend" ).keydown(function( event ) {
+            if (event.which == 13 && $('#search_friend').val()!=0) {
+                console.log('chercher')
+                searchFriend($('#search_friend').val())
+            }
+        })
+
+        $('#search_button').click(function () {
+            if($('search_friend').val()!=0){
+                searchFriend($('#search_friend').val())
+            }
+        })
+
+        $('#retour_liste').click(function () {
+            document.getElementById('search').innerHTML=""
+            $('#joueurs').show();
+        })
+
+
+    </script>
+{% endblock %}
+
+
