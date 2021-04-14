@@ -116,6 +116,11 @@ a {
 }
 
 /*--------------------- Css Inscription ---------------*/
+.form_inscription li{
+  text-align: center;
+  color: darkred;
+  font-size: 18px;
+}
 .form_inscription {
   padding-top: 40px;
   background-color: #34616E;
