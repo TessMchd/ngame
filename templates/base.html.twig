@@ -28,11 +28,10 @@
         <div class="container_nav">
             {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('new_game') }}" class="lien_nav"></a>
-            {% else %}
             <a href="{{ path('user_profil') }}" class="lien_nav">
-                {% endif %}
                 <strong style="margin-right: 10px" class="titre_nav">Profil</strong>
             </a>
+            {% endif %}
             <span class="text-white">
                 {% if is_granted('IS_AUTHENTICATED_FULLY')%}
                     <a class="lien_nav" href="{{ path('app_logout') }}">Déconnection</a>
