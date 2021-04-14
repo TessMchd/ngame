@@ -1,8 +1,8 @@
 @import "_general.scss";
-@import "_modify_profil.scss";
-//------------------------------------------------------
-// titre
-//------------------------------------------------------
+.container{
+  display: flex;
+  justify-content: center;
+}
 body{
   height: 100%;
   width: 100%;
@@ -11,17 +11,17 @@ body{
 }
 
 #profil_content{
-  margin: 6% 0;
+  margin: 5% 0;
   padding: 5% 4%;
   width: 100%;
   background-color: $bleu-fonce;
+  border-radius: 20px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  border-radius: 20px;
   position: relative;
   #longue_vue{
     position: absolute;
@@ -55,16 +55,6 @@ body{
     align-items: flex-end;
     justify-content: space-between;
     z-index: 1;
-    .info_img{
-      overflow: hidden;
-      width: 157px;
-      height: 157px;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 3%;
-    }
     #info_txt{
       width: 80%;
       .ligne{
@@ -140,10 +130,11 @@ body{
       justify-content: center;
     }
   }
-  #deconnexion{
+  .ban-droite{
     position: absolute;
     right: 24.2%;
     bottom: 12%;
+    z-index: 1;
     .ban{
       position: relative;
       a{
@@ -163,8 +154,8 @@ body{
       }
     }
   }
-  #jouer{
-    @extend #deconnexion;
+  .ban-gauche{
+    @extend .ban-droite;
     left: -2.6%;
     .ban{
       a{
@@ -178,10 +169,29 @@ body{
 }//fin #profil_content
 
 @media screen and (min-width:1399px) {
-  #deconnexion{
+  .ban-droite{
     right: 20.9%!important;
   }
-  #jouer{
+  .ban-gauche{
     left: -2.3%!important;
   }
 }
+.info_img{
+  overflow: hidden;
+  width: 157px;
+  height: 157px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3%;
+}
+//------------------------------------------------------
+// modif profil page
+//------------------------------------------------------
+@import "_modify_profil.scss";
+
+//------------------------------------------------------
+// amis
+//------------------------------------------------------
+@import "_amis.scss";
