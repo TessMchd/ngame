@@ -29,7 +29,7 @@
                         <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
                         <div>
                             <p class="pseudo">{{ invit_users[user].pseudo}}</p>
-                            <p>Rang {{  invit_users[user].stats.rang}}</p>
+                            <p>Grade {{  invit_users[user].stats.grade}}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -66,7 +66,7 @@
                         <img src="{{ asset('img/avatar/'~user.avatar)}}" width="80px">
                         <div>
                             <p class="pseudo">{{ user.pseudo}}</p>
-                            <p>Rang {{  user.stats.rang}}</p>
+                            <p>Grade {{  user.stats.grade}}</p>
                         </div>
                         {% if app.user.id in user.amis %}
                             <p>Amis</p>
@@ -104,7 +104,7 @@
                         <img src="{{ asset('img/avatar/'~invit_users[user].avatar)}}" width="80px">
                         <div>
                             <p class="pseudo">{{ invit_users[user].pseudo}}</p>
-                            <p>Rang {{  invit_users[user].stats.rang}}</p>
+                            <p>Grade {{  invit_users[user].stats.grade}}</p>
                         </div>
                         <button class="accept btn-tercary"  value="{{ user }}">Accepter</button>
                     </div>
@@ -213,7 +213,7 @@
                                 "                <img src=\"../../GoldenRumMutinerie/img/avatar/" + data[i].avatar + "\" width=\"80px\">\n" +
                                 "                <div>\n" +
                                 "                    <p>" + data[i].pseudo + "</p>\n" +
-                                "                    <p>Rang " + data[i].rang + "</p>\n" +
+                                "                    <p>Grade " + data[i].grade + "</p>\n" +
                                 "                </div>\n" +
                                 "                <button class=\"send btn-secondary\"  value=\"" + data[i].id + "\">Ajouter</button>\n" +
                                 "            </div>"
