@@ -133,7 +133,7 @@
             <h1>La manche est finie</h1>
 
                 <p id="end_msg"></p>
-                <button style="display: none" id="next_manche">Rejoindre la nouvelle manche</button>
+                <button class="btn-secondary" style="display: none" id="next_manche">Rejoindre la nouvelle manche</button>
                 <a href="{{ path('new_game') }}">Retour</a>
 
 
@@ -181,7 +181,7 @@
                 <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['OFFRE'][2]].picture ) }}">
                 <input type="radio"  name="carte_offre"  value="{{ adversaire.actions['OFFRE'][2] }}">
             </div>
-            <button id="valid_offre">Choisir la carte</button>
+            <button class="btn-secondary" id="valid_offre">Choisir la carte</button>
         </div>
     </div>
 {% endif %}
@@ -198,7 +198,7 @@
                 <img class="card_actions" src="{{ asset('img/card/'~cards[adversaire.actions['ECHANGE'][1][1]].picture ) }}">
                 <input type="radio"  name="carte_echange"  value='secondpair'>
             </div>
-            <button id="valid_echange">Choisir ces deux cartes</button>
+            <button class="btn-secondary" id="valid_echange">Choisir ces deux cartes</button>
         </div>
     </div>
 {% endif %}
